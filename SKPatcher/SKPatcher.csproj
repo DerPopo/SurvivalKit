@@ -31,7 +31,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Mono.Cecil">
-      <HintPath>..\Mono.Cecil.dll</HintPath>
+      <HintPath>..\Assemblies\Mono.Cecil.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
