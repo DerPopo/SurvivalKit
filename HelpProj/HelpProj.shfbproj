@@ -18,8 +18,8 @@
     <HtmlHelpName>Documentation</HtmlHelpName>
     <Language>en-US</Language>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\..\..\SteamLibrary\SteamApps\common\7 Days To Die\7DaysToDie_Data\Managed\SurvivalKit.dll" />
-      <DocumentationSource sourceFile="..\..\..\SteamLibrary\SteamApps\common\7 Days To Die\7DaysToDie_Data\Managed\SurvivalKit.xml" />
+      <DocumentationSource sourceFile="..\bin\Release\SurvivalKit.dll" />
+      <DocumentationSource sourceFile="..\bin\Release\SurvivalKit.xml" />
     </DocumentationSources>
     <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, TypeParameter, AutoDocumentDispose</MissingTags>
     <MaximumGroupParts>2</MaximumGroupParts>
@@ -63,10 +63,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\SteamLibrary\SteamApps\common\7 Days To Die\7DaysToDie_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\Assemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\SteamLibrary\SteamApps\common\7 Days To Die\7DaysToDie_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\Assemblies\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <!-- Import the SHFB build targets -->
