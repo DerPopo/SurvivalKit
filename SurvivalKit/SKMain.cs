@@ -58,7 +58,7 @@ namespace SurvivalKit
 
 		private SKMain()
 		{
-			UnityEngine.Debug.Log("SurvivalKit 7DTD plugin system v" + getVersion() + " by DerPopo (http://7daystodie.com/forums/) starting up...");
+			Log.Out("SurvivalKit 7DTD plugin system v" + getVersion() + " by DerPopo (http://7daystodie.com/forums/) starting up...");
 			plugMgr = new PluginManager();
 			plugMgr.loadPlugins();
 		}

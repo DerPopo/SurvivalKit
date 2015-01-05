@@ -123,7 +123,7 @@ namespace SurvivalKit.Plugins.Managed
 		{
 			if (this.enabled)
 				return;
-			UnityEngine.Debug.Log("Enabling plugin '" + name + "'");
+			Log.Out("Enabling plugin '" + name + "'");
 			this.enabled = true;
 			this.pluginInstance.onEnable();
 		}
@@ -135,7 +135,7 @@ namespace SurvivalKit.Plugins.Managed
 		{
 			if (!this.enabled)
 				return;
-			UnityEngine.Debug.Log("Disabling plugin '" + name + "'");
+			Log.Out("Disabling plugin '" + name + "'");
 			this.enabled = false;
 			this.pluginInstance.clearHandlers();
 			this.pluginInstance.clearCommandListeners();

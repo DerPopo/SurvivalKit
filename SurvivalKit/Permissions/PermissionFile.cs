@@ -735,28 +735,28 @@ namespace SurvivalKit.Permissions
 						if (groupPerms != null)
 							ret.AddRange(groupPerms);
 						else
-							UnityEngine.Debug.LogWarning("A <fromgroup> node in the permissions.xml doesn't contain a valid group name!");
+							Log.Warning("A <fromgroup> node in the permissions.xml doesn't contain a valid group name!");
 					}
 				}
 			}
 			for (int i = 0; i < ret.Count; i++)
 			{
 				if ((ret[i].Length <= 0) || (ret[i].Length == 1 && ret[i][0] == '-')) {
-					//UnityEngine.Debug.Log("removing " + ret[i] + " (invalid)");
+					//Log.Out("removing " + ret[i] + " (invalid)");
 					ret.RemoveAt(i); i--;
 					continue;
 				}
 				for (int i_ = i+1; i_ < ret.Count; i_++ )
 				{
 					if (ret[i_].Length <= 0) {
-						//UnityEngine.Debug.Log("removing " + ret[i_] + " (invalid)");
+						//Log.Out("removing " + ret[i_] + " (invalid)");
 						ret.RemoveAt(i_); i_--;
 						continue;
 					}
-					//UnityEngine.Debug.Log("perm " + ret[i] + "; " + ret[i_]);
+					//Log.Out("perm " + ret[i] + "; " + ret[i_]);
 					if (ret[i_].ToLower().Equals(ret[i].ToLower()))
 					{
-						//UnityEngine.Debug.Log("removing " + ret[i_] + " (duplicate)");
+						//Log.Out("removing " + ret[i_] + " (duplicate)");
 						ret.RemoveAt(i_);
 						i_--;
 						continue;
@@ -764,7 +764,7 @@ namespace SurvivalKit.Permissions
 					if (ret[i_].Length == 1) {
 						if (ret[i_].StartsWith ("-"))
 						{
-							//UnityEngine.Debug.Log("removing " + ret[i_] + " (invalid)");
+							//Log.Out("removing " + ret[i_] + " (invalid)");
 							ret.RemoveAt(i_);
 							i_--;
 						}
@@ -772,7 +772,7 @@ namespace SurvivalKit.Permissions
 					}
 					if ((ret[i_].StartsWith("-") && !ret[i].StartsWith("-") && ret[i_].Substring(1).ToLower().Equals(ret[i].ToLower())) ||
 						(!ret[i_].StartsWith("-") && ret[i].StartsWith("-") && ret[i].Substring(1).ToLower().Equals(ret[i_].ToLower()))) {
-						//UnityEngine.Debug.Log("removing " + ret[i] + " (conflict with " + ret[i_] + ")");
+						//Log.Out("removing " + ret[i] + " (conflict with " + ret[i_] + ")");
 						ret.RemoveAt(i);
 						i--; i_--;
 						continue;
@@ -780,7 +780,7 @@ namespace SurvivalKit.Permissions
 				}
 			}
 			/*			for (int i = 0; i < ret.Count; i++) {
-				UnityEngine.Debug.Log("perm " + ret[i]);
+				Log.Out("perm " + ret[i]);
 			}*/
 			return ret;
 		}
@@ -840,13 +840,13 @@ namespace SurvivalKit.Permissions
 					string groupName = this.getGroupName(groupNode);
 					if (groupName != null)
 					{
-						//UnityEngine.Debug.Log("permgroup " + groupName + " :");
+						//Log.Out("permgroup " + groupName + " :");
 						List<string> permissions = readPermissions(groupNode);
 						permissionsByGroup.Add(groupName, permissions);
 					} 
 					else
 					{
-						UnityEngine.Debug.LogWarning("A <group> node in the permissions.xml doesn't contain a valid name attribute!");
+						Log.Warning("A <group> node in the permissions.xml doesn't contain a valid name attribute!");
 					}
 				}
 			}
@@ -861,13 +861,13 @@ namespace SurvivalKit.Permissions
 					string id = this.getMemberId(groupNode);
 					if (id != null)
 					{
-						//UnityEngine.Debug.Log("permmember " + id + " :");
+						//Log.Out("permmember " + id + " :");
 						List<string> permissions = readPermissions(groupNode);
 						permissionsBySender.Add(id, permissions);
 					}
 					else
 					{
-						UnityEngine.Debug.LogWarning ("A <member> node in the permissions.xml doesn't contain a valid member identifier!");
+						Log.Warning("A <member> node in the permissions.xml doesn't contain a valid member identifier!");
 					}
 				}
 			}

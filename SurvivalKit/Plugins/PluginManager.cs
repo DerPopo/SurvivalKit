@@ -62,7 +62,7 @@ namespace SurvivalKit.Plugins
 					NetLoader loader = (NetLoader)curLoader;
 					if (loader.MainClass.ToLower().Equals (mainclass.ToLower())
 						|| loader.AssemblyPath.ToLower().Equals(assemblyPath.ToLower())) {
-						UnityEngine.Debug.LogWarning("Can't load a plugin twice! Please unload it first.");
+						Log.Warning("Can't load a plugin twice! Please unload it first.");
 						return null;
 					}
 				}
@@ -100,7 +100,7 @@ namespace SurvivalKit.Plugins
 					if ((nameNode != null && mainClassNode != null
 							&& nameNode.InnerText.Length > 0 && mainClassNode.InnerText.Length > 0)) {
 						if (enabledNode == null || enabledNode.InnerText.ToLower().Equals("true")) {
-							UnityEngine.Debug.Log("Loading plugin '" + nameNode.InnerText + "'");
+							Log.Out("Loading plugin '" + nameNode.InnerText + "'");
 							NetPlugin curPlugin = this.loadNetPlugin(dllPath, mainClassNode.InnerText, nameNode.InnerText);
 							if (curPlugin != null) {
 								string authorStr = "";
@@ -120,19 +120,19 @@ namespace SurvivalKit.Plugins
 									}
 									authorStr += ")";
 								}
-								UnityEngine.Debug.Log("Plugin '" + nameNode.InnerText + "'" + authorStr + " loaded.");
+								Log.Out("Plugin '" + nameNode.InnerText + "'" + authorStr + " loaded.");
 							}
 						} else {
-							UnityEngine.Debug.Log("Skipping plugin '" + nameNode.InnerText + "' (disabled by configuration xml)");
+							Log.Out("Skipping plugin '" + nameNode.InnerText + "' (disabled by configuration xml)");
 						}
 					}
 					else
 					{
-						UnityEngine.Debug.Log("Invalid plugin configuration xml '" + xmlPath + "'!");
+						Log.Out("Invalid plugin configuration xml '" + xmlPath + "'!");
 					}
 				} catch (Exception e) {
-					UnityEngine.Debug.Log("An exception occured while loading a plugin dll ('" + fi.Name + "') : ");
-					UnityEngine.Debug.LogException(e);
+					Log.Out("An exception occured while loading a plugin dll ('" + fi.Name + "') : ");
+					Log.Exception(e);
 				}
 			}
 		}

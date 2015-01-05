@@ -21,7 +21,7 @@ namespace SurvivalKit.Events
 					MethodInfo nameMethod;
 					if ((nameMethod = curType.GetMethod("getName")) != null) {
 						String curEventType = nameMethod.Invoke (null, new object[0]) as String;
-						//UnityEngine.Debug.Log ("Event type '" + curEventType + "' added.");
+						//Log.Out("Event type '" + curEventType + "' added.");
 						eventTypes.Add (curEventType, curType);
 					}
 				}
@@ -78,7 +78,7 @@ namespace SurvivalKit.Events
 								if (paramInfo.Length == 1 && _event.GetType().IsAssignableFrom(paramInfo[0].ParameterType))
 								{
 									if (listenerAttribute.priority < Priority.LOWEST || listenerAttribute.priority > Priority.MONITOR)
-										UnityEngine.Debug.LogError("The event handler of '" + (SKMain.SkMain.getPluginManager().getLoader(plug) as NetLoader).name + "' has an invalid priority!");
+										Log.Error("The event handler of '" + (SKMain.SkMain.getPluginManager().getLoader(plug) as NetLoader).name + "' has an invalid priority!");
 									else
 										eventMethods.Add(new EventMethodContainer(listenerAttribute, mi, handler));
 								}
@@ -96,8 +96,8 @@ namespace SurvivalKit.Events
 				try {
 					curMethod.method.Invoke(curMethod.handler, new Object[]{ _event });
 				} catch (Exception e) {
-					UnityEngine.Debug.LogError("An exception occured in the event handler of '" + (SKMain.SkMain.getPluginManager().getLoader(plug) as NetLoader).name + "' : ");
-					UnityEngine.Debug.LogException(e);
+					Log.Error("An exception occured in the event handler of '" + (SKMain.SkMain.getPluginManager().getLoader(plug) as NetLoader).name + "' : ");
+					Log.Exception(e);
 				}
 			}
 			if (fireSubevents) {

@@ -32,12 +32,6 @@
     <NoStdLib>true</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
-<<<<<<< HEAD
-=======
-    <Reference Include="Assembly-UnityScript-firstpass">
-      <HintPath>..\Assemblies\Assembly-UnityScript-firstpass.dll</HintPath>
-    </Reference>
->>>>>>> e1a1f2fa898f9662bb6915f47c21198632149cd5
     <Reference Include="UnityEngine">
       <HintPath>..\Assemblies\UnityEngine.dll</HintPath>
     </Reference>
@@ -51,7 +45,7 @@
       <HintPath>..\Assemblies\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\Assemblies\Assembly-CSharp.deobf.dll</HintPath>
+      <HintPath>..\Assemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="LogLibrary">
       <HintPath>..\Assemblies\LogLibrary.dll</HintPath>
