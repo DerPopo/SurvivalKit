@@ -43,9 +43,8 @@ namespace SurvivalKit.Events.Network
 							new Object[] {
 								null,
 								false,
-								packet.GetType ().GetField ("fd0008").GetValue (packet),
-								packet.GetType ().GetField ("fd0009").GetValue (packet),
-								packet.GetType ().GetField ("fd000a").GetValue (packet),
+								packet.GetType ().GetField ("pos").GetValue (packet),
+								packet.GetType ().GetField ("rot").GetValue (packet),
 								null,
 								packet,
 							}

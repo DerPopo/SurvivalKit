@@ -63,8 +63,7 @@ namespace SKPatcher
 
 		public static void Main (string[] args)
 		{
-			//args = new string[]{"P:\\Programme\\SteamLibrary\\steamapps\\common\\7 Days to Die Dedicated Server\\7DaysToDie_Data\\Managed\\Assembly-CSharp.o.dll"};
-			Console.WriteLine("RandomGen world limit patcher for 7dtd's Assembly-CSharp.dll [by DerPopo]");
+			Console.WriteLine("SurvialKit patcher for 7dtd's Assembly-CSharp.dll [by DerPopo]");
 
 			ownFolder = GetContainingFolder(Assembly.GetEntryAssembly().Location);
 			if (ownFolder == null) {
@@ -76,8 +75,8 @@ namespace SKPatcher
 
 			if ( args.Length == 0 || !args[0].ToLower().EndsWith(".dll") )
 			{
-				mainLogger.Write("Usage : rglimitpatcher \"<path to Assembly-CSharp.dll>\"");
-				mainLogger.Write("Alternatively, you can drag and drop Assembly-CSharp.dll into rglimitpatcher.");
+				mainLogger.Write("Usage : skpatcher \"<path to Assembly-CSharp.dll>\"");
+				mainLogger.Write("Alternatively, you can drag and drop Assembly-CSharp.dll into skpatcher.");
 				ErrorExit("", 2);
 			}
 			AssemblyPath acsharpSource = GetContainingFolder(args[0]);
@@ -142,7 +141,7 @@ namespace SKPatcher
 			new NetworkPatcher(csharpModule, survivalKitModule, unityModule, mscorlibModule, mainLogger).Patch();
 			new RPCPatcher(csharpModule, survivalKitModule, unityModule, mscorlibModule, mainLogger).Patch();
 
-			string outputPath = acsharpSource.path + Path.DirectorySeparatorChar + "Assembly-CSharp.rglimit.dll";
+			string outputPath = acsharpSource.path + Path.DirectorySeparatorChar + "Assembly-CSharp.sk.dll";
 			mainLogger.KeyInfo("Saving the new assembly to " + outputPath + " ...");
 			try
 			{

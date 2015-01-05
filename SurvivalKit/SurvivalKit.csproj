@@ -32,19 +32,23 @@
     <NoStdLib>true</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-UnityScript-firstpass">
-      <HintPath>..\..\..\SteamLibrary\SteamApps\common\7 Days To Die\7DaysToDie_Data\Managed\Assembly-UnityScript-firstpass.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\SteamLibrary\SteamApps\common\7 Days To Die\7DaysToDie_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System">
+      <HintPath>..\Assemblies\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>..\Assemblies\System.Xml.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib">
       <HintPath>..\..\..\SteamLibrary\SteamApps\common\7 Days To Die\7DaysToDie_Data\Managed\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>P:\Programme\SteamLibrary\steamapps\common\7 Days to Die Dedicated Server\7DaysToDie_Data\Managed\Assembly-CSharp.deobf.dll</HintPath>
+    </Reference>
+    <Reference Include="LogLibrary">
+      <HintPath>..\Assemblies\LogLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

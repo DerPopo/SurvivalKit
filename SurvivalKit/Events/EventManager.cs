@@ -30,6 +30,20 @@ namespace SurvivalKit.Events
 		}
 		private static Dictionary<String,Type> eventTypes;
 
+		//used by FireEvent(Plugin, Event, bool) to sort event handlers by priority
+		private class EventMethodContainer
+		{
+			public Events.Listener listener;
+			public MethodInfo method;
+			public Object handler;
+			public EventMethodContainer(Events.Listener listener, MethodInfo method, Object handler)
+			{
+				this.listener = listener;
+				this.method = method;
+				this.handler = handler;
+			}
+		};
+
 		/// <summary>
 		/// Fires the given event to the given event plugins.
 		/// </summary>
@@ -45,27 +59,45 @@ namespace SurvivalKit.Events
 			if (!_event.supportsClient () && SKMain.SkMain.gameIsClient ()) {
 				return _event.getReturnParams();
 			}
-			if (typeof(NetPlugin).IsAssignableFrom(plug.GetType())) {
+			List<EventMethodContainer> eventMethods = new List<EventMethodContainer>();
+			if (typeof(NetPlugin).IsAssignableFrom(plug.GetType()))
+			{
 				NetPlugin np = plug as NetPlugin;
-				foreach (Object handler in np.EventHandlers) {
-					foreach (MethodInfo mi in handler.GetType().GetMethods()) {
+				foreach (Object handler in np.EventHandlers)
+				{
+					foreach (MethodInfo mi in handler.GetType().GetMethods())
+					{
 						//if (mi.ReturnType != typeof(void))
 						//	continue;
-						foreach (Object attr in mi.GetCustomAttributes(true)) {
-							if (attr is Events.Listener) {
+						foreach (Object attr in mi.GetCustomAttributes(true))
+						{
+							if (attr is Events.Listener)
+							{
+								Events.Listener listenerAttribute = (Events.Listener)attr;
 								ParameterInfo[] paramInfo = mi.GetParameters();
-								if (paramInfo.Length == 1 && _event.GetType().IsAssignableFrom(paramInfo[0].ParameterType)) {
-									try {
-										mi.Invoke(handler, new Object[]{ _event });
-									} catch (Exception e) {
-										UnityEngine.Debug.LogWarning("An exception occured in the event handler of '" + (SKMain.SkMain.getPluginManager().getLoader(plug) as NetLoader).name + "' : ");
-										UnityEngine.Debug.LogException(e);
-									}
+								if (paramInfo.Length == 1 && _event.GetType().IsAssignableFrom(paramInfo[0].ParameterType))
+								{
+									if (listenerAttribute.priority < Priority.LOWEST || listenerAttribute.priority > Priority.MONITOR)
+										UnityEngine.Debug.LogError("The event handler of '" + (SKMain.SkMain.getPluginManager().getLoader(plug) as NetLoader).name + "' has an invalid priority!");
+									else
+										eventMethods.Add(new EventMethodContainer(listenerAttribute, mi, handler));
 								}
 								break;
 							}
 						}
 					}
+				}
+			}
+			EventMethodContainer[] sortedMethods;
+			Array.Sort((sortedMethods = eventMethods.ToArray()), (item1,item2) => ((int)item1.listener.priority).CompareTo((int)item2.listener.priority));
+			for (int i = 0; i < sortedMethods.Length; i++)
+			{
+				EventMethodContainer curMethod = sortedMethods[i];
+				try {
+					curMethod.method.Invoke(curMethod.handler, new Object[]{ _event });
+				} catch (Exception e) {
+					UnityEngine.Debug.LogError("An exception occured in the event handler of '" + (SKMain.SkMain.getPluginManager().getLoader(plug) as NetLoader).name + "' : ");
+					UnityEngine.Debug.LogException(e);
 				}
 			}
 			if (fireSubevents) {
