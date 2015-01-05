@@ -69,7 +69,7 @@ namespace SurvivalKit.Events.Network
 										return;
 									}
 								} catch (Exception e) {
-									Log.Error(("An exception occured while processing the command " + splitCmd[0].ToLower() + " : " + e.ToString());
+									Log.Error("An exception occured while processing the command " + splitCmd[0].ToLower() + " : " + e.ToString());
 								}
 							}
 						}

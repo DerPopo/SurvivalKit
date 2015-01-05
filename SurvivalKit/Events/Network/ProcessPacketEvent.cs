@@ -37,7 +37,7 @@ namespace SurvivalKit.Events.Network
 			subevents = new List<Event>();
 			MethodInfo miPkType = this.packet.GetType().GetMethod("GetPkType");
 			if (miPkType == null || !typeof(PackageType).IsAssignableFrom(miPkType.ReturnType)) {
-				Log.Error(("A packet of type '" + this.packet.GetType().FullName + "' hasn't got a valid GetPkType() function!");
+				Log.Error("A packet of type '" + this.packet.GetType().FullName + "' hasn't got a valid GetPkType() function!");
 			}
 			PackageType packType = (PackageType)miPkType.Invoke(this.packet, new object[0]);
 			switch (packType) {
