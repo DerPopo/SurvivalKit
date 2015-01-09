@@ -80,7 +80,7 @@ namespace SKPatcher
 						ILProcessor proc = body.GetILProcessor();
 						List<Instruction> eventHook = HookHelper.Instance.prepareEventHook(readMethod, "ReadPacketFromBuf", new Instruction[][]{});
 						eventHook.Add(proc.Create(OpCodes.Pop));
-						HookHelper.insertAt(body, body.Instructions.Count, eventHook.ToArray());
+						HookHelper.insertAt(body, body.Instructions.Count-1, eventHook.ToArray());
 					}
 				}
 				MethodDefinition writeMethod = HelperClass.findMember<MethodDefinition>(module, curPackageType, false,

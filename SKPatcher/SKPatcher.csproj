@@ -19,6 +19,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -32,6 +33,7 @@
     <Reference Include="Mono.Cecil">
       <HintPath>..\Assemblies\Mono.Cecil.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -43,9 +45,14 @@
     <Compile Include="HookHelper.cs" />
     <Compile Include="Patchers\RPCPatcher.cs" />
     <Compile Include="Patchers\ChunkProviderPatcher.cs" />
+    <Compile Include="Patchers\SetBlocksPatcher.cs" />
+    <Compile Include="Patchers\XMLPatches.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Patchers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="xmlpatchers.xml" />
   </ItemGroup>
 </Project>

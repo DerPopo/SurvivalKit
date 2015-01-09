@@ -21,6 +21,6 @@ Global
 		{FFDC5B24-ECB4-4BAD-A28E-B896B5B2F3D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = SurvivalKit\SurvivalKit.csproj
+		StartupItem = SKPatcher\SKPatcher.csproj
 	EndGlobalSection
 EndGlobal

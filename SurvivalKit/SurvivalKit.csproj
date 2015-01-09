@@ -80,6 +80,7 @@
     <Compile Include="Commands\CommandListener.cs" />
     <Compile Include="Permissions\PlayerCommandSender.cs" />
     <Compile Include="Events\Misc\UnknownChunkProviderEvent.cs" />
+    <Compile Include="Events\Entity\EntityEmitSmellEvent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

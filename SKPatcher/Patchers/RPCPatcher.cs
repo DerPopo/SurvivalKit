@@ -74,7 +74,7 @@ namespace SKPatcher
 						{
 							hook.Add(proc.Create(OpCodes.Castclass, module.Import(param.ParameterType)));
 						}
-						hook.Add(proc.Create(OpCodes.Starg, param.ParameterType));
+						hook.Add(proc.Create(OpCodes.Starg, param));
 					}
 					hook.Add(proc.Create(OpCodes.Ldc_I4_1));
 					hook.Add(proc.Create(OpCodes.Ldelem_Ref));

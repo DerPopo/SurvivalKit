@@ -1,17 +1,16 @@
-using System;
+﻿using System;
 
 namespace SurvivalKit.Events.Entities
 {
 	/// <summary>
-	/// Fired when an entity moves (not working properly right now).
+	/// Fired when an entity emits a smell.
 	/// </summary>
-	public class EntityMoveEvent : Event, ICancellable
+	public class EntityEmitSmellEvent : Event, ICancellable
 	{
 		private bool cancelled;
 		private UnityEngine.Vector3 pos;
-		private UnityEngine.Vector3 rot;
-		private object packet;
-		private World world;
+		private Entity instigator;
+		private string smellName;
 
 		private Event parent = null;
 		/// <summary>
@@ -21,20 +20,18 @@ namespace SurvivalKit.Events.Entities
 		/// An object array of data to pass to the event.
 		/// args[0] (object) reserved
 		/// args[1] (bool) indicates whether the event is cancelled
-		/// args[2] (UnityEngine.Vector3) the position to move the entity to
-		/// args[3] (rot) rotation angle 1
-		/// args[4] (World,optional) the World of the entity
-		/// args[5] (object,optional) the entity movement packet this event belongs to
+		/// args[2] (Entity) the entity that caused this event
+		/// args[3] (Vector3) the position of the smell
+		/// args[4] (string) the name of the smell
 		/// </param>
-		public EntityMoveEvent(Object[] args)
+		public EntityEmitSmellEvent(Object[] args)
 		{
 			if (args == null || args.Length < 5)
 				throw new ArgumentNullException();
 			cancelled = (bool)args[1];
 			pos = (UnityEngine.Vector3)args[2];
-			rot = (UnityEngine.Vector3)args[3];
-			world = (World)((args.Length > 4) ? args[4] : null);
-			packet = ((args.Length > 4) ? args[5] : null );
+			instigator = (Entity)args[3];
+			smellName = (string)args[4];
 		}
 
 		/// <summary>
@@ -45,7 +42,7 @@ namespace SurvivalKit.Events.Entities
 		/// </returns>
 		public static string getName()
 		{
-			return "EntityMove";
+			return "EntityEmitSmell";
 		}
 
 		/// <summary>
@@ -54,7 +51,7 @@ namespace SurvivalKit.Events.Entities
 		/// <returns>Returns an object array of parameters to pass to the caller of fireEvent.</returns>
 		public override object[] getReturnParams ()
 		{
-			return new object[]{ this.Cancelled, this.pos, this.rot};
+			return new object[]{ this.Cancelled, this.pos, this.instigator, this.smellName};
 		}
 		/// <summary>
 		/// Gets whether this event supports clients.
@@ -62,7 +59,7 @@ namespace SurvivalKit.Events.Entities
 		/// <returns><c>true</c>, if clients are supported, <c>false</c> otherwise.</returns>
 		public override bool supportsClient ()
 		{
-			return false;
+			return true;
 		}
 		/// <summary>
 		/// Sets the parent of the current Event.
@@ -86,34 +83,35 @@ namespace SurvivalKit.Events.Entities
 		/// </summary>
 		public UnityEngine.Vector3 Pos {
 			get { return this.pos; }
-			set { 
-				if (this.packet != null)
-					this.packet.GetType().GetField("pos").SetValue(this.packet, value);
-				this.pos = value;
-				if (this.parent != null)
-					this.parent.update();
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the new rotation of the entity.
-		/// </summary>
-		public UnityEngine.Vector3 Rot {
-			get { return rot; }
 			set {
-				if (this.packet != null)
-					this.packet.GetType().GetField("rot").SetValue(this.packet, value);
-				this.rot = value;
+				this.pos = value; 
 				if (this.parent != null)
 					this.parent.update();
 			}
 		}
 
 		/// <summary>
-		/// Gets the world this event applies to.
+		/// Gets or sets the Entity that caused this event.
 		/// </summary>
-		public World _World {
-			get { return this.world; }
+		public Entity Instigator {
+			get { return instigator; }
+			set {
+				this.instigator = value;
+				if (this.parent != null)
+					this.parent.update();
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the smell type.
+		/// </summary>
+		public string SmellName {
+			get { return this.smellName; }
+			set { 
+				this.smellName = value;
+				if (this.parent != null)
+					this.parent.update();
+			}
 		}
 	}
 }

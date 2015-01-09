@@ -44,7 +44,7 @@ namespace SurvivalKit.Events.Network
 				case PackageType.EntityPosAndRot:
 				case PackageType.EntityTeleport:
 					subevents.Add(
-						new Entity.EntityMoveEvent(
+						new Entities.EntityMoveEvent(
 							new Object[] {
 								null,
 								false,
@@ -128,8 +128,8 @@ namespace SurvivalKit.Events.Network
 					listBlockPosType.AddRange ((_event as Events.Environment.SetBlocksEvent).BlockChangeInfos);
 					packet.GetType().GetField("fd0000").SetValue(packet, listBlockPosType);
 				}
-				if (_event is Events.Entity.EntityMoveEvent) {
-					Events.Entity.EntityMoveEvent __event = (_event as Events.Entity.EntityMoveEvent);
+				if (_event is Events.Entities.EntityMoveEvent) {
+					Events.Entities.EntityMoveEvent __event = (_event as Events.Entities.EntityMoveEvent);
 					packet.GetType().GetField("pos").SetValue(packet, __event.Pos);
 					packet.GetType().GetField("rot").SetValue(packet, __event.Rot);
 				}

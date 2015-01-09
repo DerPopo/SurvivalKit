@@ -28,7 +28,7 @@ namespace SKPatcher
 		{
 			MethodDefinition fireEvent = HelperClass.findMember<MethodDefinition>(skModule, "SurvivalKit.Events.EventManager", false,
 				HelperClass.MemberNameComparer<MethodDefinition>("FireEvent"),
-				HelperClass.MethodParametersComparer("System.String", "System.Object"));
+				HelperClass.MethodParameterNamesComparer("name", "pars"));
 			if (fireEvent == null)
 				throw new Exception("Unable to find SurvivalKit.Events.EventManager.FireEvent(string,object[])!");
 

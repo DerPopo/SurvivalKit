@@ -137,9 +137,15 @@ namespace SKPatcher
 			}
 			HookHelper.Instance = new HookHelper(csharpModule, survivalKitModule, mscorlibModule);
 
-			new InitHookPatcher(csharpModule, survivalKitModule, unityModule, mscorlibModule, mainLogger).Patch();
-			new NetworkPatcher(csharpModule, survivalKitModule, unityModule, mscorlibModule, mainLogger).Patch();
-			new RPCPatcher(csharpModule, survivalKitModule, unityModule, mscorlibModule, mainLogger).Patch();
+			try {
+				new InitHookPatcher(csharpModule, survivalKitModule, unityModule, mscorlibModule, mainLogger).Patch();
+				new NetworkPatcher(csharpModule, survivalKitModule, unityModule, mscorlibModule, mainLogger).Patch();
+				new RPCPatcher(csharpModule, survivalKitModule, unityModule, mscorlibModule, mainLogger).Patch();
+				new SetBlocksPatcher(csharpModule, survivalKitModule, unityModule, mscorlibModule, mainLogger).Patch();
+				new XMLPatches(csharpModule, survivalKitModule, unityModule, mscorlibModule, mainLogger).Patch();
+			} catch (Exception e) {
+				ErrorExit ("An exception occured in a patcher : " + e.ToString());
+			}
 
 			string outputPath = acsharpSource.path + Path.DirectorySeparatorChar + "Assembly-CSharp.sk.dll";
 			mainLogger.KeyInfo("Saving the new assembly to " + outputPath + " ...");

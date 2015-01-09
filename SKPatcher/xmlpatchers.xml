@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Possible operand types :
+	sbyte, byte, int or int32, long or int64, float or single, double, string, tref, fref, mref, instref, none
+
+	tref : TypeReference
+	fref : FieldReference
+	mref : MethodReference
+	instref : Instruction reference (operand is the index of the target instruction)
+-->
+<patchers>
+	<hook type="event" name="EntityEmitSmell" cancellable="true" insertAt="0">
+		<type name="AIDirectorMarkerManagementComponent"/>
+		<method name="EmitSmell" parameters="Entity;UnityEngine.Vector3;System.String" return="System.Void"/>
+		<parameters>
+			<!--0 : this (ldarg_0)-->
+			<!--1 : isCancelled-->
+			<parameter type="Entity"> <!--2 : Entity instigator-->
+				<load>
+					<opcode name="Ldarg_1" optype="none"/>
+				</load>
+				<write>
+					<opcode name="Starg_S" optype="Byte" op="1"/>
+				</write>
+			</parameter>
+			<parameter type="UnityEngine.Vector3"> <!--3 : Vector3 position-->
+				<load>
+					<opcode name="Ldarg_2" optype="none"/>
+					<!--<opcode name="Box" optype="tref" op="UnityEngine.Vector3"/>-->
+				</load>
+				<write>
+					<!--<opcode name="Unbox_Any" optype="tref" op="UnityEngine.Vector3"/>-->
+					<opcode name="Starg_S" optype="Byte" op="2"/>
+				</write>
+			</parameter>
+			<parameter type="System.String"> <!--4 : string smellName-->
+				<load>
+					<opcode name="Ldarg_3" optype="none"/>
+				</load>
+				<write>
+					<opcode name="Starg_S" optype="Byte" op="3"/>
+				</write>
+			</parameter>
+		</parameters>
+	</hook>
+</patchers>
