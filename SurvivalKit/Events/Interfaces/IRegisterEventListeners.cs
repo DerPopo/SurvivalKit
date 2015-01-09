@@ -7,7 +7,7 @@ namespace SurvivalKit.Events.Interfaces
 	/// <summary>
 	///		Interface for classes that register <see cref="EventListener"/> instances.
 	/// </summary>
-	interface IRegisterEventListeners
+	public interface IRegisterEventListeners
 	{
 		/// <summary>
 		///		Method to register event listener.

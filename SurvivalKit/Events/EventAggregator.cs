@@ -2,6 +2,7 @@
 using SurvivalKit.Events.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace SurvivalKit.Events
@@ -13,30 +14,44 @@ namespace SurvivalKit.Events
 	public sealed class EventAggregator : IEventAggregator
 	{
 		/// <summary>
-		///		The singleton instance of the <see cref="IEventAggregator"/>.
+		///	The singleton instance of the <see cref="IEventAggregator"/>.
 		/// </summary>
 		private static IEventAggregator _instance;
 
 		/// <summary>
-		///		The private instance of the <see cref="IResolveInstances"/> implementation.
+		///	The private instance of the <see cref="IResolveInstances"/> implementation.
 		/// </summary>
 		private IResolveInstances _instanceResolver;
 
 		/// <summary>
-		///		Registry of hooks.
+		///	Registry of hooks.
 		/// </summary>
 		private Dictionary<Type, List<EventListenerRegistration>> _hookRegistry;
 
 		/// <summary>
+		/// Should we prevent calls to the log library?
+		/// Used for the testing framework.
+		/// </summary>
+		private bool _preventLogging = false;
+
+		/// <summary>
 		///		Private constructor for the singleton.
 		/// </summary>
-		private EventAggregator(IResolveInstances instanceResolver)
+		private EventAggregator(IResolveInstances instanceResolver, bool preventLogging = false)
 		{
+			_preventLogging = preventLogging;
 			_instanceResolver = instanceResolver;
 			_hookRegistry = new Dictionary<Type, List<EventListenerRegistration>>();
 
 			// Get all instances and try to gather all event listeners.
 			var registerEventListeners = _instanceResolver.ResolveInstances<IRegisterEventListeners>();
+
+			if (registerEventListeners == null || registerEventListeners.Count == 0)
+			{
+				LogMessage("No IRegisterEventListeners instances found.",true);
+				return;
+			}
+
 			foreach (var registerEventListenerInstance in registerEventListeners)
 			{
 				try
@@ -45,9 +60,34 @@ namespace SurvivalKit.Events
 				}
 				catch (Exception exception)
 				{
-					Log.Error(exception.Message);
-					Log.Error(exception.StackTrace);
+					LogMessage(exception.Message);
+					LogMessage(exception.StackTrace);
 				}
+			}
+		}
+
+		/// <summary>
+		///	Helper method for logging.
+		///	Calling the log library from a unit test project will cause errors.
+		///	This method could be moved to a separate helper in order to re-use it in other classes.
+		/// </summary>
+		/// <param name="message">The message to log</param>
+		/// <param name="isWarning">Should we log it as a warning? If not, we will log it as an error.</param>
+		private void LogMessage(string message, bool isWarning = false)
+		{
+			if (_preventLogging)
+			{
+				Debug.WriteLine(message);
+			}
+			else
+			{
+				if(isWarning)
+				{
+					Log.Warning(message);
+				} else {
+					Log.Error(message);
+				}
+				
 			}
 		}
 
@@ -76,7 +116,7 @@ namespace SurvivalKit.Events
 			if (_instance == null || (_instance != null && createNewInstance))
 			{
 				// first call to the event aggregator, lets initialize a new instance.
-				_instance = new EventAggregator(instanceResolver);
+				_instance = new EventAggregator(instanceResolver, true);
 			}
 
 			return _instance;
@@ -159,7 +199,7 @@ namespace SurvivalKit.Events
 					if (tooManyArguments || tooLittleArguments)
 					{
 						var message = string.Format("SurvivalKit warning: Skipped listener {0} for event type {1} is skipped. Argument mismatch!", instance.GetType(), eventType);
-						Log.Warning(message);
+						LogMessage(message, true);
 						continue;
 					}
 
@@ -169,8 +209,8 @@ namespace SurvivalKit.Events
 					}
 					catch (Exception exception)
 					{
-						Log.Error(exception.Message);
-						Log.Error(exception.StackTrace);
+						LogMessage(exception.Message, true);
+						LogMessage(exception.StackTrace, true);
 					}
 				}
 			}

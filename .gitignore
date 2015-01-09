@@ -3,3 +3,5 @@ obj
 *.suo
 *.userprefs
 /Assemblies/*.dll
+/OpenCover
+/TestResults
