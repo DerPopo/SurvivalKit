@@ -15,21 +15,24 @@ namespace SurvivalKit.Events
 		static EventManager()
 		{
 			eventTypes = new Dictionary<String, Type>();
-			foreach (Type curType in Assembly.GetAssembly(typeof(SKMain)).GetExportedTypes()) {
+			foreach (Type curType in Assembly.GetAssembly(typeof(SKMain)).GetExportedTypes())
+			{
 				if (curType == null)
 					continue;
-				if (typeof(Event).IsAssignableFrom(curType)) {
+				if (typeof(Event).IsAssignableFrom(curType))
+				{
 					MethodInfo nameMethod;
-					if ((nameMethod = curType.GetMethod("getName")) != null) {
-						String curEventType = nameMethod.Invoke (null, new object[0]) as String;
+					if ((nameMethod = curType.GetMethod("getName")) != null)
+					{
+						String curEventType = nameMethod.Invoke(null, new object[0]) as String;
 						//Log.Out("Event type '" + curEventType + "' added.");
-						eventTypes.Add (curEventType, curType);
+						eventTypes.Add(curEventType, curType);
 					}
 				}
 			}
 
 		}
-		private static Dictionary<String,Type> eventTypes;
+		private static Dictionary<String, Type> eventTypes;
 
 		//used by FireEvent(Plugin, Event, bool) to sort event handlers by priority
 		private class EventMethodContainer
@@ -54,10 +57,12 @@ namespace SurvivalKit.Events
 		/// <param name="fireSubevents">Also fires subevents if true.</param>
 		public static Object[] FireEvent(Plugin plug, Event _event, bool fireSubevents = false)
 		{
-			if (!SKMain.SkMain.getPluginManager().getLoader(plug).isEnabled()) {
+			if (!SKMain.SkMain.getPluginManager().getLoader(plug).isEnabled())
+			{
 				return null;
 			}
-			if (!_event.supportsClient () && SKMain.SkMain.gameIsClient ()) {
+			if (!_event.supportsClient() && SKMain.SkMain.gameIsClient())
+			{
 				return _event.getReturnParams();
 			}
 			List<EventMethodContainer> eventMethods = new List<EventMethodContainer>();
@@ -90,20 +95,25 @@ namespace SurvivalKit.Events
 				}
 			}
 			EventMethodContainer[] sortedMethods;
-			Array.Sort((sortedMethods = eventMethods.ToArray()), (item1,item2) => ((int)item1.listener.priority).CompareTo((int)item2.listener.priority));
+			Array.Sort((sortedMethods = eventMethods.ToArray()), (item1, item2) => ((int)item1.listener.priority).CompareTo((int)item2.listener.priority));
 			for (int i = 0; i < sortedMethods.Length; i++)
 			{
 				EventMethodContainer curMethod = sortedMethods[i];
-				try {
-					curMethod.method.Invoke(curMethod.handler, new Object[]{ _event });
-				} catch (Exception e) {
+				try
+				{
+					curMethod.method.Invoke(curMethod.handler, new Object[] { _event });
+				}
+				catch (Exception e)
+				{
 					Log.Error("An exception occured in the event handler of '" + (SKMain.SkMain.getPluginManager().getLoader(plug) as NetLoader).name + "' : ");
 					Log.Exception(e);
 				}
 			}
-			if (fireSubevents) {
-				foreach (Event curSubevent in _event.getSubevents()) {
-					FireEvent (plug, curSubevent, true);
+			if (fireSubevents)
+			{
+				foreach (Event curSubevent in _event.getSubevents())
+				{
+					FireEvent(plug, curSubevent, true);
 				}
 			}
 			return _event.getReturnParams();
@@ -117,11 +127,14 @@ namespace SurvivalKit.Events
 		/// <param name="fireSubevents">Also fires subevents if true.</param>
 		public static Object[] FireEvent(Event _event, bool fireSubevents = true)
 		{
-			foreach (Plugin plug in SKMain.SkMain.getPluginManager().getPlugins()) {
+			foreach (Plugin plug in SKMain.SkMain.getPluginManager().getPlugins())
+			{
 				FireEvent(plug, _event);
 			}
-			if (fireSubevents) {
-				foreach (Event curSubevent in _event.getSubevents()) {
+			if (fireSubevents)
+			{
+				foreach (Event curSubevent in _event.getSubevents())
+				{
 					FireEvent(curSubevent, true);
 				}
 			}
@@ -143,16 +156,21 @@ namespace SurvivalKit.Events
 		public static Object[] FireEvent(string name, Object[] pars)
 		{
 			Event _event = null;
-			foreach (KeyValuePair<String, Type> curEventType in eventTypes) {
-				if (curEventType.Key.ToLower().Equals(name.ToLower())) {
+			foreach (KeyValuePair<String, Type> curEventType in eventTypes)
+			{
+				if (curEventType.Key.ToLower().Equals(name.ToLower()))
+				{
 					foreach (ConstructorInfo ci in curEventType.Value.GetConstructors())
 					{
 						ParameterInfo[] parameters = ci.GetParameters();
 						if (parameters.Length == 1 && parameters[0].ParameterType.IsAssignableFrom(pars.GetType()))
 						{
-							try {
-								_event = ci.Invoke(new Object[]{pars}) as Event;
-							} catch (Exception e) {
+							try
+							{
+								_event = ci.Invoke(new Object[] { pars }) as Event;
+							}
+							catch (Exception e)
+							{
 								throw new Exception("An exception occured inside the constructor for event " + name, e);
 							}
 							break;
@@ -161,8 +179,9 @@ namespace SurvivalKit.Events
 					//_event = curEventType.Value.GetConstructor(new Type[]{ typeof(Object[]) }).Invoke(pars) as Event;
 					if (_event == null)
 						throw new Events.Exceptions.EventNotFoundException("No matching constructor for event " + name + " found.");
-					if (!(_event is ICancellable) || (_event is ICancellable && !((ICancellable)_event).IsCancelled)) {
-						FireEvent (_event);
+					if (!(_event is ICancellable) || (_event is ICancellable && !((ICancellable)_event).IsCancelled))
+					{
+						FireEvent(_event);
 					}
 					return _event.getReturnParams();
 				}

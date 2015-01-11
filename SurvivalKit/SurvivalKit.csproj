@@ -59,6 +59,7 @@
     <Compile Include="Extensions\ExtensionAttribute.cs" />
     <Compile Include="Extensions\IDispatchableEventExtensions.cs" />
     <Compile Include="Interfaces\ICancellableEvent.cs" />
+    <Compile Include="Utility\EventListenerRegistrationComparer.cs" />
     <Compile Include="Utility\InstanceResolver.cs" />
     <Compile Include="Interfaces\IDispatchableEvent.cs" />
     <Compile Include="Interfaces\IEventAggregator.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Permissions\PlayerCommandSender.cs" />
     <Compile Include="Events\Misc\UnknownChunkProviderEvent.cs" />
     <Compile Include="Events\Entity\EntityEmitSmellEvent.cs" />
+    <Compile Include="Utility\PrioritizedEventListenerDictionary.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

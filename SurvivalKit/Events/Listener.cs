@@ -15,7 +15,7 @@ namespace SurvivalKit.Events
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SurvivalKit.Events.Listener"/> attribute.
 		/// </summary>
-		public Listener ()
+		public Listener()
 		{
 			this.priority = Priority.NORMAL;
 		}

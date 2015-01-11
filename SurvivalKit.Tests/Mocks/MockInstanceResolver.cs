@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SurvivalKit.Tests.Events.Mocks
+namespace SurvivalKit.Tests.Mocks
 {
 	public class MockInstanceResolver : IResolveInstances 
 	{
