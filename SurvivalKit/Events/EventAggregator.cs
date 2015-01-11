@@ -1,5 +1,6 @@
-﻿using SurvivalKit.Events.Abstracts;
-using SurvivalKit.Events.Interfaces;
+﻿using SurvivalKit.Abstracts;
+using SurvivalKit.Interfaces;
+using SurvivalKit.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -183,7 +184,8 @@ namespace SurvivalKit.Events
 		/// <param name="eventInstance">The event instance that should be pushed to all modules.</param>
 		public void DispatchEvent<TEventType>(TEventType eventInstance, params object[] arguments) where TEventType : IDispatchableEvent
 		{
-			var eventType = eventInstance.GetType();
+			// use the type they are giving us, not the actual type. 
+			var eventType = typeof(TEventType);
 
 			if (_hookRegistry.ContainsKey(eventType))
 			{

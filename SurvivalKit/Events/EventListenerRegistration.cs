@@ -1,9 +1,9 @@
-﻿using SurvivalKit.Events.Abstracts;
+﻿using SurvivalKit.Abstracts;
 using SurvivalKit.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using SurvivalKit.Events.Interfaces;
+using SurvivalKit.Interfaces;
 
 namespace SurvivalKit.Events
 {

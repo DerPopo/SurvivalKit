@@ -1,9 +1,9 @@
-﻿using SurvivalKit.Events.Interfaces;
+﻿using SurvivalKit.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SurvivalKit.Events.Abstracts
+namespace SurvivalKit.Abstracts
 {
 	/// <summary>
 	///	Abstract class all instances registered with the <see cref="EventAggregator"/> should register with.

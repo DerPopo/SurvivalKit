@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SurvivalKit.Events.Interfaces
+namespace SurvivalKit.Interfaces
 {
 	public interface IEventHook
 	{

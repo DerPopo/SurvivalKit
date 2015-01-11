@@ -1,6 +1,7 @@
-﻿using SurvivalKit.Events.Interfaces;
+﻿using SurvivalKit.Events;
+using SurvivalKit.Interfaces;
 
-namespace SurvivalKit.Events.Extensions
+namespace SurvivalKit.Extensions
 {
 	/// <summary>
 	///	Extension method for the <see cref="IDispatchableEvent"/> interface.

@@ -1,5 +1,5 @@
-﻿using SurvivalKit.Events.Abstracts;
-using SurvivalKit.Events.Interfaces;
+﻿using SurvivalKit.Abstracts;
+using SurvivalKit.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

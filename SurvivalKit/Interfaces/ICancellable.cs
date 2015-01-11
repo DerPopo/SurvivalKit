@@ -1,6 +1,6 @@
 using System;
 
-namespace SurvivalKit.Events
+namespace SurvivalKit.Interfaces
 {
 	/// <summary>
 	/// An interface for cancellable events.

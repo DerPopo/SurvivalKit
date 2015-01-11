@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Collections.Generic;
+using SurvivalKit.Interfaces;
 
 namespace SurvivalKit.Events.Network
 {

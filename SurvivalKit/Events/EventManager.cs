@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using SurvivalKit.Plugins;
 using SurvivalKit.Plugins.Managed;
+using SurvivalKit.Interfaces;
 
 namespace SurvivalKit.Events
 {

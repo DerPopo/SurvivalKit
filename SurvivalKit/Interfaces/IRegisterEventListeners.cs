@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SurvivalKit.Events.Interfaces
+namespace SurvivalKit.Interfaces
 {
 	/// <summary>
 	///		Interface for classes that register <see cref="EventListener"/> instances.

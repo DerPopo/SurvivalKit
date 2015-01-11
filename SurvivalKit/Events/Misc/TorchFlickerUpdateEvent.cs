@@ -1,3 +1,4 @@
+using SurvivalKit.Interfaces;
 using System;
 
 namespace SurvivalKit.Events.Misc

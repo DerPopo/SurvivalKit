@@ -2,8 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SurvivalKit.Events;
 using System.Collections.Generic;
-using SurvivalKit.Events.Interfaces;
-using SurvivalKit.Events.Abstracts;
+using SurvivalKit.Interfaces;
+using SurvivalKit.Abstracts;
 using System.Runtime.CompilerServices;
 
 namespace SurvivalKit.Tests.Events

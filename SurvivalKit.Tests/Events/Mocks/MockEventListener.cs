@@ -1,6 +1,6 @@
 ﻿using SurvivalKit.Events;
-using SurvivalKit.Events.Abstracts;
-using SurvivalKit.Events.Interfaces;
+using SurvivalKit.Abstracts;
+using SurvivalKit.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +30,7 @@ namespace SurvivalKit.Tests.Events.Mocks
 			return "MockEventListener";
 		}
 
-		public override IEnumerable<SurvivalKit.Events.Interfaces.IEventHook> GetEventHooks()
+		public override IEnumerable<SurvivalKit.Interfaces.IEventHook> GetEventHooks()
 		{
 			if (_returnNull)
 			{

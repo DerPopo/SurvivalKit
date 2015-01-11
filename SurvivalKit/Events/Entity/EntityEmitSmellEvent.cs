@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SurvivalKit.Interfaces;
+using System;
 
 namespace SurvivalKit.Events.Entities
 {

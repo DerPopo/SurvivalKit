@@ -52,18 +52,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Events\Abstracts\EventListener.cs" />
+    <Compile Include="Abstracts\EventListener.cs" />
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\EventHook.cs" />
     <Compile Include="Events\EventListenerRegistration.cs" />
-    <Compile Include="Events\Extensions\ExtensionAttribute.cs" />
-    <Compile Include="Events\Extensions\IDispatchableEventExtensions.cs" />
-    <Compile Include="Events\InstanceResolver.cs" />
-    <Compile Include="Events\Interfaces\IDispatchableEvent.cs" />
-    <Compile Include="Events\Interfaces\IEventAggregator.cs" />
-    <Compile Include="Events\Interfaces\IEventHook.cs" />
-    <Compile Include="Events\Interfaces\IRegisterEventListeners.cs" />
-    <Compile Include="Events\Interfaces\IResolveInstances.cs" />
+    <Compile Include="Extensions\ExtensionAttribute.cs" />
+    <Compile Include="Extensions\IDispatchableEventExtensions.cs" />
+    <Compile Include="Interfaces\ICancellableEvent.cs" />
+    <Compile Include="Utility\InstanceResolver.cs" />
+    <Compile Include="Interfaces\IDispatchableEvent.cs" />
+    <Compile Include="Interfaces\IEventAggregator.cs" />
+    <Compile Include="Interfaces\IEventHook.cs" />
+    <Compile Include="Interfaces\IRegisterEventListeners.cs" />
+    <Compile Include="Interfaces\IResolveInstances.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Plugins\Managed\NetPlugin.cs" />
     <Compile Include="Plugins\Managed\NetLoader.cs" />
@@ -72,7 +73,7 @@
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Plugins\Plugin.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
-    <Compile Include="Events\ICancellable.cs" />
+    <Compile Include="Interfaces\ICancellable.cs" />
     <Compile Include="Events\Listener.cs" />
     <Compile Include="Events\Priority.cs" />
     <Compile Include="Events\Event.cs" />

@@ -1,8 +1,8 @@
-﻿using SurvivalKit.Events.Interfaces;
+﻿using SurvivalKit.Interfaces;
 using System;
 using System.Collections.Generic;
 
-namespace SurvivalKit.Events
+namespace SurvivalKit.Utility
 {
 	/// <summary>
 	///		Internal instance resolver.
