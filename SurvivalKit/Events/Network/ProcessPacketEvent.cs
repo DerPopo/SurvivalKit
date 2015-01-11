@@ -92,7 +92,7 @@ namespace SurvivalKit.Events.Network
 		public override object[] getReturnParams ()
 		{
 			this.update();
-			return new object[]{ this.Cancelled };
+			return new object[]{ this.IsCancelled };
 		}
 		/// <summary>
 		/// Gets whether this event supports clients.
@@ -121,8 +121,8 @@ namespace SurvivalKit.Events.Network
 			foreach (Event _event in this.subevents) {
 				_event.update();
 				if (_event is ICancellable) {
-					if ((_event as ICancellable).Cancelled == true)
-						Cancelled = true;
+					if ((_event as ICancellable).IsCancelled == true)
+						IsCancelled = true;
 				}
 				if (_event is Events.Environment.SetBlocksEvent) {
 					List<BlockChangeInfo> listBlockPosType = new List<BlockChangeInfo>();
@@ -141,7 +141,7 @@ namespace SurvivalKit.Events.Network
 		/// Gets or sets whether this event is cancelled.
 		/// </summary>
 		/// <value><c>true</c> if this instance cancelled, <c>false</c> otherwise.</value>
-		public bool Cancelled {
+		public bool IsCancelled {
 			get { return this.cancelled; }
 			set { this.cancelled = value; }
 		}

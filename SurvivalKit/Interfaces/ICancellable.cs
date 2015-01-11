@@ -10,7 +10,7 @@ namespace SurvivalKit.Interfaces
 		/// <summary>
 		/// Gets or sets whether this event is cancelled.
 		/// </summary>
-		bool Cancelled { get; set; }
+		bool IsCancelled { get; set; }
 	}
 }
 

@@ -50,7 +50,7 @@ namespace SurvivalKit.Events.Environment
 		/// <returns>Returns an object array of parameters to pass to the caller of fireEvent.</returns>
 		public override object[] getReturnParams ()
 		{
-			if (this.Cancelled) {
+			if (this.IsCancelled) {
 				System.Diagnostics.StackFrame sf = new System.Diagnostics.StackTrace().GetFrame(1);
 				if (sf != null && sf.GetMethod ().Module.Equals (this.GetType ().Module) && this.world != null) {
 					List<BlockChangeInfo> blockPosTypes = new List<BlockChangeInfo>(this.blockPosTypes.Count);
@@ -70,7 +70,7 @@ namespace SurvivalKit.Events.Environment
 				}
 			}
 
-			return new object[]{ this.Cancelled, this.blockPosTypes, this.world };
+			return new object[]{ this.IsCancelled, this.blockPosTypes, this.world };
 		}
 		/// <summary>
 		/// Gets whether this event supports clients.
@@ -93,7 +93,7 @@ namespace SurvivalKit.Events.Environment
 		/// Gets whether this event supports clients.
 		/// </summary>
 		/// <returns><c>true</c>, if clients are supported, <c>false</c> otherwise.</returns>
-		public bool Cancelled {
+		public bool IsCancelled {
 			get { return this.cancelled; }
 			set { this.cancelled = value; if (parent != null) parent.update(); }
 		}

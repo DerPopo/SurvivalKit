@@ -52,7 +52,7 @@ namespace SurvivalKit.Events.Entities
 		/// <returns>Returns an object array of parameters to pass to the caller of fireEvent.</returns>
 		public override object[] getReturnParams ()
 		{
-			return new object[]{ this.Cancelled, this.pos, this.instigator, this.smellName};
+			return new object[]{ this.IsCancelled, this.pos, this.instigator, this.smellName};
 		}
 		/// <summary>
 		/// Gets whether this event supports clients.
@@ -75,7 +75,7 @@ namespace SurvivalKit.Events.Entities
 		/// Gets whether this event supports clients.
 		/// </summary>
 		/// <returns><c>true</c>, if clients are supported, <c>false</c> otherwise.</returns>
-		public bool Cancelled {
+		public bool IsCancelled {
 			get { return this.cancelled; }
 			set { this.cancelled = value; }
 		}

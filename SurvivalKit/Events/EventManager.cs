@@ -161,7 +161,7 @@ namespace SurvivalKit.Events
 					//_event = curEventType.Value.GetConstructor(new Type[]{ typeof(Object[]) }).Invoke(pars) as Event;
 					if (_event == null)
 						throw new Events.Exceptions.EventNotFoundException("No matching constructor for event " + name + " found.");
-					if (!(_event is ICancellable) || (_event is ICancellable && !((ICancellable)_event).Cancelled)) {
+					if (!(_event is ICancellable) || (_event is ICancellable && !((ICancellable)_event).IsCancelled)) {
 						FireEvent (_event);
 					}
 					return _event.getReturnParams();

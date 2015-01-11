@@ -32,6 +32,6 @@ namespace SurvivalKit.Interfaces
 		/// </summary>
 		/// <typeparam name="TEventType">The type of the event that will be dispatched.</typeparam>
 		/// <param name="eventInstance">The event instance that should be pushed to all modules.</param>
-		void DispatchEvent<TEventType>(TEventType eventInstance, params object[] arguments) where TEventType : IDispatchableEvent;
+		void DispatchEvent<TEventType>(TEventType eventInstance) where TEventType : IDispatchableEvent;
 	}
 }

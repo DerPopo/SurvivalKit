@@ -116,7 +116,7 @@ namespace SurvivalKit.Events.Network
 		/// Gets or sets whether this event is cancelled.
 		/// </summary>
 		/// <value><c>true</c> if this instance cancelled, <c>false</c> otherwise.</value>
-		public bool Cancelled {
+		public bool IsCancelled {
 			get { return this.cancelled; }
 			set { this.cancelled = value; }
 		}

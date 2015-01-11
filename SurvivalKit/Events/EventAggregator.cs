@@ -182,7 +182,7 @@ namespace SurvivalKit.Events
 		/// </summary>
 		/// <typeparam name="TEventType">The type of the event that will be dispatched.</typeparam>
 		/// <param name="eventInstance">The event instance that should be pushed to all modules.</param>
-		public void DispatchEvent<TEventType>(TEventType eventInstance, params object[] arguments) where TEventType : IDispatchableEvent
+		public void DispatchEvent<TEventType>(TEventType eventInstance) where TEventType : IDispatchableEvent
 		{
 			// use the type they are giving us, not the actual type. 
 			var eventType = typeof(TEventType);
@@ -196,9 +196,8 @@ namespace SurvivalKit.Events
 					var method = eventHookRegistration.EventHook.MethodToInvoke;
 					var instance = eventHookRegistration.Instance;
 
-					var tooManyArguments = arguments.Length > eventHookRegistration.GetMethodArguments();
-					var tooLittleArguments = arguments.Length < eventHookRegistration.GetRequiredMethodArguments();
-					if (tooManyArguments || tooLittleArguments)
+					var tooManyArgumentsRequired = eventHookRegistration.GetRequiredMethodArguments() > 1;
+					if (tooManyArgumentsRequired)
 					{
 						var message = string.Format("SurvivalKit warning: Skipped listener {0} for event type {1} is skipped. Argument mismatch!", instance.GetType(), eventType);
 						LogMessage(message, true);
@@ -207,7 +206,7 @@ namespace SurvivalKit.Events
 
 					try
 					{
-						method.Invoke(instance, arguments);
+						method.Invoke(instance, new object[1] {eventInstance});
 					}
 					catch (Exception exception)
 					{
@@ -216,6 +215,11 @@ namespace SurvivalKit.Events
 					}
 				}
 			}
+		}
+
+		private bool IsCancelled<TEventType>(TEventType eventInstance) where TEventType : IDispatchableEvent
+		{
+			return eventInstance.GetType().IsAssignableFrom(typeof(ICancellable)) && ((ICancellable)eventInstance).IsCancelled;
 		}
 	}
 }
