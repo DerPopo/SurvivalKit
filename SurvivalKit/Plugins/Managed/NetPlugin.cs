@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 
 using SurvivalKit;
+using SurvivalKit.Interfaces;
 
 namespace SurvivalKit.Plugins.Managed
 {
@@ -18,14 +19,14 @@ namespace SurvivalKit.Plugins.Managed
 		}
 		private List<Object> eventHandlers = new List<Object>();
 
-		private Dictionary<string,Commands.CommandListener> listenerByCommand = new Dictionary<string, SurvivalKit.Commands.CommandListener>();
+		private Dictionary<string,ICommandListener> listenerByCommand = new Dictionary<string, ICommandListener>();
 
 		/// <summary>
 		/// Gets the command listeners.
 		/// </summary>
 		/// <value>The dictionary containing the commands as keys and the listeners as values.</value>
-		public Dictionary<string,Commands.CommandListener> ListenerByCommand {
-			get { return new Dictionary<string,Commands.CommandListener>(this.listenerByCommand); }
+		public Dictionary<string,ICommandListener> ListenerByCommand {
+			get { return new Dictionary<string,ICommandListener>(this.listenerByCommand); }
 		}
 
 		/// <summary>
@@ -60,11 +61,11 @@ namespace SurvivalKit.Plugins.Managed
 		}
 
 		/// <summary>
-		/// Registers a command to a <see cref="SurvivalKit.Commands.CommandListener"/>.
+		/// Registers a command to a <see cref="SurvivalKit.Commands.ICommandListener"/>.
 		/// </summary>
 		/// <param name="command">Command.</param>
 		/// <param name="listener">Listener.</param>
-		public void registerCommand(string command, Commands.CommandListener listener)
+		public void registerCommand(string command, ICommandListener listener)
 		{
 			if (!this.getLoader().isEnabled())
 				return;

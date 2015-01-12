@@ -52,6 +52,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstracts\BaseEvent.cs" />
+    <Compile Include="Abstracts\CancellableBaseEvent.cs" />
     <Compile Include="Abstracts\EventListener.cs" />
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\EventHook.cs" />
@@ -75,9 +77,7 @@
     <Compile Include="Plugins\Plugin.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="Interfaces\ICancellable.cs" />
-    <Compile Include="Events\Listener.cs" />
     <Compile Include="Events\Priority.cs" />
-    <Compile Include="Events\Event.cs" />
     <Compile Include="Events\Exceptions\EventNotFoundException.cs" />
     <Compile Include="Events\Misc\TorchFlickerUpdateEvent.cs" />
     <Compile Include="Events\Network\ReadPacketFromBufEvent.cs" />
@@ -91,7 +91,7 @@
     <Compile Include="Permissions\CommandSender.cs" />
     <Compile Include="Permissions\PermissionFile.cs" />
     <Compile Include="Permissions\SimplePermissionManager.cs" />
-    <Compile Include="Commands\CommandListener.cs" />
+    <Compile Include="Commands\ICommandListener.cs" />
     <Compile Include="Permissions\PlayerCommandSender.cs" />
     <Compile Include="Events\Misc\UnknownChunkProviderEvent.cs" />
     <Compile Include="Events\Entity\EntityEmitSmellEvent.cs" />

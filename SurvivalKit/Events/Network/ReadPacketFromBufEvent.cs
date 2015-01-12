@@ -1,3 +1,4 @@
+using SurvivalKit.Abstracts;
 using System;
 
 namespace SurvivalKit.Events.Network
@@ -5,7 +6,7 @@ namespace SurvivalKit.Events.Network
 	/// <summary>
 	/// Fired after the game read a packet from a buffer.
 	/// </summary>
-	public class ReadPacketFromBufEvent : Event
+	public class ReadPacketFromBufEvent : BaseEvent
 	{
 		private object packet;
 
@@ -40,14 +41,6 @@ namespace SurvivalKit.Events.Network
 		public override object[] getReturnParams ()
 		{
 			return new object[]{  };
-		}
-		/// <summary>
-		/// Gets whether this event supports clients.
-		/// </summary>
-		/// <returns><c>true</c>, if clients are supported, <c>false</c> otherwise.</returns>
-		public override bool supportsClient ()
-		{
-			return false;
 		}
 
 		/// <summary>

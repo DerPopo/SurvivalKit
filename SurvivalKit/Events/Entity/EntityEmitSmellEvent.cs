@@ -1,4 +1,5 @@
-﻿using SurvivalKit.Interfaces;
+﻿using SurvivalKit.Abstracts;
+using SurvivalKit.Interfaces;
 using System;
 
 namespace SurvivalKit.Events.Entities
@@ -6,14 +7,14 @@ namespace SurvivalKit.Events.Entities
 	/// <summary>
 	/// Fired when an entity emits a smell.
 	/// </summary>
-	public class EntityEmitSmellEvent : Event, ICancellable
+	public class EntityEmitSmellEvent : CancellableBaseEvent
 	{
 		private bool cancelled;
 		private UnityEngine.Vector3 pos;
 		private Entity instigator;
 		private string smellName;
 
-		private Event parent = null;
+		private BaseEvent parent = null;
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SurvivalKit.Events.Entity.EntityMoveEvent"/> class.
 		/// </summary>
@@ -54,19 +55,12 @@ namespace SurvivalKit.Events.Entities
 		{
 			return new object[]{ this.IsCancelled, this.pos, this.instigator, this.smellName};
 		}
-		/// <summary>
-		/// Gets whether this event supports clients.
-		/// </summary>
-		/// <returns><c>true</c>, if clients are supported, <c>false</c> otherwise.</returns>
-		public override bool supportsClient ()
-		{
-			return true;
-		}
+
 		/// <summary>
 		/// Sets the parent of the current Event.
 		/// </summary>
 		/// <param name="parent">The new parent event.</param>
-		public override void setParent(Event parent)
+		public override void setParent(BaseEvent parent)
 		{
 			this.parent = parent;
 		}
@@ -75,7 +69,7 @@ namespace SurvivalKit.Events.Entities
 		/// Gets whether this event supports clients.
 		/// </summary>
 		/// <returns><c>true</c>, if clients are supported, <c>false</c> otherwise.</returns>
-		public bool IsCancelled {
+		public override bool IsCancelled {
 			get { return this.cancelled; }
 			set { this.cancelled = value; }
 		}

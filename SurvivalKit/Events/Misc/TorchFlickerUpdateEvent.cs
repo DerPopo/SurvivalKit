@@ -1,3 +1,4 @@
+using SurvivalKit.Abstracts;
 using SurvivalKit.Interfaces;
 using System;
 
@@ -6,7 +7,7 @@ namespace SurvivalKit.Events.Misc
 	/// <summary>
 	/// Fired when a torch/light flicker Update() method is called.
 	/// </summary>
-	public class TorchFlickerUpdateEvent : Event, ICancellable
+	public class TorchFlickerUpdateEvent : CancellableBaseEvent
 	{
 		private object flickerclass;
 		private bool cancelled;
@@ -56,20 +57,12 @@ namespace SurvivalKit.Events.Misc
 		{
 			return new object[]{ this.cancelled, this.intensity, this.maxIntensity, this.minIntensity };
 		}
-		/// <summary>
-		/// Gets whether this event supports clients.
-		/// </summary>
-		/// <returns><c>true</c>, if clients are supported, <c>false</c> otherwise.</returns>
-		public override bool supportsClient ()
-		{
-			return true;
-		}
 
 		/// <summary>
 		/// Gets or sets whether this event is cancelled.
 		/// </summary>
 		/// <value><c>true</c> if this instance cancelled, <c>false</c> otherwise.</value>
-		public bool IsCancelled {
+		public override bool IsCancelled {
 			get { return this.cancelled; }
 			set { this.cancelled = value; }
 		}

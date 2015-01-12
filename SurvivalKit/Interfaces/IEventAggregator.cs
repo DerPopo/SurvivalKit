@@ -28,10 +28,18 @@ namespace SurvivalKit.Interfaces
 		void UnregisterEventListener<TListener>(TListener eventListener) where TListener : EventListener;
 
 		/// <summary>
-		///		Method to dispatch an event.
+		///	Method to dispatch an event.
 		/// </summary>
 		/// <typeparam name="TEventType">The type of the event that will be dispatched.</typeparam>
 		/// <param name="eventInstance">The event instance that should be pushed to all modules.</param>
-		void DispatchEvent<TEventType>(TEventType eventInstance) where TEventType : IDispatchableEvent;
+		/// <param name="fireSubEvents">Should we fire sub events</param>
+		void DispatchEvent<TEventType>(TEventType eventInstance, bool fireSubEvents) where TEventType : IDispatchableEvent;
+
+		/// <summary>
+		/// Method to get all registered event types.
+		/// This list will be used to match incoming events.
+		/// </summary>
+		/// <returns>Returns a list of <see cref="System.Type"/> instances.</returns>
+		List<Type> GetRegisteredEventTypes();
 	}
 }

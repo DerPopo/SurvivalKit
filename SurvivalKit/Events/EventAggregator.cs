@@ -186,7 +186,8 @@ namespace SurvivalKit.Events
 		/// </summary>
 		/// <typeparam name="TEventType">The type of the event that will be dispatched.</typeparam>
 		/// <param name="eventInstance">The event instance that should be pushed to all modules.</param>
-		public void DispatchEvent<TEventType>(TEventType eventInstance) where TEventType : IDispatchableEvent
+		/// <param name="fireSubEvents">Should we fire sub events</param>
+		public void DispatchEvent<TEventType>(TEventType eventInstance, bool fireSubEvents) where TEventType : IDispatchableEvent
 		{
 			// use the type they are giving us, not the actual type. 
 			var eventType = typeof(TEventType);
@@ -211,6 +212,11 @@ namespace SurvivalKit.Events
 					try
 					{
 						method.Invoke(instance, new object[1] {eventInstance});
+
+						if (fireSubEvents)
+						{
+							//instance.getSub
+						}
 					}
 					catch (Exception exception)
 					{
@@ -221,9 +227,26 @@ namespace SurvivalKit.Events
 			}
 		}
 
+		/// <summary>
+		///	Helper method to see if an event is cancelled.
+		/// </summary>
+		/// <typeparam name="TEventType">The type of the vent.</typeparam>
+		/// <param name="eventInstance">The instance that might be cancelled.</param>
+		/// <returns>Returns <c>true</c> if the event is cancelled.</returns>
 		private bool IsCancelled<TEventType>(TEventType eventInstance) where TEventType : IDispatchableEvent
 		{
 			return eventInstance.GetType().IsAssignableFrom(typeof(ICancellable)) && ((ICancellable)eventInstance).IsCancelled;
+		}
+
+		/// <summary>
+		/// Method to get all registered event types.
+		/// This list will be used to match incoming events.
+		/// </summary>
+		/// <returns>Returns a list of <see cref="System.Type"/> instances.</returns>
+		public List<Type> GetRegisteredEventTypes()
+		{
+			var keys = _hookRegistry.Keys;
+			return new List<Type>(keys);
 		}
 	}
 }

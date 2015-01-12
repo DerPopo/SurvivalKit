@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using SurvivalKit.Commands;
+using SurvivalKit.Abstracts;
 using SurvivalKit.Interfaces;
 
 namespace SurvivalKit.Events.Network
@@ -8,7 +8,7 @@ namespace SurvivalKit.Events.Network
 	/// <summary>
 	/// Fired when a RPC function gets called.
 	/// </summary>
-	public class RPCEvent : Event, ICancellable
+	public class RPCEvent : CancellableBaseEvent
 	{
 		private bool cancelled;
 		private object rpcclass;
@@ -57,8 +57,8 @@ namespace SurvivalKit.Events.Network
 							if (!(plugin is Plugins.Managed.NetPlugin))
 								continue;
 							Plugins.Managed.NetPlugin _plugin = (Plugins.Managed.NetPlugin)plugin;
-							Dictionary<string,CommandListener> listenerByCommand = _plugin.ListenerByCommand;
-							CommandListener cmdListener = null;
+							Dictionary<string,ICommandListener> listenerByCommand = _plugin.ListenerByCommand;
+							ICommandListener cmdListener = null;
 							if (listenerByCommand.TryGetValue(splitCmd[0].ToLower(), out cmdListener))
 							{
 								try {
@@ -103,20 +103,13 @@ namespace SurvivalKit.Events.Network
 				ret[i + 3] = args[i];
 			return ret;
 		}
-		/// <summary>
-		/// Gets whether this event supports clients.
-		/// </summary>
-		/// <returns><c>true</c>, if clients are supported, <c>false</c> otherwise.</returns>
-		public override bool supportsClient ()
-		{
-			return false;
-		}
 
 		/// <summary>
 		/// Gets or sets whether this event is cancelled.
 		/// </summary>
 		/// <value><c>true</c> if this instance cancelled, <c>false</c> otherwise.</value>
-		public bool IsCancelled {
+		public override bool IsCancelled
+		{
 			get { return this.cancelled; }
 			set { this.cancelled = value; }
 		}

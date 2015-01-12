@@ -1,3 +1,4 @@
+using SurvivalKit.Abstracts;
 using SurvivalKit.Interfaces;
 using System;
 
@@ -6,7 +7,7 @@ namespace SurvivalKit.Events.Misc
 	/// <summary>
 	/// Fired when an unknown chunk provider was detected. Can be used to implement custom chunk providers
 	/// </summary>
-	public class UnknownChunkProviderEvent : Event, ICancellable
+	public class UnknownChunkProviderEvent : CancellableBaseEvent
 	{
 		private ChunkCluster cluster;
 		private IChunkProvider chunkProvider;
@@ -55,19 +56,10 @@ namespace SurvivalKit.Events.Misc
 		}
 
 		/// <summary>
-		/// Gets whether this event supports clients.
-		/// </summary>
-		/// <returns><c>true</c>, if clients are supported, <c>false</c> otherwise.</returns>
-		public override bool supportsClient ()
-		{
-			return true;
-		}
-
-		/// <summary>
 		/// Gets or sets whether this event is cancelled.
 		/// </summary>
 		/// <value><c>true</c> if this instance cancelled, <c>false</c> otherwise.</value>
-		public bool IsCancelled {
+		public override bool IsCancelled {
 			get { return this.cancelled; }
 			set { this.cancelled = value; }
 		}
