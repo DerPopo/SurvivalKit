@@ -44,6 +44,11 @@ namespace SurvivalKit.Events
 		private int? _nonOptionArguments;
 
 		/// <summary>
+		/// Property that will be set to true if a registration should be deleted.
+		/// </summary>
+		internal bool markForDeletion = false;
+
+		/// <summary>
 		///	Method to retrieve the total amount of arguments of the method, including the optional ones.
 		/// </summary>
 		/// <returns>Returns the amount of arguments in the <see cref="EventHook.MethodToInvoke"/></returns>

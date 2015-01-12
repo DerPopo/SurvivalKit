@@ -10,8 +10,7 @@ namespace SurvivalKit.Utility
 	///	Dictionary class that has a collection of of objects in every value.
 	///	These objects have been sorted according to the sorting operator we get in the constructor.
 	/// </summary>
-	/// <remarks>Inspired by https://github.com/Microsoft/referencesource/blob/master/System/compmod/system/collections/specialized/ordereddictionary.cs </remarks>
-	internal class PrioritizedEventListenerDictionary<TKey, TValue> : IDictionary<TKey, TValue>
+	internal class PrioritizedEventListenerDictionary<TKey, TValue>
 	{
 		private Dictionary<TKey, List<TValue>> _internalDictionary;
 		private IComparer<TValue> _comparer;
@@ -72,6 +71,11 @@ namespace SurvivalKit.Utility
 
 		public bool ContainsKey(TKey key)
 		{
+			if (key == null)
+			{
+				return false;
+			}
+
 			return _internalDictionary.ContainsKey(key);
 		}
 
@@ -82,13 +86,12 @@ namespace SurvivalKit.Utility
 
 		public bool Remove(TKey key)
 		{
-			return _internalDictionary.Remove(key);
-		}
+			if (key == null)
+			{
+				return false;
+			}
 
-		[Obsolete("There is no single value to retrieve. Use the overload with List<TValue>", true)]
-		public bool TryGetValue(TKey key, out TValue value)
-		{
-			throw new NotSupportedException("There is no single value to retrieve. Use the overload with List<TValue>");
+			return _internalDictionary.Remove(key);
 		}
 
 		public bool TryGetValue(TKey key, out List<TValue> value)
@@ -97,12 +100,6 @@ namespace SurvivalKit.Utility
 			var result = _internalDictionary.TryGetValue(key, out localCopy);
 			value = localCopy;
 			return result;
-		}
-
-		[Obsolete("There is no single value to retrieve. Use the overload with List<TValue>", true)]
-		public ICollection<TValue> Values
-		{
-			get { throw new NotSupportedException("There is no single value to retrieve. Use the overload with List<TValue>"); }
 		}
 
 		public ICollection<List<TValue>> ValueCollections
@@ -168,7 +165,7 @@ namespace SurvivalKit.Utility
 
 		public bool Remove(KeyValuePair<TKey, TValue> item)
 		{
-			if (_internalDictionary.ContainsKey(item.Key))
+			if (ContainsKey(item.Key))
 			{
 				return _internalDictionary[item.Key].Remove(item.Value);
 			}
@@ -176,28 +173,32 @@ namespace SurvivalKit.Utility
 			return false;
 		}
 
-		IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
+		/// <summary>
+		/// Remove a value from all keys.
+		/// </summary>
+		/// <param name="item">The item to remove.</param>
+		/// <returns>Returns <c>r</c></returns>
+		public bool Remove(TValue value)
 		{
-			throw new NotSupportedException("There is no single value to retrieve. Use the overload with List<TValue>");
-		}
-
-		IEnumerator<KeyValuePair<TKey, List<TValue>>> GetValueCollectionEnumerator()
-		{
-			return _internalDictionary.GetEnumerator();
-		}
-
-
-		[Obsolete]
-		TValue IDictionary<TKey, TValue>.this[TKey key]
-		{
-			get
+			if(value == null)
 			{
-				throw new NotImplementedException();
+				return false;
 			}
-			set
+
+			var foundItem = false;
+			foreach (var item in _internalDictionary)
 			{
-				throw new NotImplementedException();
+				var list = item.Value;
+				if (list.Contains(value))
+				{
+					foundItem = true;
+					list.Remove(value);
+					foundItem = true;
+				}
 			}
+
+			return foundItem;
 		}
+
 	}
 }

@@ -27,7 +27,7 @@ namespace SurvivalKit.Events
 		/// <summary>
 		///	Registry of hooks.
 		/// </summary>
-		private Dictionary<Type, List<EventListenerRegistration>> _hookRegistry;
+		private PrioritizedEventListenerDictionary<Type, EventListenerRegistration> _hookRegistry;
 
 		/// <summary>
 		/// Should we prevent calls to the log library?
@@ -42,7 +42,7 @@ namespace SurvivalKit.Events
 		{
 			_preventLogging = preventLogging;
 			_instanceResolver = instanceResolver;
-			_hookRegistry = new Dictionary<Type, List<EventListenerRegistration>>();
+			_hookRegistry = new PrioritizedEventListenerDictionary<Type, EventListenerRegistration>(new EventListenerRegistrationComparer());
 
 			// Get all instances and try to gather all event listeners.
 			var registerEventListeners = _instanceResolver.ResolveInstances<IRegisterEventListeners>();
@@ -149,14 +149,7 @@ namespace SurvivalKit.Events
 				var registration = new EventListenerRegistration(eventListener, eventHook);
 				var type = eventHook.GetEventType();
 
-				if (!_hookRegistry.ContainsKey(type))
-				{
-
-					_hookRegistry.Add(type, new List<EventListenerRegistration>());
-				}
-
-				_hookRegistry[type].Add(registration);
-				// TODO implement priority sort
+				_hookRegistry.Add(type, registration);
 			}
 
 			return true;
@@ -170,10 +163,21 @@ namespace SurvivalKit.Events
 		/// <exception cref="ArgumentNullException">Thrown when the <paramref name="eventListener"/> is <c>null</c>.</exception>
 		public void UnregisterEventListener<TListener>(TListener eventListener) where TListener : EventListener
 		{
-			foreach (var keyValue in _hookRegistry)
+			var keys = _hookRegistry.Keys;
+			foreach (var key in keys)
 			{
-				// loop all events, and remove all instances.
-				keyValue.Value.RemoveAll(item => item.Instance.UniqueIdentifier == eventListener.UniqueIdentifier);
+				var list = _hookRegistry[key];
+
+				foreach (var eventListenerRegistration in list)
+				{
+					// mark all registrations this event listener.
+					if(eventListenerRegistration.Instance == eventListener)
+					{
+						eventListenerRegistration.markForDeletion = true;
+					}
+				}
+				// clean all entries.
+				list.RemoveAll(item => item.markForDeletion);
 			}
 		}
 
