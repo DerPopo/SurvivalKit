@@ -45,7 +45,7 @@ namespace SurvivalKit.Events
 			_hookRegistry = new PrioritizedEventListenerDictionary<Type, EventListenerRegistration>(new EventListenerRegistrationComparer());
 
 			// Get all instances and try to gather all event listeners.
-			var registerEventListeners = _instanceResolver.ResolveInstances<IRegisterEventListeners>();
+			var registerEventListeners = _instanceResolver.ResolveInstances<IPlugin>();
 
 			if (registerEventListeners == null || registerEventListeners.Count == 0)
 			{

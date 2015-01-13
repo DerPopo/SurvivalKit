@@ -31,7 +31,7 @@ namespace SurvivalKit.Tests.Events
 		[TestMethod]
 		public void EventAggregator_RegisterEventListener_EmptyList()
 		{
-			var list = new List<IRegisterEventListeners>();
+			var list = new List<IPlugin>();
 			var resolver = new Mocks.MockInstanceResolver(list);
 
 			try
@@ -49,9 +49,9 @@ namespace SurvivalKit.Tests.Events
 		public void EventAggregator_RegisterEventListener_Mocked_Null()
 		{
 			List<EventListener> eventListeners = null;
-			var list = new List<IRegisterEventListeners>
+			var list = new List<IPlugin>
 			{
-				new Mocks.MockRegisterEventListeners(eventListeners)
+				new Mocks.MockPlugin(eventListeners)
 			};
 			var resolver = new Mocks.MockInstanceResolver(list);
 
@@ -70,9 +70,9 @@ namespace SurvivalKit.Tests.Events
 		public void EventAggregator_RegisterEventListener_Mocked_Empty()
 		{
 			var eventListeners = new List<EventListener>();
-			var list = new List<IRegisterEventListeners>
+			var list = new List<IPlugin>
 			{
-				new Mocks.MockRegisterEventListeners(eventListeners)
+				new Mocks.MockPlugin(eventListeners)
 			};
 			var resolver = new Mocks.MockInstanceResolver(list);
 

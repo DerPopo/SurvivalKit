@@ -7,11 +7,11 @@ using System.Text;
 
 namespace SurvivalKit.Tests.Mocks
 {
-	public class MockRegisterEventListeners : IRegisterEventListeners
+	public class MockPlugin : IPlugin
 	{
 		private List<EventListener> _collection;
 		
-		public MockRegisterEventListeners(List<EventListener> input)
+		public MockPlugin(List<EventListener> input)
 		{
 			_collection = input;
 		}
@@ -28,6 +28,28 @@ namespace SurvivalKit.Tests.Mocks
 			{
 				eventAggregator.RegisterEventListener(item);
 			}
+		}
+
+
+		public string[] getAuthors()
+		{
+			return new string[] { "Mock" };
+		}
+
+		public void onLoad()
+		{
+		}
+
+		public void onEnable()
+		{
+		}
+
+		public void onDisable()
+		{
+		}
+
+		public void Dispose()
+		{
 		}
 	}
 }

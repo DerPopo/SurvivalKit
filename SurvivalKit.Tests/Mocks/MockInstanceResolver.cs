@@ -8,9 +8,9 @@ namespace SurvivalKit.Tests.Mocks
 {
 	public class MockInstanceResolver : IResolveInstances 
 	{
-		private List<IRegisterEventListeners> _returnValue;
+		private List<IPlugin> _returnValue;
 
-		public MockInstanceResolver(List<IRegisterEventListeners> returnValue)
+		public MockInstanceResolver(List<IPlugin> returnValue)
 		{
 			_returnValue = returnValue;
 		}
