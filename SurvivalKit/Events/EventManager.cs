@@ -138,27 +138,11 @@ namespace SurvivalKit.Events
 				{
 					try
 					{
-						Activator.CreateInstance(curEventType, pars);
+						Activator.CreateInstance(curEventType, new object[] { pars });
 					}
 					catch (Exception ex)
 					{
 						throw new Exception("An exception occurred inside the constructor for event " + name, ex);
-					}
-					foreach (ConstructorInfo ci in curEventType.GetConstructors())
-					{
-						ParameterInfo[] parameters = ci.GetParameters();
-						if (parameters.Length == 1 && parameters[0].ParameterType.IsAssignableFrom(pars.GetType()))
-						{
-							try
-							{
-								_event = ci.Invoke(new Object[] { pars }) as BaseEvent;
-							}
-							catch (Exception e)
-							{
-								throw new Exception("An exception occured inside the constructor for event " + name, e);
-							}
-							break;
-						}
 					}
 
 					if (_event == null)
