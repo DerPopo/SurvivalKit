@@ -1,8 +1,5 @@
 using System;
 using System.Reflection;
-using System.Collections.Generic;
-using SurvivalKit.Plugins;
-using SurvivalKit.Plugins.Managed;
 using SurvivalKit.Interfaces;
 using SurvivalKit.Extensions;
 using SurvivalKit.Abstracts;
@@ -145,7 +142,7 @@ namespace SurvivalKit.Events
 					}
 					catch (Exception ex)
 					{
-						throw new Exception("An exception occured inside the constructor for event " + name, ex);
+						throw new Exception("An exception occurred inside the constructor for event " + name, ex);
 					}
 					foreach (ConstructorInfo ci in curEventType.GetConstructors())
 					{
@@ -167,7 +164,7 @@ namespace SurvivalKit.Events
 					if (_event == null)
 					{
 						// Event dispatched from the game should always be processed. 
-						throw new Events.Exceptions.EventNotFoundException("No matching constructor for event " + name + " found.");
+						throw new Exceptions.EventNotFoundException("No matching constructor for event " + name + " found.");
 					}
 					
 					if (!_event.IsCancelled())
@@ -178,7 +175,7 @@ namespace SurvivalKit.Events
 				}
 			}
 
-			throw new Events.Exceptions.EventNotFoundException("Event " + name + " not found.");
+			throw new Exceptions.EventNotFoundException("Event " + name + " not found.");
 		}
 	}
 }

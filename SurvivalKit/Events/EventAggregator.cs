@@ -1,4 +1,5 @@
 ﻿using SurvivalKit.Abstracts;
+using SurvivalKit.Extensions;
 using SurvivalKit.Interfaces;
 using SurvivalKit.Utility;
 using System;
@@ -185,11 +186,17 @@ namespace SurvivalKit.Events
 			// use the type they are giving us, not the actual type. 
 			var eventType = typeof(TEventType);
 
+
+			if (eventInstance.IsCancelled())
+			{
+				// stop processing if the event is cancelled?
+				return;
+			}
+
 			if (_hookRegistry.ContainsKey(eventType))
 			{
 				var eventHookRegistrations = _hookRegistry[eventType];
 
-				// TODO implement IsCancelled in this loop
 				foreach (var eventHookRegistration in eventHookRegistrations)
 				{
 					var method = eventHookRegistration.EventHook.MethodToInvoke;
@@ -207,10 +214,16 @@ namespace SurvivalKit.Events
 					{
 						method.Invoke(instance, new object[1] {eventInstance});
 
-						if (fireSubEvents)
+						if (!eventInstance.IsCancelled() && fireSubEvents)
 						{
-							// TODO implement sub event delegation.
-							//instance.getSub
+							// The current event was cancelled by the handler. No need to trigger child events?
+
+							var subEvents = eventInstance.getSubevents();
+							foreach (var dispatchableEvent in subEvents)
+							{
+								// might end up in an infinite loop.
+								dispatchableEvent.Dispatch();
+							}
 						}
 					}
 					catch (Exception exception)
@@ -220,17 +233,6 @@ namespace SurvivalKit.Events
 					}
 				}
 			}
-		}
-
-		/// <summary>
-		///	Helper method to see if an event is cancelled.
-		/// </summary>
-		/// <typeparam name="TEventType">The type of the vent.</typeparam>
-		/// <param name="eventInstance">The instance that might be cancelled.</param>
-		/// <returns>Returns <c>true</c> if the event is cancelled.</returns>
-		private bool IsCancelled<TEventType>(TEventType eventInstance) where TEventType : IDispatchableEvent
-		{
-			return eventInstance.GetType().IsAssignableFrom(typeof(ICancellable)) && ((ICancellable)eventInstance).IsCancelled;
 		}
 
 		/// <summary>
