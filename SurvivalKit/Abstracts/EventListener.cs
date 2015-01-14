@@ -1,7 +1,7 @@
-﻿using SurvivalKit.Interfaces;
+﻿using SurvivalKit.Events;
+using SurvivalKit.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SurvivalKit.Abstracts
 {
@@ -11,12 +11,12 @@ namespace SurvivalKit.Abstracts
 	public abstract class EventListener : IComparable<EventListener>, IEqualityComparer<EventListener>
 	{
 		/// <summary>
-		///	Guid identifying an event listener.
+		///	GUID identifying an event listener.
 		/// </summary>
 		internal Guid UniqueIdentifier { get; set; }
 
 		/// <summary>
-		///	Constructor to initialize the guid.
+		///	Constructor to initialize the GUID.
 		/// </summary>
 		protected EventListener()
 		{
@@ -69,24 +69,24 @@ namespace SurvivalKit.Abstracts
 		/// <summary>
 		///		Method to compare two <see cref="EventListener"/> instances with eachother.
 		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
-		/// <returns></returns>
-		public bool Equals(EventListener x, EventListener y)
+		/// <param name="leftInstance">The left instance.</param>
+		/// <param name="rightInstance">The right instance/</param>
+		/// <returns>Returns <c>true</c> if <see cref="CompareTo"/> returns 0.</returns>
+		public bool Equals(EventListener leftInstance, EventListener rightInstance)
 		{
-			if (x == null || y == null)
+			if (leftInstance == null || rightInstance == null)
 			{
 				return false;
 			}
 
-			return x.CompareTo(y) == 0;
+			return leftInstance.CompareTo(rightInstance) == 0;
 		}
 
 		/// <summary>
-		///		Method to get a hashcode.
+		///		Method to get a hash code.
 		/// </summary>
-		/// <param name="obj">The object to get the hashcode from.</param>
-		/// <returns>Returns a hashcode.</returns>
+		/// <param name="obj">The object to get the hash code from.</param>
+		/// <returns>Returns a hash code.</returns>
 		public int GetHashCode(EventListener obj)
 		{
 			return obj.UniqueIdentifier.GetHashCode();

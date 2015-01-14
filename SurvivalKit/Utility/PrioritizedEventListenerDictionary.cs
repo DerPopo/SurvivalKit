@@ -1,7 +1,6 @@
-﻿	using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SurvivalKit.Utility
 {
@@ -148,11 +147,6 @@ namespace SurvivalKit.Utility
 			return false;
 		}
 
-		public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
-		{
-			throw new NotImplementedException();
-		}
-
 		public int Count
 		{
 			get { return _internalDictionary.Count; }
@@ -176,7 +170,7 @@ namespace SurvivalKit.Utility
 		/// <summary>
 		/// Remove a value from all keys.
 		/// </summary>
-		/// <param name="item">The item to remove.</param>
+		/// <param name="value">The item to remove.</param>
 		/// <returns>Returns <c>r</c></returns>
 		public bool Remove(TValue value)
 		{

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SurvivalKit.Interfaces
 {
 	/// <summary>
-	///	Interface that should be implemented by all plugins.	
-	/// Contains a method for registering <see cref="EventListener"/> instances.
+	///	Interface that should be implemented by all plug ins.	
+	/// Contains a method for registering <see cref="Abstracts.EventListener"/> instances.
 	/// </summary>
 	public interface IPlugin : IDisposable
 	{
@@ -23,17 +21,17 @@ namespace SurvivalKit.Interfaces
 		String[] getAuthors();
 
 		/// <summary>
-		/// Called when the plugin load finished.
+		/// Called when the plug in load finished.
 		/// </summary>
 		void onLoad();
 
 		/// <summary>
-		/// Called when the plugin is enabled.
+		/// Called when the plug in is enabled.
 		/// </summary>
 		void onEnable();
 
 		/// <summary>
-		/// Called when the plugin is disabled.
+		/// Called when the plug in is disabled.
 		/// </summary>
 		void onDisable();
 	}

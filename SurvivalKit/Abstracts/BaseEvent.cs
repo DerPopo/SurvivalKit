@@ -17,16 +17,16 @@ namespace SurvivalKit.Abstracts
 		public abstract Object[] getReturnParams();
 
 		/// <summary>
-		/// A function that gets all subevents.
+		/// A function that gets all sub events.
 		/// </summary>
 		/// <returns>
-		/// Returns an event array containing all direct subevents.
+		/// Returns an event array containing all direct sub events.
 		/// </returns>
 		/// <example>A ProcessPacketEvent containing a SetBlock packet returns an instance of SetBlocksEvent.</example>
 		public virtual IDispatchableEvent[] getSubevents() { return new BaseEvent[0]; }
 
 		/// <summary>
-		/// A function called to make sure an event gets notificated for changes in a subevent.
+		/// A function called to make sure an event gets notified for changes in a sub event.
 		/// </summary>
 		/// <example> A SetBlocksEvent calls parent.update() (parent most likely is a ProcessPacketEvent) when the SetBlocksEvent gets cancelled. </example>
 		public virtual void update(){}

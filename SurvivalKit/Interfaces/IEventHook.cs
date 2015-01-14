@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SurvivalKit.Interfaces
 {
@@ -15,7 +13,7 @@ namespace SurvivalKit.Interfaces
 		/// <summary>
 		///	The priority of the hook
 		/// </summary>
-		SurvivalKit.Events.Priority HookPriority { get; }
+		Events.Priority HookPriority { get; }
 
 		/// <summary>
 		///	The method to invoke when the event is triggered.

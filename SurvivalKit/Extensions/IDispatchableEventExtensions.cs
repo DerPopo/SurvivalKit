@@ -8,18 +8,19 @@ namespace SurvivalKit.Extensions
 	/// </summary>
 	public static class IDispatchableEventExtensions
 	{
-		/// <summary>
-		///	Dispatch an event.
-		/// </summary>
-		/// <typeparam name="TEventType">The event type.</typeparam>
-		/// <param name="eventInstance">The instance of the event that should be dispatched</param>
+		///  <summary>
+		/// 	Dispatch an event.
+		///  </summary>
+		///  <typeparam name="TEventType">The event type.</typeparam>
+		///  <param name="eventInstance">The instance of the event that should be dispatched</param>
+		/// <param name="fireSubEvents">Should sub events be fired as well?</param>
 		/// <example>
-		/// This method lets you dispatch events easily using the following syntax:
-		/// <c>
-		/// var instance = new MyCustomDispatchableEvent();
-		/// instance.Dispatch();
-		/// </c>
-		/// </example>
+		///  This method lets you dispatch events easily using the following syntax:
+		///  <c>
+		///  var instance = new MyCustomDispatchableEvent();
+		///  instance.Dispatch();
+		///  </c>
+		///  </example>
 		public static void Dispatch<TEventType>(this TEventType eventInstance, bool fireSubEvents = true) where TEventType : IDispatchableEvent
 		{
 			var eventAggregator = EventAggregator.GetInstance();

@@ -4,7 +4,6 @@ using SurvivalKit.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace SurvivalKit.Events
 {
@@ -20,20 +19,15 @@ namespace SurvivalKit.Events
 		private static IEventAggregator _instance;
 
 		/// <summary>
-		///	The private instance of the <see cref="IResolveInstances"/> implementation.
-		/// </summary>
-		private IResolveInstances _instanceResolver;
-
-		/// <summary>
 		///	Registry of hooks.
 		/// </summary>
-		private PrioritizedEventListenerDictionary<Type, EventListenerRegistration> _hookRegistry;
+		private readonly PrioritizedEventListenerDictionary<Type, EventListenerRegistration> _hookRegistry;
 
 		/// <summary>
 		/// Should we prevent calls to the log library?
 		/// Used for the testing framework.
 		/// </summary>
-		private bool _preventLogging = false;
+		private readonly bool _preventLogging = false;
 
 		/// <summary>
 		///		Private constructor for the singleton.
@@ -41,11 +35,10 @@ namespace SurvivalKit.Events
 		private EventAggregator(IResolveInstances instanceResolver, bool preventLogging = false)
 		{
 			_preventLogging = preventLogging;
-			_instanceResolver = instanceResolver;
 			_hookRegistry = new PrioritizedEventListenerDictionary<Type, EventListenerRegistration>(new EventListenerRegistrationComparer());
 
 			// Get all instances and try to gather all event listeners.
-			var registerEventListeners = _instanceResolver.ResolveInstances<IPlugin>();
+			var registerEventListeners = instanceResolver.ResolveInstances<IPlugin>();
 
 			if (registerEventListeners == null || registerEventListeners.Count == 0)
 			{
@@ -127,7 +120,7 @@ namespace SurvivalKit.Events
 		/// Method to register an event listener.
 		/// </summary>
 		/// <typeparam name="TListener">The type of the event listener.</typeparam>
-		/// <param name="eventListener">The listener intance.</param>
+		/// <param name="eventListener">The listener instance.</param>
 		/// <returns>
 		///	Returns <c>true</c> if the <see cref="TListener"/> was added to the registry of listeners.
 		///	Returns <c>false</c> if the <see cref="TListener"/> was already added to the registry of listeners.
@@ -141,7 +134,7 @@ namespace SurvivalKit.Events
 			}
 
 
-			// TODO check if this eventlistener isn't already registered.
+			// TODO check if this event listener isn't already registered.
 
 			var hooks = eventListener.GetEventHooks();
 			foreach (var eventHook in hooks)
@@ -173,11 +166,11 @@ namespace SurvivalKit.Events
 					// mark all registrations this event listener.
 					if(eventListenerRegistration.Instance == eventListener)
 					{
-						eventListenerRegistration.markForDeletion = true;
+						eventListenerRegistration.MarkedForDeletion = true;
 					}
 				}
 				// clean all entries.
-				list.RemoveAll(item => item.markForDeletion);
+				list.RemoveAll(item => item.MarkedForDeletion);
 			}
 		}
 
@@ -196,6 +189,7 @@ namespace SurvivalKit.Events
 			{
 				var eventHookRegistrations = _hookRegistry[eventType];
 
+				// TODO implement IsCancelled in this loop
 				foreach (var eventHookRegistration in eventHookRegistrations)
 				{
 					var method = eventHookRegistration.EventHook.MethodToInvoke;
@@ -215,6 +209,7 @@ namespace SurvivalKit.Events
 
 						if (fireSubEvents)
 						{
+							// TODO implement sub event delegation.
 							//instance.getSub
 						}
 					}

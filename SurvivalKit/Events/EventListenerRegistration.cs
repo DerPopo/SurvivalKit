@@ -1,14 +1,10 @@
 ﻿using SurvivalKit.Abstracts;
-using SurvivalKit.Events;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using SurvivalKit.Interfaces;
 
 namespace SurvivalKit.Events
 {
 	/// <summary>
-	///		The registration of the first event listener.
+	///	The registration of the first event listener.
 	/// </summary>
 	internal class EventListenerRegistration
 	{
@@ -46,12 +42,12 @@ namespace SurvivalKit.Events
 		/// <summary>
 		/// Property that will be set to true if a registration should be deleted.
 		/// </summary>
-		internal bool markForDeletion = false;
+		internal bool MarkedForDeletion = false;
 
 		/// <summary>
 		///	Method to retrieve the total amount of arguments of the method, including the optional ones.
 		/// </summary>
-		/// <returns>Returns the amount of arguments in the <see cref="EventHook.MethodToInvoke"/></returns>
+		/// <returns>Returns the amount of arguments in the <see cref="IEventHook.MethodToInvoke"/></returns>
 		public int GetMethodArguments()
 		{
 			if (!_methodArguments.HasValue)
@@ -65,7 +61,7 @@ namespace SurvivalKit.Events
 		/// <summary>
 		///	Method to retrieve the amount of arguments that are required.
 		/// </summary>
-		/// <returns>Returns the amount of required arguments in the <see cref="EventHook.MethodToInvoke"/></returns>
+		/// <returns>Returns the amount of required arguments in the <see cref="IEventHook.MethodToInvoke"/></returns>
 		public int GetRequiredMethodArguments()
 		{
 			if (!_nonOptionArguments.HasValue)

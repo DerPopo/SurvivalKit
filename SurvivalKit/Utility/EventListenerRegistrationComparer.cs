@@ -2,12 +2,11 @@
 using SurvivalKit.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SurvivalKit.Utility
 {
 	/// <summary>
-	///	Class for comparing <see cref="IEventHook"/> instances using the <see cref="IEvetHook.HookPriority"/>.
+	///	Class for comparing <see cref="IEventHook"/> instances using the <see cref="IEventHook.HookPriority"/>.
 	/// </summary>
 	internal class EventListenerRegistrationComparer : IComparer<EventListenerRegistration>
 	{

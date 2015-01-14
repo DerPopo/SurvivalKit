@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SurvivalKit.Interfaces
 {
 	/// <summary>
-	///	Interface all events should implement if they want to be dispatched by the <see cref="EventAggregator"/>.
+	///	Interface all events should implement if they want to be dispatched by the <see cref="IEventAggregator"/>.
 	/// </summary>
 	public interface IDispatchableEvent
 	{
@@ -18,10 +16,10 @@ namespace SurvivalKit.Interfaces
 		Object[] getReturnParams();
 
 		/// <summary>
-		/// A function that gets all subevents.
+		/// A function that gets all sub events.
 		/// </summary>
 		/// <returns>
-		/// Returns an event array containing all direct subevents.
+		/// Returns an event array containing all direct sub events.
 		/// </returns>
 		/// <example>A ProcessPacketEvent containing a SetBlock packet returns an instance of SetBlocksEvent.</example>
 		IDispatchableEvent[] getSubevents();

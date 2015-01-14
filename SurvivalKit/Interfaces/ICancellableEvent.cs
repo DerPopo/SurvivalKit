@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SurvivalKit.Interfaces
+﻿namespace SurvivalKit.Interfaces
 {
-	public interface ICancellableEvent : IDispatchableEvent
+	/// <summary>
+	///	Interface for all cancellable events.
+	/// </summary>
+	public interface ICancellableEvent : IDispatchableEvent, ICancellable
 	{
 	}
 }
