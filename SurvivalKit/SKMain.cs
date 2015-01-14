@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using SurvivalKit.Events;
 using SurvivalKit.Plugins;
 
 namespace SurvivalKit
@@ -71,6 +71,7 @@ namespace SurvivalKit
 			if (mainInstance == null) {
 				Permissions.PermissionManager.Instance = new Permissions.SimplePermissionManager();
 				mainInstance = new SKMain();
+				// TODO start loading plugins on a different thread?
 			}
 		}
 
@@ -90,7 +91,9 @@ namespace SurvivalKit
 		/// <param name="gmanager">The GameManager that will get activated during GameManager.Awake().</param>
 		public static void onGameEnable(GameManager gmanager)
 		{
+			EventAggregator.GetInstance().EnableGame();
 			if (mainInstance != null && !mainInstance.pluginsEnabled) {
+				
 				foreach (Plugin plug in mainInstance.plugMgr.getPlugins()) {
 					try {
 						PluginLoader loader = mainInstance.plugMgr.getLoader(plug);
@@ -107,6 +110,7 @@ namespace SurvivalKit
 		/// <param name="gmanager">The GameManager that will be disactivated during GameManager.Finalize().</param>
 		public static void onGameDisable(GameManager gmanager)
 		{
+			EventAggregator.GetInstance().DisableGame();
 			if (mainInstance != null && !mainInstance.pluginsEnabled) {
 				foreach (Plugin plug in mainInstance.plugMgr.getPlugins()) {
 					PluginLoader loader = mainInstance.plugMgr.getLoader(plug);
@@ -123,6 +127,7 @@ namespace SurvivalKit
 		/// </summary>
 		public static void onGameUninit()
 		{
+			EventAggregator.GetInstance().DisableGame();
 			if (mainInstance != null) {
 				foreach (Plugin plug in mainInstance.plugMgr.getPlugins()) {
 					PluginLoader loader = mainInstance.plugMgr.getLoader(plug);

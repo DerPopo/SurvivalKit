@@ -15,6 +15,11 @@ namespace SurvivalKit.Events
 	public sealed class EventAggregator : IEventAggregator
 	{
 		/// <summary>
+		///	Boolean to determine whether the game is enabled or not.
+		/// </summary>
+		private bool GameDisabled = true;
+
+		/// <summary>
 		///	The singleton instance of the <see cref="IEventAggregator"/>.
 		/// </summary>
 		private static IEventAggregator _instance;
@@ -183,6 +188,12 @@ namespace SurvivalKit.Events
 		/// <param name="fireSubEvents">Should we fire sub events</param>
 		public void DispatchEvent<TEventType>(TEventType eventInstance, bool fireSubEvents) where TEventType : IDispatchableEvent
 		{
+			if (GameDisabled)
+			{
+				// perhaps cancel the event?
+				return;
+			}
+
 			// use the type they are giving us, not the actual type. 
 			var eventType = typeof(TEventType);
 
@@ -244,6 +255,22 @@ namespace SurvivalKit.Events
 		{
 			var keys = _hookRegistry.Keys;
 			return new List<Type>(keys);
+		}
+
+		/// <summary>
+		///	Enable the event dispatching.
+		/// </summary>
+		public void EnableGame()
+		{
+			GameDisabled = true;
+		}
+
+		/// <summary>
+		/// Disables the event dispatching.
+		/// </summary>
+		public void DisableGame()
+		{
+			GameDisabled = false;
 		}
 	}
 }

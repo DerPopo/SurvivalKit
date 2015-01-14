@@ -40,5 +40,15 @@ namespace SurvivalKit.Interfaces
 		/// </summary>
 		/// <returns>Returns a list of <see cref="System.Type"/> instances.</returns>
 		List<Type> GetRegisteredEventTypes();
+
+		/// <summary>
+		///	Enable the event dispatching.
+		/// </summary>
+		void EnableGame();
+
+		/// <summary>
+		/// Disables the event dispatching.
+		/// </summary>
+		void DisableGame();
 	}
 }
