@@ -11,8 +11,20 @@ namespace SurvivalKit.Interfaces
 		/// <summary>
 		///		Method to register event listener.
 		/// </summary>
-		/// <param name="eventAggregator">The aggregator the listeners should register with.</param>
+		/// <param name="eventAggregator">The aggregator the event listeners should register with.</param>
 		void RegisterEventListeners(IEventAggregator eventAggregator);
+
+		/// <summary>
+		///		Method to register command listener.
+		/// </summary>
+		/// <param name="eventAggregator">The aggregator the command listeners should register with.</param>
+		void RegisterCommandListeners(IEventAggregator eventAggregator);
+
+		/// <summary>
+		/// Method to retrieve the name of a plugin.
+		/// </summary>
+		/// <returns>The name of the plugin.</returns>
+		string getPluginName();
 
 		/// <summary>
 		/// Gets the authors of this plugin.

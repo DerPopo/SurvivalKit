@@ -52,28 +52,11 @@ namespace SurvivalKit.Events.Network
 						EntityPlayer playerEntity = SKMain.getPlayerEntity(networkPlayer, curGmgr);
 						if (playerEntity == null)
 							continue;
-						foreach (Plugins.Plugin plugin in SKMain.SkMain.getPluginManager().getPlugins())
-						{
-							if (!(plugin is Plugins.Managed.NetPlugin))
-								continue;
-							Plugins.Managed.NetPlugin _plugin = (Plugins.Managed.NetPlugin)plugin;
-							Dictionary<string,ICommandListener> listenerByCommand = _plugin.ListenerByCommand;
-							ICommandListener cmdListener = null;
-							if (listenerByCommand.TryGetValue(splitCmd[0].ToLower(), out cmdListener))
-							{
-								try {
-									if (cmdListener.onCommand(new SurvivalKit.Permissions.PlayerCommandSender(playerEntity, networkPlayer), splitCmd[0], splitCmd[0], cmdArgs))
-									{
-										this.args[0] = null;
-										this.args[2] = null;
-										this.cancelled = true;
-										return;
-									}
-								} catch (Exception e) {
-									Log.Error("An exception occured while processing the command " + splitCmd[0].ToLower() + " : " + e.ToString());
-								}
-							}
-						}
+
+						string alias = splitCmd[0], command = splitCmd[0];
+						var commandSender = new SurvivalKit.Permissions.PlayerCommandSender(playerEntity, networkPlayer);
+
+						EventAggregator.GetInstance().DispatchCommand(command, commandSender, alias, cmdArgs);
 					}
 				}
 			}

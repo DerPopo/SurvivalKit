@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using SurvivalKit.Interfaces;
 using SurvivalKit.Abstracts;
 using System.Runtime.CompilerServices;
+using SurvivalKit.Tests.Mocks;
 
 namespace SurvivalKit.Tests.Events
 {
@@ -51,7 +52,7 @@ namespace SurvivalKit.Tests.Events
 			List<EventListener> eventListeners = null;
 			var list = new List<IPlugin>
 			{
-				new Mocks.MockPlugin(eventListeners)
+				new Mocks.MockPlugin(eventListeners, new List<ICommandListener>(), "")
 			};
 			var resolver = new Mocks.MockInstanceResolver(list);
 
@@ -72,7 +73,29 @@ namespace SurvivalKit.Tests.Events
 			var eventListeners = new List<EventListener>();
 			var list = new List<IPlugin>
 			{
-				new Mocks.MockPlugin(eventListeners)
+				new Mocks.MockPlugin(eventListeners, new List<ICommandListener>(), "")
+			};
+			var resolver = new Mocks.MockInstanceResolver(list);
+
+			try
+			{
+				var instance = EventAggregator.GetInstance(resolver, true);
+				Assert.IsNotNull(instance);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail("Exception occurred while constructing the event aggregator.", ex);
+			}
+		}
+
+		[TestMethod]
+		public void EventAggregator_RegisterEventListener_Mocked_Single()
+		{
+			var eventListeners = new List<EventListener>();
+			eventListeners.Add(new MockEventListener(true,false));
+			var list = new List<IPlugin>
+			{
+				new Mocks.MockPlugin(eventListeners, new List<ICommandListener>(), "")
 			};
 			var resolver = new Mocks.MockInstanceResolver(list);
 

@@ -130,11 +130,12 @@ namespace SurvivalKit.Events
 		/// </returns>
 		public static Object[] FireEvent(string name, Object[] pars)
 		{
+			var lowerCaseName = name.ToLower();
 			IDispatchableEvent _event = null;
 			var eventTypes = _aggregator.GetRegisteredEventTypes();
 			foreach (Type curEventType in eventTypes)
 			{
-				if (curEventType.Name.ToLower().Equals(name.ToLower()))
+				if (curEventType.Name.ToLower().Equals(lowerCaseName))
 				{
 					try
 					{
