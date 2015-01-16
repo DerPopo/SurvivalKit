@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SurvivalKit.Events;
+using SurvivalKit.Utility;
 
 namespace SurvivalKit
 {
@@ -82,7 +83,8 @@ namespace SurvivalKit
 			if (mainInstance != null) {
 				if (gmanager != null && !gamemanagers.Contains(gmanager))
 					gamemanagers.Add(gmanager);
-
+				
+				PluginLoader.GetInstance().LoadAssemblies();
 				EventAggregator.GetInstance().EnableGame();
 			}
 		}
