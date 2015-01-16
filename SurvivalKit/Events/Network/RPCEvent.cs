@@ -56,7 +56,16 @@ namespace SurvivalKit.Events.Network
 						string alias = splitCmd[0], command = splitCmd[0];
 						var commandSender = new SurvivalKit.Permissions.PlayerCommandSender(playerEntity, networkPlayer);
 
-						EventAggregator.GetInstance().DispatchCommand(command, commandSender, alias, cmdArgs);
+						var isCancelled = EventAggregator.GetInstance().DispatchCommand(command, commandSender, alias, cmdArgs);
+						if (isCancelled)
+						{
+							cancelled = true;
+
+							// Why do we set these arguments to null? Shouldn't we set the properties 'name' and 'rpcclass' to null?
+							this.args[0] = null;
+							this.args[2] = null;
+							break;
+						}
 					}
 				}
 			}

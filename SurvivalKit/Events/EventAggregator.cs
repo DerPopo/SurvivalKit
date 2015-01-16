@@ -54,7 +54,7 @@ namespace SurvivalKit.Events
 
 			if (registerEventListeners == null || registerEventListeners.Count == 0)
 			{
-				LogMessage("No IRegisterEventListeners instances found.",true);
+				LogMessage("No IRegisterEventListeners instances found.", true);
 				return;
 			}
 
@@ -88,13 +88,15 @@ namespace SurvivalKit.Events
 			}
 			else
 			{
-				if(isWarning)
+				if (isWarning)
 				{
 					Log.Warning(message);
-				} else {
+				}
+				else
+				{
 					Log.Error(message);
 				}
-				
+
 			}
 		}
 
@@ -177,7 +179,7 @@ namespace SurvivalKit.Events
 				foreach (var eventListenerRegistration in list)
 				{
 					// mark all registrations this event listener.
-					if(eventListenerRegistration.Instance == eventListener)
+					if (eventListenerRegistration.Instance == eventListener)
 					{
 						eventListenerRegistration.MarkedForDeletion = true;
 					}
@@ -230,7 +232,7 @@ namespace SurvivalKit.Events
 
 					try
 					{
-						method.Invoke(instance, new object[1] {eventInstance});
+						method.Invoke(instance, new object[1] { eventInstance });
 
 						if (!eventInstance.IsCancelled() && fireSubEvents)
 						{
@@ -302,7 +304,7 @@ namespace SurvivalKit.Events
 				throw new ArgumentNullException("commandListener");
 			}
 
-			if(!_commandRegistry.ContainsKey(command))
+			if (!_commandRegistry.ContainsKey(command))
 			{
 				_commandRegistry.Add(command, new List<ICommandListener>());
 			}
@@ -322,9 +324,41 @@ namespace SurvivalKit.Events
 		/// <typeparam name="TEventType">The type of the event that will be dispatched.</typeparam>
 		/// <param name="eventInstance">The event instance that should be pushed to all modules.</param>
 		/// <param name="fireSubEvents">Should we fire sub events</param>
-		public void DispatchCommand(string command, Permissions.CommandSender sender, string alias, object[] arguments)
+		public bool DispatchCommand(string command, Permissions.CommandSender sender, string alias, string[] arguments)
 		{
-			throw new NotImplementedException();
+			var isCancelledCommand = false;
+			if (_commandRegistry.ContainsKey(command))
+			{
+				var listeners = _commandRegistry[command];
+
+				foreach (var item in listeners)
+				{
+					try
+					{
+						var result = item.onCommand(sender, command, alias, arguments);
+						if (result)
+						{
+							// command is cancelled
+							isCancelledCommand = true;
+							break;
+						}
+					}
+					catch (Exception exception)
+					{
+						Log.Error("An exception occured while processing the command " + command.ToLower() + " : " + exception.ToString());
+						Log.Error(exception.StackTrace);
+					}
+
+				}
+			}
+			else
+			{
+				// send the sender a message he is sending us unknown commands?
+			}
+
+
+			return isCancelledCommand;
 		}
+
 	}
 }

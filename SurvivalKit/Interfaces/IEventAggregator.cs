@@ -54,7 +54,7 @@ namespace SurvivalKit.Interfaces
 		/// <typeparam name="TEventType">The type of the event that will be dispatched.</typeparam>
 		/// <param name="eventInstance">The event instance that should be pushed to all modules.</param>
 		/// <param name="fireSubEvents">Should we fire sub events</param>
-		void DispatchCommand(string command, CommandSender sender, string alias, object[] arguments);
+		bool DispatchCommand(string command, CommandSender sender, string alias, string[] arguments);
 
 		/// <summary>
 		/// Method to get all registered event types.
