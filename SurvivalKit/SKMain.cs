@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-
-using SurvivalKit.Plugins;
+using SurvivalKit.Events;
 
 namespace SurvivalKit
 {
@@ -10,8 +9,6 @@ namespace SurvivalKit
 	/// </summary>
 	public class SKMain
 	{
-		private bool pluginsEnabled = false;
-		private PluginManager plugMgr;
 		private static SKMain mainInstance = null;
 		private static List<GameManager> gamemanagers = new List<GameManager>();
 		/// <summary>
@@ -22,13 +19,6 @@ namespace SurvivalKit
 			get { return mainInstance; }
 		}
 
-		/// <summary>
-		/// Gets the plugin manager.
-		/// </summary>
-		/// <returns>The plugin manager.</returns>
-		public PluginManager getPluginManager() {
-			return this.plugMgr;
-		}
 		/// <summary>
 		/// Gets the current GameManager
 		/// </summary>
@@ -59,8 +49,6 @@ namespace SurvivalKit
 		private SKMain()
 		{
 			Log.Out("SurvivalKit 7DTD plugin system v" + getVersion() + " by DerPopo (http://7daystodie.com/forums/) starting up...");
-			plugMgr = new PluginManager();
-			plugMgr.loadPlugins();
 		}
 
 		/// <summary>
@@ -71,6 +59,7 @@ namespace SurvivalKit
 			if (mainInstance == null) {
 				Permissions.PermissionManager.Instance = new Permissions.SimplePermissionManager();
 				mainInstance = new SKMain();
+				// TODO start loading plugins on a different thread?
 			}
 		}
 
@@ -90,15 +79,11 @@ namespace SurvivalKit
 		/// <param name="gmanager">The GameManager that will get activated during GameManager.Awake().</param>
 		public static void onGameEnable(GameManager gmanager)
 		{
-			if (mainInstance != null && !mainInstance.pluginsEnabled) {
-				foreach (Plugin plug in mainInstance.plugMgr.getPlugins()) {
-					try {
-						PluginLoader loader = mainInstance.plugMgr.getLoader(plug);
-						loader.Enable();
-					} catch (Exception){}
-				}
+			if (mainInstance != null) {
 				if (gmanager != null && !gamemanagers.Contains(gmanager))
 					gamemanagers.Add(gmanager);
+
+				EventAggregator.GetInstance().EnableGame();
 			}
 		}
 		/// <summary>
@@ -107,13 +92,8 @@ namespace SurvivalKit
 		/// <param name="gmanager">The GameManager that will be disactivated during GameManager.Finalize().</param>
 		public static void onGameDisable(GameManager gmanager)
 		{
-			if (mainInstance != null && !mainInstance.pluginsEnabled) {
-				foreach (Plugin plug in mainInstance.plugMgr.getPlugins()) {
-					PluginLoader loader = mainInstance.plugMgr.getLoader(plug);
-					try {
-						loader.Disable();
-					} catch (Exception) {}
-				}
+			if (mainInstance != null) {
+				EventAggregator.GetInstance().DisableGame();	
 				if (gmanager != null)
 					gamemanagers.Remove(gmanager);
 			}
@@ -124,15 +104,7 @@ namespace SurvivalKit
 		public static void onGameUninit()
 		{
 			if (mainInstance != null) {
-				foreach (Plugin plug in mainInstance.plugMgr.getPlugins()) {
-					PluginLoader loader = mainInstance.plugMgr.getLoader(plug);
-					try {
-						loader.Disable();
-					} catch (Exception){}
-					try {
-						loader.Unload();
-					} catch (Exception){}
-				}
+				EventAggregator.GetInstance().DisableGame();
 				mainInstance = null;
 			}
 		}
@@ -141,22 +113,23 @@ namespace SurvivalKit
 		/// </summary>
 		public static void doReload()
 		{
-			if (mainInstance == null)
-				onGameInit();
-			foreach (Plugin plug in mainInstance.plugMgr.getPlugins()) {
-				PluginLoader loader = mainInstance.plugMgr.getLoader(plug);
-				try {
-					if (loader.isEnabled())
-						loader.Disable();
-				} catch (Exception){}
-				try {
-					loader.Unload();
-				} catch (Exception){}
-			}
-			mainInstance.pluginsEnabled = false;
-			mainInstance.plugMgr = new PluginManager();
-			mainInstance.plugMgr.loadPlugins();
-			onGameEnable(null);
+			// TODO implement the reload method.
+			//if (mainInstance == null)
+			//	onGameInit();
+			//foreach (Plugin plug in mainInstance.plugMgr.getPlugins()) {
+			//	PluginLoader loader = mainInstance.plugMgr.getLoader(plug);
+			//	try {
+			//		if (loader.isEnabled())
+			//			loader.Disable();
+			//	} catch (Exception){}
+			//	try {
+			//		loader.Unload();
+			//	} catch (Exception){}
+			//}
+			//mainInstance.pluginsEnabled = false;
+			//mainInstance.plugMgr = new PluginManager();
+			//mainInstance.plugMgr.loadPlugins();
+			//onGameEnable(null);
 		}
 
 		/// <summary>

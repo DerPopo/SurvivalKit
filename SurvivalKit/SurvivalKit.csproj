@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -52,6 +52,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstracts\BaseEvent.cs" />
+    <Compile Include="Abstracts\CancellableBaseEvent.cs" />
+    <Compile Include="Abstracts\EventListener.cs" />
+    <Compile Include="Events\EventAggregator.cs" />
+    <Compile Include="Events\EventHook.cs" />
+    <Compile Include="Events\EventListenerRegistration.cs" />
+    <Compile Include="Extensions\ExtensionAttribute.cs" />
+    <Compile Include="Extensions\IDispatchableEventExtensions.cs" />
+    <Compile Include="Interfaces\ICancellableEvent.cs" />
+    <Compile Include="Interfaces\ICommandListener.cs" />
+    <Compile Include="Interfaces\IPlugin.cs" />
+    <Compile Include="Utility\EventListenerRegistrationComparer.cs" />
+    <Compile Include="Utility\InstanceResolver.cs" />
+    <Compile Include="Interfaces\IDispatchableEvent.cs" />
+    <Compile Include="Interfaces\IEventAggregator.cs" />
+    <Compile Include="Interfaces\IEventHook.cs" />
+    <Compile Include="Interfaces\IResolveInstances.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Plugins\Managed\NetPlugin.cs" />
     <Compile Include="Plugins\Managed\NetLoader.cs" />
@@ -60,10 +77,8 @@
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Plugins\Plugin.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
-    <Compile Include="Events\ICancellable.cs" />
-    <Compile Include="Events\Listener.cs" />
+    <Compile Include="Interfaces\ICancellable.cs" />
     <Compile Include="Events\Priority.cs" />
-    <Compile Include="Events\Event.cs" />
     <Compile Include="Events\Exceptions\EventNotFoundException.cs" />
     <Compile Include="Events\Misc\TorchFlickerUpdateEvent.cs" />
     <Compile Include="Events\Network\ReadPacketFromBufEvent.cs" />
@@ -77,22 +92,11 @@
     <Compile Include="Permissions\CommandSender.cs" />
     <Compile Include="Permissions\PermissionFile.cs" />
     <Compile Include="Permissions\SimplePermissionManager.cs" />
-    <Compile Include="Commands\CommandListener.cs" />
     <Compile Include="Permissions\PlayerCommandSender.cs" />
     <Compile Include="Events\Misc\UnknownChunkProviderEvent.cs" />
     <Compile Include="Events\Entity\EntityEmitSmellEvent.cs" />
+    <Compile Include="Utility\PrioritizedEventListenerDictionary.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Plugins\" />
-    <Folder Include="Plugins\Managed\" />
-    <Folder Include="Events\" />
-    <Folder Include="Events\Misc\" />
-    <Folder Include="Events\Exceptions\" />
-    <Folder Include="Events\Network\" />
-    <Folder Include="Events\Entity\" />
-    <Folder Include="Events\Environment\" />
-    <Folder Include="Permissions\" />
-    <Folder Include="Commands\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

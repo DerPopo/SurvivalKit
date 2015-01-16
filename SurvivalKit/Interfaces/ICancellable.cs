@@ -1,6 +1,4 @@
-using System;
-
-namespace SurvivalKit.Events
+namespace SurvivalKit.Interfaces
 {
 	/// <summary>
 	/// An interface for cancellable events.
@@ -10,7 +8,7 @@ namespace SurvivalKit.Events
 		/// <summary>
 		/// Gets or sets whether this event is cancelled.
 		/// </summary>
-		bool Cancelled { get; set; }
+		bool IsCancelled { get; set; }
 	}
 }
 

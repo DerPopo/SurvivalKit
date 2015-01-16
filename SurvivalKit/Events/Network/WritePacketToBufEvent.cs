@@ -1,17 +1,19 @@
 using System;
 using System.Reflection;
 using System.Collections.Generic;
+using SurvivalKit.Interfaces;
+using SurvivalKit.Abstracts;
 
 namespace SurvivalKit.Events.Network
 {
 	/// <summary>
 	/// Fired before the game wrote a packet to a buffer.
 	/// </summary>
-	public class WritePacketToBufEvent : Event, ICancellable
+	public class WritePacketToBufEvent : CancellableBaseEvent
 	{
 		private bool cancelled;
 		private object packet;
-		private List<Event> subevents;
+		private List<BaseEvent> subevents;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SurvivalKit.Events.Network.WritePacketToBufEvent"/> class.
@@ -29,7 +31,7 @@ namespace SurvivalKit.Events.Network
 			packet = args[0];
 			cancelled = (bool)args[1];
 
-			subevents = new List<Event>();
+			subevents = new List<BaseEvent>();
 			MethodInfo miPkType = this.packet.GetType().GetMethod("GetPkType");
 			if (miPkType == null || !typeof(PackageType).IsAssignableFrom(miPkType.ReturnType)) {
 				Log.Error("A packet of type '" + this.packet.GetType().FullName + "' hasn't got a valid GetPkType() function!");
@@ -71,15 +73,7 @@ namespace SurvivalKit.Events.Network
 		public override object[] getReturnParams ()
 		{
 			this.update();
-			return new object[]{ this.Cancelled };
-		}
-		/// <summary>
-		/// Gets whether this event supports clients.
-		/// </summary>
-		/// <returns><c>true</c>, if clients are supported, <c>false</c> otherwise.</returns>
-		public override bool supportsClient ()
-		{
-			return false;
+			return new object[]{ this.IsCancelled };
 		}
 
 		/// <summary>
@@ -87,7 +81,7 @@ namespace SurvivalKit.Events.Network
 		/// </summary>
 		/// <returns>Returns an event array containing all direct subevents.</returns>
 		/// <example>A ProcessPacketEvent containing a SetBlock packet returns an instance of SetBlocksEvent.</example>
-		public override Event[] getSubevents ()
+		public override IDispatchableEvent[] getSubevents()
 		{
 			return subevents.ToArray();
 		}
@@ -98,11 +92,11 @@ namespace SurvivalKit.Events.Network
 		/// <example>A SetBlocksEvent calls parent.update() (parent most likely is a ProcessPacketEvent) when the SetBlocksEvent gets cancelled.</example>
 		public override void update()
 		{
-			foreach (Event _event in this.subevents) {
+			foreach (BaseEvent _event in this.subevents) {
 				_event.update();
 				if (_event is ICancellable) {
-					if ((_event as ICancellable).Cancelled == true)
-						Cancelled = true;
+					if ((_event as ICancellable).IsCancelled == true)
+						IsCancelled = true;
 				}
 				if (_event is Events.Entities.EntityMoveEvent) {
 					Events.Entities.EntityMoveEvent __event = (_event as Events.Entities.EntityMoveEvent);
@@ -116,7 +110,7 @@ namespace SurvivalKit.Events.Network
 		/// Gets or sets whether this event is cancelled.
 		/// </summary>
 		/// <value><c>true</c> if this instance cancelled, <c>false</c> otherwise.</value>
-		public bool Cancelled {
+		public override bool IsCancelled {
 			get { return this.cancelled; }
 			set { this.cancelled = value; }
 		}

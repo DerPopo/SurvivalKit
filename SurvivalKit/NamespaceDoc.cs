@@ -21,7 +21,7 @@ namespace SurvivalKit
 	/// 	<see cref="SurvivalKit.Events.Network.RPCEvent"/> - [server only] Fired when a client sent a RPC message. If cancelled, the RPC message won't get processed.<para/>
 	/// 	<see cref="SurvivalKit.Events.Network.WritePacketToBufEvent"/> [server only] Fired before the server writes a packet to a buffer. If cancelled, the packet won't get written to the buffer.<para/>
 	///  <para/>
-	/// To add a listener to a command, call <see cref="SurvivalKit.Plugins.Managed.NetPlugin.registerCommand(string,SurvivalKit.Commands.CommandListener)"/>.<para/>
+	/// To add a listener to a command, call <see cref="SurvivalKit.Plugins.Managed.NetPlugin.registerCommand(string,SurvivalKit.Commands.ICommandListener)"/>.<para/>
 	/// You can check for permissions (the name should begin with your plugin's name) with <see cref="SurvivalKit.Permissions.CommandSender.isPermitted(string)"/> and 
 	/// <see cref="SurvivalKit.Permissions.CommandSender.isOp()"/>.
 	/// </summary>

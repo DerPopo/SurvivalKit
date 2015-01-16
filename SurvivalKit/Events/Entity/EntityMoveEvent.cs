@@ -1,3 +1,5 @@
+using SurvivalKit.Abstracts;
+using SurvivalKit.Interfaces;
 using System;
 
 namespace SurvivalKit.Events.Entities
@@ -5,7 +7,7 @@ namespace SurvivalKit.Events.Entities
 	/// <summary>
 	/// Fired when an entity moves (not working properly right now).
 	/// </summary>
-	public class EntityMoveEvent : Event, ICancellable
+	public class EntityMoveEvent : CancellableBaseEvent
 	{
 		private bool cancelled;
 		private UnityEngine.Vector3 pos;
@@ -13,7 +15,7 @@ namespace SurvivalKit.Events.Entities
 		private object packet;
 		private World world;
 
-		private Event parent = null;
+		private BaseEvent parent = null;
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SurvivalKit.Events.Entity.EntityMoveEvent"/> class.
 		/// </summary>
@@ -54,21 +56,14 @@ namespace SurvivalKit.Events.Entities
 		/// <returns>Returns an object array of parameters to pass to the caller of fireEvent.</returns>
 		public override object[] getReturnParams ()
 		{
-			return new object[]{ this.Cancelled, this.pos, this.rot};
+			return new object[]{ this.IsCancelled, this.pos, this.rot};
 		}
-		/// <summary>
-		/// Gets whether this event supports clients.
-		/// </summary>
-		/// <returns><c>true</c>, if clients are supported, <c>false</c> otherwise.</returns>
-		public override bool supportsClient ()
-		{
-			return false;
-		}
+
 		/// <summary>
 		/// Sets the parent of the current Event.
 		/// </summary>
 		/// <param name="parent">The new parent event.</param>
-		public override void setParent(Event parent)
+		public override void setParent(BaseEvent parent)
 		{
 			this.parent = parent;
 		}
@@ -77,7 +72,7 @@ namespace SurvivalKit.Events.Entities
 		/// Gets whether this event supports clients.
 		/// </summary>
 		/// <returns><c>true</c>, if clients are supported, <c>false</c> otherwise.</returns>
-		public bool Cancelled {
+		public override bool IsCancelled {
 			get { return this.cancelled; }
 			set { this.cancelled = value; }
 		}

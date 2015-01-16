@@ -1,3 +1,5 @@
+using SurvivalKit.Abstracts;
+using SurvivalKit.Interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -6,13 +8,13 @@ namespace SurvivalKit.Events.Environment
 	/// <summary>
 	/// Fired before blocks are set.
 	/// </summary>
-	public class SetBlocksEvent : Event, ICancellable
+	public class SetBlocksEvent : CancellableBaseEvent
 	{
 		private bool cancelled;
 		private List<BlockChangeInfo> blockPosTypes;
 		private World world;
 
-		private Event parent = null;
+		private BaseEvent parent = null;
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SurvivalKit.Events.Environment.SetBlocksEvent"/> class.
 		/// </summary>
@@ -49,7 +51,7 @@ namespace SurvivalKit.Events.Environment
 		/// <returns>Returns an object array of parameters to pass to the caller of fireEvent.</returns>
 		public override object[] getReturnParams ()
 		{
-			if (this.Cancelled) {
+			if (this.IsCancelled) {
 				System.Diagnostics.StackFrame sf = new System.Diagnostics.StackTrace().GetFrame(1);
 				if (sf != null && sf.GetMethod ().Module.Equals (this.GetType ().Module) && this.world != null) {
 					List<BlockChangeInfo> blockPosTypes = new List<BlockChangeInfo>(this.blockPosTypes.Count);
@@ -69,21 +71,14 @@ namespace SurvivalKit.Events.Environment
 				}
 			}
 
-			return new object[]{ this.Cancelled, this.blockPosTypes, this.world };
+			return new object[]{ this.IsCancelled, this.blockPosTypes, this.world };
 		}
-		/// <summary>
-		/// Gets whether this event supports clients.
-		/// </summary>
-		/// <returns><c>true</c>, if clients are supported, <c>false</c> otherwise.</returns>
-		public override bool supportsClient ()
-		{
-			return false;
-		}
+
 		/// <summary>
 		/// Sets the parent of the current Event.
 		/// </summary>
 		/// <param name="parent">The new parent event.</param>
-		public override void setParent(Event parent)
+		public override void setParent(BaseEvent parent)
 		{
 			this.parent = parent;
 		}
@@ -92,7 +87,7 @@ namespace SurvivalKit.Events.Environment
 		/// Gets whether this event supports clients.
 		/// </summary>
 		/// <returns><c>true</c>, if clients are supported, <c>false</c> otherwise.</returns>
-		public bool Cancelled {
+		public override bool IsCancelled {
 			get { return this.cancelled; }
 			set { this.cancelled = value; if (parent != null) parent.update(); }
 		}

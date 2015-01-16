@@ -1,11 +1,9 @@
-using System;
-
-namespace SurvivalKit.Commands
+namespace SurvivalKit.Interfaces
 {
 	/// <summary>
 	/// The CommandListener interface is used in command listening classes.
 	/// </summary>
-	public interface CommandListener
+	public interface ICommandListener
 	{
 		/// <summary>
 		/// Called when a <see cref="SurvivalKit.Permissions.CommandSender"/> sent a command.

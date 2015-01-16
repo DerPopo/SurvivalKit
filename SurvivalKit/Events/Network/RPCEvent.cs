@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
-using SurvivalKit.Commands;
+using SurvivalKit.Abstracts;
+using SurvivalKit.Interfaces;
 
 namespace SurvivalKit.Events.Network
 {
 	/// <summary>
 	/// Fired when a RPC function gets called.
 	/// </summary>
-	public class RPCEvent : Event, ICancellable
+	public class RPCEvent : CancellableBaseEvent
 	{
 		private bool cancelled;
 		private object rpcclass;
@@ -51,28 +52,11 @@ namespace SurvivalKit.Events.Network
 						EntityPlayer playerEntity = SKMain.getPlayerEntity(networkPlayer, curGmgr);
 						if (playerEntity == null)
 							continue;
-						foreach (Plugins.Plugin plugin in SKMain.SkMain.getPluginManager().getPlugins())
-						{
-							if (!(plugin is Plugins.Managed.NetPlugin))
-								continue;
-							Plugins.Managed.NetPlugin _plugin = (Plugins.Managed.NetPlugin)plugin;
-							Dictionary<string,CommandListener> listenerByCommand = _plugin.ListenerByCommand;
-							CommandListener cmdListener = null;
-							if (listenerByCommand.TryGetValue(splitCmd[0].ToLower(), out cmdListener))
-							{
-								try {
-									if (cmdListener.onCommand(new SurvivalKit.Permissions.PlayerCommandSender(playerEntity, networkPlayer), splitCmd[0], splitCmd[0], cmdArgs))
-									{
-										this.args[0] = null;
-										this.args[2] = null;
-										this.cancelled = true;
-										return;
-									}
-								} catch (Exception e) {
-									Log.Error("An exception occured while processing the command " + splitCmd[0].ToLower() + " : " + e.ToString());
-								}
-							}
-						}
+
+						string alias = splitCmd[0], command = splitCmd[0];
+						var commandSender = new SurvivalKit.Permissions.PlayerCommandSender(playerEntity, networkPlayer);
+
+						EventAggregator.GetInstance().DispatchCommand(command, commandSender, alias, cmdArgs);
 					}
 				}
 			}
@@ -102,20 +86,13 @@ namespace SurvivalKit.Events.Network
 				ret[i + 3] = args[i];
 			return ret;
 		}
-		/// <summary>
-		/// Gets whether this event supports clients.
-		/// </summary>
-		/// <returns><c>true</c>, if clients are supported, <c>false</c> otherwise.</returns>
-		public override bool supportsClient ()
-		{
-			return false;
-		}
 
 		/// <summary>
 		/// Gets or sets whether this event is cancelled.
 		/// </summary>
 		/// <value><c>true</c> if this instance cancelled, <c>false</c> otherwise.</value>
-		public bool Cancelled {
+		public override bool IsCancelled
+		{
 			get { return this.cancelled; }
 			set { this.cancelled = value; }
 		}

@@ -1,9 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurvivalKit", "SurvivalKit\SurvivalKit.csproj", "{FFDC5B24-ECB4-4BAD-A28E-B896B5B2F3D2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SKPatcher", "SKPatcher\SKPatcher.csproj", "{B0552F02-81B1-4B10-AA5A-1DE487796263}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurvivalKit.Tests", "SurvivalKit.Tests\SurvivalKit.Tests.csproj", "{2337A1FE-CA8E-4AB2-9C83-C927A758D671}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +13,21 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B0552F02-81B1-4B10-AA5A-1DE487796263}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B0552F02-81B1-4B10-AA5A-1DE487796263}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B0552F02-81B1-4B10-AA5A-1DE487796263}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B0552F02-81B1-4B10-AA5A-1DE487796263}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FFDC5B24-ECB4-4BAD-A28E-B896B5B2F3D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FFDC5B24-ECB4-4BAD-A28E-B896B5B2F3D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFDC5B24-ECB4-4BAD-A28E-B896B5B2F3D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFDC5B24-ECB4-4BAD-A28E-B896B5B2F3D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0552F02-81B1-4B10-AA5A-1DE487796263}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0552F02-81B1-4B10-AA5A-1DE487796263}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0552F02-81B1-4B10-AA5A-1DE487796263}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0552F02-81B1-4B10-AA5A-1DE487796263}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2337A1FE-CA8E-4AB2-9C83-C927A758D671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2337A1FE-CA8E-4AB2-9C83-C927A758D671}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2337A1FE-CA8E-4AB2-9C83-C927A758D671}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2337A1FE-CA8E-4AB2-9C83-C927A758D671}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = SKPatcher\SKPatcher.csproj

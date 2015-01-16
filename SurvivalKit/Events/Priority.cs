@@ -1,9 +1,7 @@
-using System;
-
 namespace SurvivalKit.Events
 {
 	/// <summary>
-	/// The enum describing the different priority levels.
+	/// The enumeration describing the different priority levels.
 	/// </summary>
 	public enum Priority
 	{
