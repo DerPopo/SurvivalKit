@@ -48,7 +48,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Events\EventManagerTests.cs" />
     <Compile Include="Mocks\MockEvent.cs" />
+    <Compile Include="Mocks\MockEventAggregator.cs" />
     <Compile Include="Mocks\MockEventHook.cs" />
     <Compile Include="Mocks\MockEventListener.cs" />
     <Compile Include="Events\EventAggregatorTests.cs" />
@@ -68,7 +70,23 @@
     <Folder Include="Events\Abstracts\" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=00a761881d5bd7cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Assemblies\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Assemblies\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="LogLibrary, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Assemblies\LogLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Assemblies\UnityEngine.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -56,7 +56,7 @@ namespace SurvivalKit.Utility
 		{
 			if (!LoadedPlugins)
 			{
-				// omly load the plugins once
+				// only load the plugins once
 				loadPlugins();
 				LoadedPlugins = true;
 			}

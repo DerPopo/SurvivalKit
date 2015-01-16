@@ -58,6 +58,7 @@
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\EventHook.cs" />
     <Compile Include="Events\EventListenerRegistration.cs" />
+    <Compile Include="Exceptions\SurvivalKitPluginException.cs" />
     <Compile Include="Extensions\ExtensionAttribute.cs" />
     <Compile Include="Extensions\IDispatchableEventExtensions.cs" />
     <Compile Include="Interfaces\ICancellableEvent.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Permissions\PlayerCommandSender.cs" />
     <Compile Include="Events\Misc\UnknownChunkProviderEvent.cs" />
     <Compile Include="Events\Entity\EntityEmitSmellEvent.cs" />
+    <Compile Include="Utility\LogUtility.cs" />
     <Compile Include="Utility\PluginLoader.cs" />
     <Compile Include="Utility\PrioritizedEventListenerDictionary.cs" />
   </ItemGroup>

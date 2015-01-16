@@ -1,4 +1,5 @@
 ﻿using SurvivalKit.Abstracts;
+using SurvivalKit.Exceptions;
 using SurvivalKit.Extensions;
 using SurvivalKit.Interfaces;
 using SurvivalKit.Utility;
@@ -54,7 +55,7 @@ namespace SurvivalKit.Events
 
 			if (registerEventListeners == null || registerEventListeners.Count == 0)
 			{
-				LogMessage("No IRegisterEventListeners instances found.", true);
+				LogUtility.Warning("No IRegisterEventListeners instances found.");
 				return;
 			}
 
@@ -67,36 +68,8 @@ namespace SurvivalKit.Events
 				}
 				catch (Exception exception)
 				{
-					LogMessage(exception.Message);
-					LogMessage(exception.StackTrace);
+					LogUtility.Exception(exception);
 				}
-			}
-		}
-
-		/// <summary>
-		///	Helper method for logging.
-		///	Calling the log library from a unit test project will cause errors.
-		///	This method could be moved to a separate helper in order to re-use it in other classes.
-		/// </summary>
-		/// <param name="message">The message to log</param>
-		/// <param name="isWarning">Should we log it as a warning? If not, we will log it as an error.</param>
-		private void LogMessage(string message, bool isWarning = false)
-		{
-			if (_preventLogging)
-			{
-				Debug.WriteLine(message);
-			}
-			else
-			{
-				if (isWarning)
-				{
-					Log.Warning(message);
-				}
-				else
-				{
-					Log.Error(message);
-				}
-
 			}
 		}
 
@@ -226,7 +199,7 @@ namespace SurvivalKit.Events
 					if (tooManyArgumentsRequired)
 					{
 						var message = string.Format("SurvivalKit warning: Skipped listener {0} for event type {1} is skipped. Argument mismatch!", instance.GetType(), eventType);
-						LogMessage(message, true);
+						LogUtility.Warning(message);
 						continue;
 					}
 
@@ -248,8 +221,9 @@ namespace SurvivalKit.Events
 					}
 					catch (Exception exception)
 					{
-						LogMessage(exception.Message, true);
-						LogMessage(exception.StackTrace, true);
+						// TODO Perhaps disable this plugin?
+						var wrappedException = new SurvivalKitPluginException(eventType.Name, eventType.AssemblyQualifiedName, "Exception while invoking plugin", exception);
+						LogUtility.Exception(wrappedException);
 					}
 				}
 			}
@@ -345,8 +319,8 @@ namespace SurvivalKit.Events
 					}
 					catch (Exception exception)
 					{
-						Log.Error("An exception occured while processing the command " + command.ToLower() + " : " + exception.ToString());
-						Log.Error(exception.StackTrace);
+						LogUtility.Error("An exception occured while processing the command " + command.ToLower());
+						LogUtility.Exception(exception);
 					}
 
 				}

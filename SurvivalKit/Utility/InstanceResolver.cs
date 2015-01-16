@@ -1,4 +1,5 @@
-﻿using SurvivalKit.Interfaces;
+﻿using SurvivalKit.Exceptions;
+using SurvivalKit.Interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -34,8 +35,7 @@ namespace SurvivalKit.Utility
 				}
 				catch (Exception exception)
 				{
-					Log.Error(exception.Message);
-					Log.Error(exception.StackTrace);
+					LogUtility.Exception(exception);
 				}
 
 				foreach (var typeInAssembly in typesInAssembly)
@@ -67,8 +67,8 @@ namespace SurvivalKit.Utility
 						}
 						catch (Exception exception)
 						{
-							Log.Error(exception.Message);
-							Log.Error(exception.StackTrace);
+							var wrappedException = new SurvivalKitPluginException("ResolvePlugin","SurvivalKit.InstanceResolver.ResolveInstances", "Error while invoking constructor", exception);
+							LogUtility.Exception(wrappedException);
 						}
 					}
 				}

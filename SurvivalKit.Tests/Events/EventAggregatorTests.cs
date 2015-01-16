@@ -6,6 +6,7 @@ using SurvivalKit.Interfaces;
 using SurvivalKit.Abstracts;
 using System.Runtime.CompilerServices;
 using SurvivalKit.Tests.Mocks;
+using SurvivalKit.Utility;
 
 namespace SurvivalKit.Tests.Events
 {
@@ -16,6 +17,7 @@ namespace SurvivalKit.Tests.Events
 		[TestMethod]
 		public void EventAggregator_RegisterEventListener_Null()
 		{
+			LogUtility.SetLogToConsole();
 			var resolver = new Mocks.MockInstanceResolver(null);
 			try
 			{
