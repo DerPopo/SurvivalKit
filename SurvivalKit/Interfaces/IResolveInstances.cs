@@ -16,6 +16,6 @@ namespace SurvivalKit.Interfaces
 		/// Returns a list with <see cref="TInstance"/> instances. 
 		/// The list could be empty when no implementations were found.
 		/// </returns>
-		List<TInstance> ResolveInstances<TInstance>();
+		List<TInstance> ResolveInstances<TInstance>(bool onlyLookInPlugins = true);
 	}
 }

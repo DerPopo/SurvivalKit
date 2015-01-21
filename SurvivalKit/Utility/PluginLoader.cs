@@ -63,14 +63,29 @@ namespace SurvivalKit.Utility
 		}
 
 		/// <summary>
+		///	Internal getter for the loaded assemblies.
+		///	This call should be used in the <see cref="IResolveInstances"/> method.
+		/// </summary>
+		/// <returns>Returns a list of assemblies from the plugin folder.</returns>
+		public List<Assembly> GetLoadedAssemblies()
+		{
+			LoadAssemblies();
+			return _loadedAssemblies;
+		}
+
+		/// <summary>
 		///	Internal method containing the logic to actually load plugins.
 		/// </summary>
 		/// <remarks>Todo: implement a registry that will keep track of which plugins are enabled or not.</remarks>
 		private void loadPlugins()
 		{
+			LogUtility.Out("[SK] PluginLoader started loading");
 			DirectoryInfo pluginDir = new DirectoryInfo("plugins");
 			if (!pluginDir.Exists)
+			{
+				LogUtility.Out("[SK] Created plugin directory.");
 				pluginDir.Create();
+			}
 
 			foreach (FileInfo fi in pluginDir.GetFiles("*.dll"))
 			{
@@ -82,10 +97,12 @@ namespace SurvivalKit.Utility
 				}
 				catch (Exception e)
 				{
-					Log.Out("An exception occured while loading a plugin dll ('" + fi.Name + "') : ");
-					Log.Exception(e);
+					LogUtility.Error("[SK] An exception occured while loading a plugin dll ('" + fi.Name + "') : ");
+					LogUtility.Exception(e);
 				}
 			}
+
+			LogUtility.Out("[SK] PluginLoader finished loading");
 		}
 	}
 }

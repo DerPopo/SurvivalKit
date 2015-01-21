@@ -18,6 +18,22 @@ namespace SurvivalKit.Utility
 		}
 
 		/// <summary>
+		///	Method to log a message.
+		/// </summary>
+		/// <param name="message">The message to log.</param>
+		public static void Out(string message)
+		{
+			if (LogToConsole)
+			{
+				Debug.WriteLine(message);
+			}
+			else
+			{
+				Log.Out(message);
+			}
+		}
+
+		/// <summary>
 		///	Log an exception.
 		/// </summary>
 		/// <param name="exception">The exception to log</param>
@@ -25,9 +41,10 @@ namespace SurvivalKit.Utility
 		{
 			if(LogToConsole)
 			{
-				Debug.WriteLine("Exception:");
+				Debug.WriteLine("[SK]  Exception:");
 				Debug.WriteLine(exception);
 			} else {
+				Log.Error("[SK]  Exception:");
 				Log.Exception(exception);
 			}
 		}

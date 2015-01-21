@@ -49,7 +49,7 @@ namespace SurvivalKit
 
 		private SKMain()
 		{
-			Log.Out("SurvivalKit 7DTD plugin system v" + getVersion() + " by DerPopo (http://7daystodie.com/forums/) starting up...");
+			Log.Out("[SK] SurvivalKit 7DTD plugin system v" + getVersion() + " by DerPopo (http://7daystodie.com/forums/) starting up...");
 		}
 
 		/// <summary>

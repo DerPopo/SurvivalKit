@@ -15,9 +15,9 @@ namespace SurvivalKit.Tests.Mocks
 			_returnValue = returnValue;
 		}
 
-		public List<TInstance> ResolveInstances<TInstance>()
+		public List<TInstance> ResolveInstances<TInstance>(bool onlyLookInPlugins = true)
 		{
-			return _returnValue == null ? null: _returnValue.Cast<TInstance>().ToList();
+			return _returnValue == null ? null : _returnValue.Cast<TInstance>().ToList();
 		}
 	}
 }

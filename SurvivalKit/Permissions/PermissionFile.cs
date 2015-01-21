@@ -735,7 +735,7 @@ namespace SurvivalKit.Permissions
 						if (groupPerms != null)
 							ret.AddRange(groupPerms);
 						else
-							Log.Warning("A <fromgroup> node in the permissions.xml doesn't contain a valid group name!");
+							Log.Warning("[SK] A <fromgroup> node in the permissions.xml doesn't contain a valid group name!");
 					}
 				}
 			}
@@ -846,7 +846,7 @@ namespace SurvivalKit.Permissions
 					} 
 					else
 					{
-						Log.Warning("A <group> node in the permissions.xml doesn't contain a valid name attribute!");
+						Log.Warning("[SK]  A <group> node in the permissions.xml doesn't contain a valid name attribute!");
 					}
 				}
 			}
@@ -867,7 +867,7 @@ namespace SurvivalKit.Permissions
 					}
 					else
 					{
-						Log.Warning("A <member> node in the permissions.xml doesn't contain a valid member identifier!");
+						Log.Warning("[SK]  A <member> node in the permissions.xml doesn't contain a valid member identifier!");
 					}
 				}
 			}
