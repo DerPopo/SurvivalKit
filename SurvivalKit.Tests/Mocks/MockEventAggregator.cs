@@ -22,22 +22,22 @@ namespace SurvivalKit.Tests.Mocks
 			}
 		}
 
-		public bool RegisterEventListener<TListener>(TListener eventListener) where TListener : Abstracts.EventListener
-		{
-			throw new NotImplementedException();
-		}
-
 		public bool RegisterCommandListener(string command, ICommandListener commandListener)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void UnregisterEventListener<TListener>(TListener eventListener) where TListener : Abstracts.EventListener
+		public void DispatchEvent<TEventType>(TEventType eventInstance, bool fireSubEvents) where TEventType : IDispatchableEvent
 		{
 			throw new NotImplementedException();
 		}
 
-		public void DispatchEvent<TEventType>(TEventType eventInstance, bool fireSubEvents) where TEventType : IDispatchableEvent
+		public bool RegisterEventListener<TListener>(TListener eventListener) where TListener : Abstracts.EventListener
+		{
+			throw new NotImplementedException();
+		}
+
+		public void UnregisterEventListener<TListener>(TListener eventListener) where TListener : Abstracts.EventListener
 		{
 			throw new NotImplementedException();
 		}
