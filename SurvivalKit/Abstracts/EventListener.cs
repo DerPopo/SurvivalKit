@@ -89,6 +89,10 @@ namespace SurvivalKit.Abstracts
 		/// <returns>Returns a hash code.</returns>
 		public int GetHashCode(EventListener obj)
 		{
+			if (obj == null)
+			{
+				throw new ArgumentNullException("obj");
+			}
 			return obj.UniqueIdentifier.GetHashCode();
 		}
 	}
