@@ -17,7 +17,7 @@ namespace SetBlockEventPlugin
 		public SetBlockListener()
 		{
 			var fileInfo = new FileInfo("SetBlockLog.txt");
-			WriteStream = fileInfo.OpenWrite();
+			WriteStream = fileInfo.Open(FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read);
 			
 		}
 

@@ -47,7 +47,6 @@ namespace SurvivalKit.Events
 			var eventTypes = _aggregator.GetRegisteredEventTypes();
 			foreach (Type curEventType in eventTypes)
 			{
-				//Log.Out("Event : " + curEventType.Name);
 				if (curEventType.Name.ToLower().Equals(lowerCaseName))
 				{
 					try
@@ -62,10 +61,11 @@ namespace SurvivalKit.Events
 						LogUtility.Exception(ex);
 						throw exception;
 					}
-				
+
 					if (!_event.IsCancelled())
 					{
 						_event.Dispatch();
+						LogUtility.Out("Dispatched : " + curEventType.Name);
 					}
 					return _event.getReturnParams();
 				}

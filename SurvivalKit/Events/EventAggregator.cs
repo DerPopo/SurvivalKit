@@ -171,9 +171,11 @@ namespace SurvivalKit.Events
 		/// <param name="fireSubEvents">Should we fire sub events</param>
 		public void DispatchEvent<TEventType>(TEventType eventInstance, bool fireSubEvents) where TEventType : IDispatchableEvent
 		{
+			LogUtility.Out("[SK] Dispatching: " + eventInstance.GetType().Name);
 			if (GameDisabled)
 			{
 				// perhaps cancel the event?
+				LogUtility.Out("[SK] Dispatching failed: " + eventInstance.GetType().Name);
 				return;
 			}
 
@@ -184,11 +186,13 @@ namespace SurvivalKit.Events
 			if (eventInstance.IsCancelled())
 			{
 				// stop processing if the event is cancelled?
+				LogUtility.Out("[SK] Dispatching cancelled: " + eventInstance.GetType().Name);
 				return;
 			}
 
 			if (_hookRegistry.ContainsKey(eventType))
 			{
+				LogUtility.Out("[SK] Found listeners for: " + eventType.Name);
 				var eventHookRegistrations = _hookRegistry[eventType];
 
 				foreach (var eventHookRegistration in eventHookRegistrations)
@@ -206,6 +210,8 @@ namespace SurvivalKit.Events
 
 					try
 					{
+						LogUtility.Out("[SK] Invoking listener for: " + eventType.Name);
+						LogUtility.Out("[SK] Invoking listener for: " + instance.GetType().Name);
 						method.Invoke(instance, new object[1] { eventInstance });
 
 						if (!eventInstance.IsCancelled() && fireSubEvents)
@@ -246,7 +252,7 @@ namespace SurvivalKit.Events
 		/// </summary>
 		public void EnableGame()
 		{
-			GameDisabled = true;
+			GameDisabled = false;
 		}
 
 		/// <summary>
@@ -254,7 +260,7 @@ namespace SurvivalKit.Events
 		/// </summary>
 		public void DisableGame()
 		{
-			GameDisabled = false;
+			GameDisabled = true;
 		}
 
 		/// <summary>
