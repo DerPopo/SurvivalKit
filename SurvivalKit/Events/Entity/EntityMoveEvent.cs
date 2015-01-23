@@ -21,22 +21,21 @@ namespace SurvivalKit.Events.Entities
 		/// </summary>
 		/// <param name="args">
 		/// An object array of data to pass to the event.
-		/// args[0] (object) reserved
-		/// args[1] (bool) indicates whether the event is cancelled
-		/// args[2] (UnityEngine.Vector3) the position to move the entity to
-		/// args[3] (rot) rotation angle 1
-		/// args[4] (World,optional) the World of the entity
-		/// args[5] (object,optional) the entity movement packet this event belongs to
+		/// args[0] (bool) indicates whether the event is cancelled
+		/// args[1] (UnityEngine.Vector3) the position to move the entity to
+		/// args[2] (rot) rotation angle 1
+		/// args[3] (World,optional) the World of the entity
+		/// args[4] (object,optional) the entity movement packet this event belongs to
 		/// </param>
 		public EntityMoveEvent(Object[] args)
 		{
 			if (args == null || args.Length < 5)
 				throw new ArgumentNullException();
-			cancelled = (bool)args[1];
-			pos = (UnityEngine.Vector3)args[2];
-			rot = (UnityEngine.Vector3)args[3];
-			world = (World)((args.Length > 4) ? args[4] : null);
-			packet = ((args.Length > 4) ? args[5] : null );
+			cancelled = (bool)args[0];
+			pos = (UnityEngine.Vector3)args[1];
+			rot = (UnityEngine.Vector3)args[2];
+			world = (World)((args.Length > 3) ? args[3] : null);
+			packet = ((args.Length > 4) ? args[4] : null );
 		}
 
 		/// <summary>

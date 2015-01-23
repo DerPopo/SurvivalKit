@@ -5,7 +5,7 @@ using System;
 namespace SurvivalKit.Events.Misc
 {
 	/// <summary>
-	/// Fired when an unknown chunk provider was detected. Can be used to implement custom chunk providers
+	/// Fired when an unknown chunk provider was detected. Can be used to implement custom chunk providers.
 	/// </summary>
 	public class UnknownChunkProviderEvent : CancellableBaseEvent
 	{
@@ -22,6 +22,7 @@ namespace SurvivalKit.Events.Misc
 		/// args[0] (ChunkCluster) the ChunkCluster that fired the event.
 		/// args[1] (bool) indicates whether the event is cancelled (false by default).
 		/// args[2] (int) the unknown chunkProviderId.
+		/// args[3] (IChunkProvider) the chunk provider (null by default).
 		/// </param>
 		public UnknownChunkProviderEvent(Object[] args)
 		{
@@ -30,7 +31,7 @@ namespace SurvivalKit.Events.Misc
 			cluster = (ChunkCluster)args[0];
 			cancelled = (bool)args[1];
 			chunkProviderId = (int)args[2];
-			chunkProvider = null;
+			chunkProvider = (IChunkProvider)args[3];
 		}
 
 		/// <summary>
@@ -52,7 +53,7 @@ namespace SurvivalKit.Events.Misc
 		/// </returns>
 		public override object[] getReturnParams ()
 		{
-			return new object[]{ this.cancelled, this.chunkProvider };
+			return new object[]{ cluster, this.cancelled, this.chunkProvider };
 		}
 
 		/// <summary>

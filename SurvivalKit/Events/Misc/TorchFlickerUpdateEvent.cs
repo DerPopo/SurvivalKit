@@ -55,7 +55,7 @@ namespace SurvivalKit.Events.Misc
 		/// </returns>
 		public override object[] getReturnParams ()
 		{
-			return new object[]{ this.cancelled, this.intensity, this.maxIntensity, this.minIntensity };
+			return new object[]{ null, this.cancelled, this.intensity, this.maxIntensity, this.minIntensity };
 		}
 
 		/// <summary>

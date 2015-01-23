@@ -20,18 +20,17 @@ namespace SurvivalKit.Events.Environment
 		/// </summary>
 		/// <param name="args">
 		/// An object array of data to pass to the event.
-		/// args[0] (object) reserved
-		/// args[1] (bool) indicates whether the event is cancelled
-		/// args[2] (System.Collections.Generic.List, generic parameter = BlockChangeInfo) a list of BlockChangeInfo
-		/// args[3] (World) the world
+		/// args[0] (bool) indicates whether the event is cancelled
+		/// args[1] (System.Collections.Generic.List, generic parameter = BlockChangeInfo) a list of BlockChangeInfo
+		/// args[2] (World) the world
 		/// </param>
 		public SetBlocksEvent(Object[] args)
 		{
 			if (args == null || args.Length < 4)
 				throw new ArgumentNullException();
-			this.cancelled = (bool)args[1];
-			this.blockPosTypes = (List<BlockChangeInfo>)args[2];
-			this.world = (World)args[3];
+			this.cancelled = (bool)args[0];
+			this.blockPosTypes = (List<BlockChangeInfo>)args[1];
+			this.world = (World)args[2];
 		}
 
 		/// <summary>

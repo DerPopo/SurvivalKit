@@ -32,6 +32,16 @@ namespace SurvivalKit.Tests.Mocks
 			throw new NotImplementedException();
 		}
 
+		public bool RegisterEventListener<TListener>(TListener eventListener) where TListener : SurvivalKit.Abstracts.EventListener
+		{
+			throw new NotImplementedException();
+		}
+
+		public void UnregisterEventListener<TListener>(TListener eventListener) where TListener : SurvivalKit.Abstracts.EventListener
+		{
+			throw new NotImplementedException();
+		}
+
 		public bool DispatchCommand(string command, Permissions.CommandSender sender, string alias, string[] arguments)
 		{
 			throw new NotImplementedException();
@@ -48,16 +58,6 @@ namespace SurvivalKit.Tests.Mocks
 		}
 
 		public void DisableGame()
-		{
-			throw new NotImplementedException();
-		}
-
-		public bool RegisterEventListener<TListener>(TListener eventListener) where TListener : SurvivalKit.Abstracts.EventListener
-		{
-			throw new NotImplementedException();
-		}
-
-		public void UnregisterEventListener<TListener>(TListener eventListener) where TListener : SurvivalKit.Abstracts.EventListener
 		{
 			throw new NotImplementedException();
 		}

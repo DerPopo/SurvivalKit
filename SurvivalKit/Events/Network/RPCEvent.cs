@@ -11,7 +11,6 @@ namespace SurvivalKit.Events.Network
 	public class RPCEvent : CancellableBaseEvent
 	{
 		private bool cancelled;
-		private object rpcclass;
 		private string name;
 		private object[] args;
 
@@ -20,21 +19,19 @@ namespace SurvivalKit.Events.Network
 		/// </summary>
 		/// <param name="args">
 		/// An object array of data to pass to the event.
-		/// args[0] (object) the class which contains the function listening for the RPC.
-		/// args[1] (bool) indicates whether the event is cancelled
-		/// args[2] (string) the name of the fired RPC.
-		/// args[3] (object) the first argument of the fired RPC. (following args contain following RPC arguments)
+		/// args[0] (bool) indicates whether the event is cancelled
+		/// args[1] (string) the name of the fired RPC.
+		/// args[2] (object) the first argument of the fired RPC. (following args contain following RPC arguments)
 		/// </param>
 		public RPCEvent(Object[] args)
 		{
 			if (args == null || args.Length < 3)
 				throw new ArgumentNullException();
-			this.rpcclass = args[0];
-			this.cancelled = (bool)args[1];
-			this.name = (string)args[2];
-			this.args = new object[args.Length-3];
-			for (int i = 3; i < args.Length; i++)
-				this.args[i - 3] = args[i];
+			this.cancelled = (bool)args[0];
+			this.name = (string)args[1];
+			this.args = new object[args.Length-2];
+			for (int i = 2; i < args.Length; i++)
+				this.args[i - 2] = args[i];
 
 			if (this.name.Equals("RPC_ChatMessage") && this.args[0] != null) { //string _msg, int _teamNo, string _playerName, bool _bOpenWdw
 				string message = (string)this.args[0];
@@ -63,7 +60,7 @@ namespace SurvivalKit.Events.Network
 
 							// Why do we set these arguments to null? Shouldn't we set the properties 'name' and 'rpcclass' to null?
 							this.args[0] = null;
-							this.args[2] = null;
+							this.args[1] = null;
 							break;
 						}
 					}
@@ -87,12 +84,11 @@ namespace SurvivalKit.Events.Network
 		/// <returns>Returns an object array of parameters to pass to the caller of fireEvent.</returns>
 		public override object[] getReturnParams ()
 		{
-			object[] ret = new object[3+args.Length];
-			ret[0] = this.rpcclass;
-			ret[1] = cancelled;
-			ret[2] = this.name;
+			object[] ret = new object[2+args.Length];
+			ret[0] = cancelled;
+			ret[1] = this.name;
 			for (int i = 0; i < args.Length; i++)
-				ret[i + 3] = args[i];
+				ret[i + 2] = args[i];
 			return ret;
 		}
 

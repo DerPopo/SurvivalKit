@@ -32,7 +32,7 @@ namespace SKPatcher
 			{
 				MethodBody body = setBlocksMethod.Body;
 				ILProcessor proc = body.GetILProcessor();
-				List<Instruction> hook = HookHelper.Instance.prepareEventHook(setBlocksMethod, "SetBlocks", new Instruction[][] { 
+				List<Instruction> hook = HookHelper.Instance.prepareEventHook(setBlocksMethod, "SetBlocksEvent", new Instruction[][] { 
 					new Instruction[] { proc.Create(OpCodes.Ldc_I4_0), proc.Create(OpCodes.Box, module.Import(mscorlibModule.GetType("System.Boolean"))) },
 					new Instruction[] { proc.Create(OpCodes.Ldarg_1) },
 					new Instruction[] { proc.Create(OpCodes.Ldarg_0), proc.Create(OpCodes.Call, module.Import(worldProperty.GetMethod)) },

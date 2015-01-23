@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using SurvivalKit.Events;
 using SurvivalKit.Utility;
 
@@ -49,7 +50,27 @@ namespace SurvivalKit
 
 		private SKMain()
 		{
-			Log.Out("[SK] SurvivalKit 7DTD plugin system v" + getVersion() + " by DerPopo (http://7daystodie.com/forums/) starting up...");
+			//fancy code to randomize the order of contributors
+			string[] contributors = new string[] { "DerPopo", "GWM" };
+			//use the (truncated) UNIX-time as seed
+			Random rand = new Random((int)(UInt64)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds));
+			List<int> contributorIndices = new List<int>(contributors.Length);
+			for (int i = 0; i < contributors.Length; i++)
+				contributorIndices.Add(i);
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < contributors.Length; i++)
+			{
+				int contributorIndex = rand.Next(contributorIndices.Count);
+				if ((contributors.Length-i) == 1 && i > 0)
+					sb.Append(" and ");
+				else if (i > 0)
+					sb.Append(", ");
+				sb.Append(contributors[contributorIndices[contributorIndex]]);
+
+				contributorIndices.RemoveAt(contributorIndex);
+			}
+			string contributorsString = sb.ToString();
+			Log.Out("[SK] SurvivalKit 7DTD plugin system v" + getVersion() + " by " + contributorsString + " starting up...");
 		}
 
 		/// <summary>

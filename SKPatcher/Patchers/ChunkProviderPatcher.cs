@@ -49,25 +49,28 @@ namespace SKPatcher
 				}
 
 				ILProcessor proc = body.GetILProcessor();
-				List<Instruction> hook = HookHelper.Instance.prepareEventHook(initChunkCluster, "OnUnknownChunkProvider", new Instruction[][]{
+				List<Instruction> hook = HookHelper.Instance.prepareEventHook(initChunkCluster, "UnknownChunkProviderEvent", new Instruction[][]{
+					new Instruction[]{proc.Create(OpCodes.Ldarg_0)},
 					new Instruction[]{proc.Create(OpCodes.Ldc_I4_0), proc.Create(OpCodes.Box, module.Import(mscorlibModule.GetType("System.Boolean")))},
 					new Instruction[]{proc.Create(OpCodes.Ldarg_1), proc.Create(OpCodes.Box, module.Import(mscorlibModule.GetType("System.Int32")))},
+					new Instruction[]{proc.Create(OpCodes.Ldnull)},
 				}); hook.Insert(0, proc.Create(OpCodes.Ldarg_0));
 				hook.Add(proc.Create(OpCodes.Dup));
-				hook.Add(proc.Create(OpCodes.Ldc_I4_0));
+				hook.Add(proc.Create(OpCodes.Ldc_I4_1));
 				hook.Add(proc.Create(OpCodes.Ldelem_Ref));
 				hook.Add(proc.Create(OpCodes.Unbox_Any, module.Import(mscorlibModule.GetType("System.Boolean"))));
 				int jmp1_sindex = hook.Count; hook.Add(null); //brtrue
 				hook.Add(proc.Create(OpCodes.Pop));
 				hook.Add(proc.Create(OpCodes.Br, body.Instructions[targetIndex+1]));
 				int jmp1_tindex = hook.Count;
-				hook.Add(proc.Create(OpCodes.Ldc_I4_1));
+				hook.Add(proc.Create(OpCodes.Ldc_I4_2));
 				hook.Add(proc.Create(OpCodes.Ldelem_Ref));
 				hook.Add(proc.Create(OpCodes.Br, body.Instructions[targetIndex+2]));
 
 				hook.RemoveAt(jmp1_sindex); hook.Insert(jmp1_sindex, proc.Create(OpCodes.Brtrue, hook[jmp1_tindex]));
 
 				HookHelper.insertAt(body, targetIndex, hook.ToArray());
+				body.Instructions[jumpsToDefault[0]].Operand = hook[0];
 			}
 		}
 	}
