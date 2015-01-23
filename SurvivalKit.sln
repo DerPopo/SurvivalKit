@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SKPatcher", "SKPatcher\SKPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurvivalKit.Tests", "SurvivalKit.Tests\SurvivalKit.Tests.csproj", "{2337A1FE-CA8E-4AB2-9C83-C927A758D671}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DemoPlugins", "DemoPlugins", "{9B2FDA4D-546D-4A3C-91E0-B0F2FA073777}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetBlockEventPlugin", "SurvivalKit.DemoPlugins\SetBlockEventPlugin\SetBlockEventPlugin.csproj", "{8445E53A-04E1-4D57-8CF9-A8DC28B8E494}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,9 +29,16 @@ Global
 		{2337A1FE-CA8E-4AB2-9C83-C927A758D671}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2337A1FE-CA8E-4AB2-9C83-C927A758D671}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2337A1FE-CA8E-4AB2-9C83-C927A758D671}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8445E53A-04E1-4D57-8CF9-A8DC28B8E494}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8445E53A-04E1-4D57-8CF9-A8DC28B8E494}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8445E53A-04E1-4D57-8CF9-A8DC28B8E494}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8445E53A-04E1-4D57-8CF9-A8DC28B8E494}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8445E53A-04E1-4D57-8CF9-A8DC28B8E494} = {9B2FDA4D-546D-4A3C-91E0-B0F2FA073777}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = SKPatcher\SKPatcher.csproj
