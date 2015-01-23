@@ -55,7 +55,7 @@ namespace SurvivalKit.Events
 
 			if (registerEventListeners == null || registerEventListeners.Count == 0)
 			{
-				LogUtility.Warning("No IRegisterEventListeners instances found.");
+				LogUtility.Warning("No IPlugin instances found.");
 				return;
 			}
 
@@ -121,6 +121,7 @@ namespace SurvivalKit.Events
 				throw new ArgumentNullException("eventListener");
 			}
 
+			LogUtility.Out("Registering " + eventListener.GetType().FullName);
 
 			// TODO check if this event listener isn't already registered.
 

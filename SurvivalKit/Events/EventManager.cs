@@ -70,7 +70,7 @@ namespace SurvivalKit.Events
 					return _event.getReturnParams();
 				}
 			}
-			//Log.Out("Event \"" + name + "\" not found!");
+			//LogUtility.Out("Event \"" + name + "\" not found!");
 
 			// Removed exception. An event can be implemented, but there could be nobody to listen to it.
 			return pars;

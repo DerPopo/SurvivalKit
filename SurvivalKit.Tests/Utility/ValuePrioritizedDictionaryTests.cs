@@ -113,6 +113,36 @@ namespace SurvivalKit.Tests.Utility
 		/// <summary>
 		///  Test the scenario where you do have a registry in the dictionary yet, and you add a new hook to the same event.
 		/// </summary>
+		[TestMethod]
+		public void PrioritizedEventListenerDictionaryTests_TryGetValue_Valid()
+		{
+			EventListenerRegistrationComparer comparer = new EventListenerRegistrationComparer();
+			var dictionary = new PrioritizedEventListenerDictionary<Type, EventListenerRegistration>(comparer);
+			var mockListener = new EventListenerRegistration(new MockEventListener(true, false), new MockEventHook(GetType(), SurvivalKit.Events.Priority.HIGH, null));
+			dictionary.Add(typeof(PrioritizedEventListenerDictionaryTests), mockListener);
+			List<EventListenerRegistration> list = null;
+			var value = dictionary.TryGetValue(typeof(PrioritizedEventListenerDictionaryTests), out list);
+			Assert.IsNotNull(list);
+			Assert.AreEqual(1, list.Count);
+			Assert.AreEqual(mockListener, list[0]);
+		}
+
+		/// <summary>
+		///  Test the scenario where you do have a registry in the dictionary yet, and you add a new hook to the same event.
+		/// </summary>
+		[TestMethod]
+		public void PrioritizedEventListenerDictionaryTests_TryGetValue_Null()
+		{
+			EventListenerRegistrationComparer comparer = new EventListenerRegistrationComparer();
+			var dictionary = new PrioritizedEventListenerDictionary<Type, EventListenerRegistration>(comparer);
+			List<EventListenerRegistration> list = null;
+			var value = dictionary.TryGetValue(typeof(PrioritizedEventListenerDictionaryTests), out list);
+			Assert.IsNull(list);
+		}
+
+		/// <summary>
+		///  Test the scenario where you do have a registry in the dictionary yet, and you add a new hook to the same event.
+		/// </summary>
 		[ExpectedException(typeof(ArgumentNullException))]
 		[TestMethod]
 		public void PrioritizedEventListenerDictionaryTests_Add_KeyNull()

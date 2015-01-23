@@ -11,6 +11,8 @@ namespace SurvivalKit.Utility
 	/// </summary>
 	internal class InstanceResolver : IResolveInstances
 	{
+		private delegate bool IsOfType(Type typeToCheck, Type expectedType);
+
 		private ILoadAssemblies pluginLoader = null;
 
 		/// <summary>
@@ -41,18 +43,25 @@ namespace SurvivalKit.Utility
 		public List<TInstance> ResolveInstances<TInstance>(bool onlyLookInPlugins = true)
 		{
 			// get the type once, instead of once every type.
+			IsOfType typeCheckMethod = IsSubclassOf;
 			var typeOfTInstance = typeof(TInstance);
+			if (typeOfTInstance.IsInterface)
+			{
+				typeCheckMethod = ImplementsInterface;
+			}
 			var returnList = new List<TInstance>();
 
 			var assemblies = getAssemblyCollection(onlyLookInPlugins);
 
 			if (assemblies.Count == 0)
 			{
+				LogUtility.Out("[SK] InstanceResolver: No assemblies found.");
 				return returnList;
 			}
 
 			foreach (var assembly in assemblies)
 			{
+				LogUtility.Out("[SK] InstanceResolver: Scanning assembly " + assembly.Location);
 				// loop all assemblies, see if it contains types we are looking for.
 				Type[] typesInAssembly = new Type[0];
 				try
@@ -69,8 +78,13 @@ namespace SurvivalKit.Utility
 
 				foreach (var typeInAssembly in typesInAssembly)
 				{
+					if (typeInAssembly.IsInterface || typeInAssembly.IsAbstract)
+					{
+						continue;
+					}
+					
 					// loop all types in the assembly. only act when it matches our needs.
-					if (typeInAssembly.IsAssignableFrom(typeOfTInstance) && typeInAssembly != typeof(object))
+					if (typeCheckMethod(typeInAssembly, typeOfTInstance))
 					{
 						var constructors = typeInAssembly.GetConstructors();
 						var foundValidConstructor = false;
@@ -111,12 +125,48 @@ namespace SurvivalKit.Utility
 		{
 			if (onlyLookInPlugins)
 			{
+				pluginLoader.LoadAssemblies();
 				return pluginLoader.GetLoadedAssemblies();
 			}
 			else
 			{
 				return new List<Assembly>(AppDomain.CurrentDomain.GetAssemblies());
 			}
+		}
+
+		private bool ImplementsInterface(Type typeToCheck, Type expectedType)
+		{
+			var interfaces = typeToCheck.GetInterfaces();
+
+			foreach (var item in interfaces)
+			{
+				if (item == expectedType)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		private bool IsSubclassOf(Type typeToCheck, Type expectedType)
+		{
+			var isMatch = false;
+			if (typeToCheck.BaseType != null)
+			{
+				isMatch = IsSubclassOf(typeToCheck.BaseType, expectedType);
+			}
+
+			if(!isMatch)
+			{
+				isMatch = typeToCheck.BaseType == expectedType;
+			}
+
+			if (!isMatch)
+			{
+				isMatch = typeToCheck == expectedType;
+			}
+
+			return isMatch;
 		}
 	}
 }

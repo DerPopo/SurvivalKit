@@ -28,6 +28,7 @@ namespace SurvivalKit.Tests.Utility
 		[TestMethod]
 		public void InstanceResolverTests_ResolveInstances_ValidList()
 		{
+			LogUtility.SetLogToConsole();
 			var list = new List<Assembly>{Assembly.GetExecutingAssembly()};
 			var mockLoader = new Mocks.MockAssemblyLoader(list);
 			var resolver = new SurvivalKit.Utility.InstanceResolver(mockLoader);

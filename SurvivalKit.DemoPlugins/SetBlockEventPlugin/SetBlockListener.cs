@@ -1,5 +1,8 @@
 ﻿using SurvivalKit.Abstracts;
+using SurvivalKit.Events;
 using SurvivalKit.Events.Environment;
+using SurvivalKit.Interfaces;
+using SurvivalKit.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,7 +33,8 @@ namespace SetBlockEventPlugin
 
 		public override IEnumerable<SurvivalKit.Interfaces.IEventHook> GetEventHooks()
 		{
-			throw new NotImplementedException();
+			var eventHook = new EventHook<SetBlocksEvent>(Priority.NORMAL, GetType().GetMethod("HandleEvent"));
+			return new List<IEventHook> { eventHook };
 		}
 
 		public void HandleEvent(SetBlocksEvent eventInstance)

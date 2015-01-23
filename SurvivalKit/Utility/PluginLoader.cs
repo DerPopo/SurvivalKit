@@ -91,6 +91,7 @@ namespace SurvivalKit.Utility
 				try
 				{
 					// just load all assemblies, the resolver locate all IPlugin implementations
+					LogUtility.Out("[SK] Loading plugin DLL ('" + fi.Name + "') : ");
 					var assembly = Assembly.LoadFrom(fi.FullName);
 					_loadedAssemblies.Add(assembly);
 				}

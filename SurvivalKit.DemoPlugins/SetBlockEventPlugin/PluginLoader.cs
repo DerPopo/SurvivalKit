@@ -6,6 +6,11 @@ namespace SetBlockEventPlugin
     {
 		private SetBlockListener Listener;
 
+		public PluginLoader()
+		{
+			Listener = new SetBlockListener();
+		}
+
 		public void RegisterEventListeners(IEventAggregator eventAggregator)
 		{
 			eventAggregator.RegisterEventListener(Listener);
@@ -28,7 +33,7 @@ namespace SetBlockEventPlugin
 
 		public void onLoad()
 		{
-			Listener = new SetBlockListener();
+			
 		}
 
 		public void onEnable()
