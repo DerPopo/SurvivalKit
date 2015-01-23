@@ -121,6 +121,12 @@ namespace SurvivalKit.Utility
 			return returnList;
 		}
 
+		/// <summary>
+		///	Method to get the collection of assemblies that should be scanned.
+		///	When resolving an instance, you can select to limit yourself to the plugin assemblies.
+		/// </summary>
+		/// <param name="onlyLookInPlugins">Should we limit to scanning the plugins</param>
+		/// <returns>Returns a list of assemblies.</returns>
 		private List<Assembly> getAssemblyCollection(bool onlyLookInPlugins)
 		{
 			if (onlyLookInPlugins)
@@ -134,6 +140,12 @@ namespace SurvivalKit.Utility
 			}
 		}
 
+		/// <summary>
+		/// Check if a type implements an interface.
+		/// </summary>
+		/// <param name="typeToCheck">The type that might implement the interface</param>
+		/// <param name="expectedType">The type of the interface.</param>
+		/// <returns>Returns <c>true</c> if the type implements the interface</returns>
 		private bool ImplementsInterface(Type typeToCheck, Type expectedType)
 		{
 			var interfaces = typeToCheck.GetInterfaces();
@@ -148,6 +160,12 @@ namespace SurvivalKit.Utility
 			return false;
 		}
 
+		/// <summary>
+		/// Check if the type or it's base type is of the desired type.
+		/// </summary>
+		/// <param name="typeToCheck">The type that might be the desired type, or a subclass of.</param>
+		/// <param name="expectedType">The desired type</param>
+		/// <returns>Returns <c>true</c> if the type is found.</returns>
 		private bool IsSubclassOf(Type typeToCheck, Type expectedType)
 		{
 			var isMatch = false;
