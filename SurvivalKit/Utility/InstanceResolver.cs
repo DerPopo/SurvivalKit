@@ -61,6 +61,7 @@ namespace SurvivalKit.Utility
 				}
 				catch (Exception exception)
 				{
+					// Not yet able to cover this piece of code with a unit test.
 					LogUtility.Error("Unable to extract types from assembly: " + assembly.FullName);
 					LogUtility.Error(assembly.Location);
 					LogUtility.Exception(exception);
