@@ -59,12 +59,12 @@ namespace SKPatcher
 						argLoaders.Add(instrTmp.ToArray());
 					}
 
-					List<Instruction> hook = HookHelper.Instance.prepareEventHook(mdef, "RPC", argLoaders.ToArray());
+					List<Instruction> hook = HookHelper.Instance.prepareEventHook(mdef, "RPCEvent", argLoaders.ToArray());
 					for (int i = 0; i < _params.Count; i++)
 					{
 						ParameterDefinition param = _params[i];
 						hook.Add(proc.Create(OpCodes.Dup));
-						hook.Add(proc.Create(OpCodes.Ldc_I4, i + 3));
+						hook.Add(proc.Create(OpCodes.Ldc_I4, i + 2));
 						hook.Add(proc.Create(OpCodes.Ldelem_Ref));
 						if (param.ParameterType.IsValueType)
 						{
@@ -76,7 +76,7 @@ namespace SKPatcher
 						}
 						hook.Add(proc.Create(OpCodes.Starg, param));
 					}
-					hook.Add(proc.Create(OpCodes.Ldc_I4_1));
+					hook.Add(proc.Create(OpCodes.Ldc_I4_0));
 					hook.Add(proc.Create(OpCodes.Ldelem_Ref));
 					hook.Add(proc.Create(OpCodes.Unbox_Any, module.Import(mscorlibModule.GetType("System.Boolean"))));
 					hook.Add(proc.Create(OpCodes.Brfalse, mdef.Body.Instructions[0]));

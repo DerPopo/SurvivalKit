@@ -47,11 +47,14 @@ namespace SurvivalKit.Events
 			var eventTypes = _aggregator.GetRegisteredEventTypes();
 			foreach (Type curEventType in eventTypes)
 			{
+				//Log.Out("Event : " + curEventType.Name);
 				if (curEventType.Name.ToLower().Equals(lowerCaseName))
 				{
 					try
 					{
-						Activator.CreateInstance(curEventType, new object[] { pars });
+						_event = Activator.CreateInstance(curEventType, new object[] { pars }) as IDispatchableEvent;
+						if (_event == null)
+							throw new ArgumentException("The event " + name + "is not compatible to IDispatchableEvent!");
 					}
 					catch (Exception ex)
 					{
@@ -67,6 +70,7 @@ namespace SurvivalKit.Events
 					return _event.getReturnParams();
 				}
 			}
+			//Log.Out("Event \"" + name + "\" not found!");
 
 			// Removed exception. An event can be implemented, but there could be nobody to listen to it.
 			return pars;

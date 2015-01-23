@@ -38,7 +38,7 @@ namespace SKPatcher
 			hook.Add(proc.Create(OpCodes.Ldc_I4, argLoaders.Length + 1));
 			hook.Add(proc.Create(OpCodes.Newarr, csModule.Import(mscorlibModule.GetType("System.Object"))));
 			int dataIndex = 0;
-			addToArray(proc, hook, dataIndex++, new Instruction[] { proc.Create(OpCodes.Ldarg_0) });
+			//addToArray(proc, hook, dataIndex++, new Instruction[] { proc.Create(OpCodes.Ldarg_0) });
 			for (int i = 0; i < argLoaders.Length; i++)
 				addToArray(proc, hook, dataIndex++, argLoaders[i]);
 			hook.Add(proc.Create(OpCodes.Call, csModule.Import(fireEvent)));

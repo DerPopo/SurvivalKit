@@ -34,9 +34,9 @@ namespace SurvivalKit.Tests.Events
 		[TestMethod]
 		public void EventAggregator_RegisterEventListener_EmptyList()
 		{
+			LogUtility.SetLogToConsole();
 			var list = new List<IPlugin>();
 			var resolver = new Mocks.MockInstanceResolver(list);
-
 			try
 			{
 				var instance = EventAggregator.GetInstance(resolver, true);
@@ -51,6 +51,7 @@ namespace SurvivalKit.Tests.Events
 		[TestMethod]
 		public void EventAggregator_RegisterEventListener_Mocked_Null()
 		{
+			LogUtility.SetLogToConsole();
 			List<EventListener> eventListeners = null;
 			var list = new List<IPlugin>
 			{
@@ -72,6 +73,7 @@ namespace SurvivalKit.Tests.Events
 		[TestMethod]
 		public void EventAggregator_RegisterEventListener_Mocked_Empty()
 		{
+			LogUtility.SetLogToConsole();
 			var eventListeners = new List<EventListener>();
 			var list = new List<IPlugin>
 			{
@@ -93,6 +95,7 @@ namespace SurvivalKit.Tests.Events
 		[TestMethod]
 		public void EventAggregator_RegisterEventListener_Mocked_Single()
 		{
+			LogUtility.SetLogToConsole();
 			var eventListeners = new List<EventListener>();
 			eventListeners.Add(new MockEventListener(true,false));
 			var list = new List<IPlugin>

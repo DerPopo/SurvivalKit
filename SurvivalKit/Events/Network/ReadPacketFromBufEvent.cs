@@ -40,7 +40,7 @@ namespace SurvivalKit.Events.Network
 		/// <returns>Returns an object array of parameters to pass to the caller of fireEvent.</returns>
 		public override object[] getReturnParams ()
 		{
-			return new object[]{  };
+			return new object[]{ null };
 		}
 
 		/// <summary>

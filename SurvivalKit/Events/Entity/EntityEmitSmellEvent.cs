@@ -20,20 +20,19 @@ namespace SurvivalKit.Events.Entities
 		/// </summary>
 		/// <param name="args">
 		/// An object array of data to pass to the event.
-		/// args[0] (object) reserved
-		/// args[1] (bool) indicates whether the event is cancelled
-		/// args[2] (Entity) the entity that caused this event
-		/// args[3] (Vector3) the position of the smell
-		/// args[4] (string) the name of the smell
+		/// args[0] (bool) indicates whether the event is cancelled
+		/// args[1] (Entity) the entity that caused this event
+		/// args[2] (Vector3) the position of the smell
+		/// args[3] (string) the name of the smell
 		/// </param>
 		public EntityEmitSmellEvent(Object[] args)
 		{
 			if (args == null || args.Length < 5)
 				throw new ArgumentNullException();
-			cancelled = (bool)args[1];
-			pos = (UnityEngine.Vector3)args[2];
-			instigator = (Entity)args[3];
-			smellName = (string)args[4];
+			cancelled = (bool)args[0];
+			pos = (UnityEngine.Vector3)args[1];
+			instigator = (Entity)args[2];
+			smellName = (string)args[3];
 		}
 
 		/// <summary>

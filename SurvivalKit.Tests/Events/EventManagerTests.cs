@@ -28,7 +28,7 @@ namespace SurvivalKit.Tests.Events
 
 			try
 			{
-				var result = EventManager.FireEvent("WillNeverBeFoundEvent", new object[0]);
+				var result = EventManager.FireEvent("WillNeverBeFoundEvent", new object[]{});
 				Assert.IsNotNull(result);
 			}
 			catch (Exception exception)
@@ -66,11 +66,14 @@ namespace SurvivalKit.Tests.Events
 		///	Currently it keeps complaining the Unity library could not be loaded.
 		///	This might be because the unit test library runs ons .NET 3.5 and the project itself runs on 3.0
 		///	To be investigated.
+		///	Update by DerPopo : it wants a strongly-named UnityEngine, not sure why
+		///	The world is an optional parameter, so I set it to null
 		/// </summary>
 		[TestMethod]
 		public void EventManagerTests_FireEvent_FoundEvent_ValidArguments()
 		{
 			LogUtility.SetLogToConsole();
+			InvalidTimeZoneException workaroundStuff = new InvalidTimeZoneException();
 			var mockAggregator = new MockEventAggregator(new List<Type> { typeof(EntityMoveEvent) });
 			EventManager._aggregator = mockAggregator;
 
@@ -81,13 +84,12 @@ namespace SurvivalKit.Tests.Events
 					false,
 					new UnityEngine.Vector3(),
 					new UnityEngine.Vector3(),
-					new World(),
+					null, //new World(),
 					new {
 						pos = 12,
 						rot = 241
 					}
 				});
-				
 			}
 			catch (SurvivalKitPluginException exception)
 			{

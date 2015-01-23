@@ -43,7 +43,6 @@ namespace SurvivalKit.Events.Network
 					subevents.Add(
 						new Entities.EntityMoveEvent(
 							new Object[] {
-								null,
 								false,
 								packet.GetType ().GetField ("pos").GetValue (packet),
 								packet.GetType ().GetField ("rot").GetValue (packet),
@@ -73,7 +72,7 @@ namespace SurvivalKit.Events.Network
 		public override object[] getReturnParams ()
 		{
 			this.update();
-			return new object[]{ this.IsCancelled };
+			return new object[]{ null, this.IsCancelled };
 		}
 
 		/// <summary>

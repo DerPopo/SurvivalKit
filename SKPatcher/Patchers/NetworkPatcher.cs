@@ -46,8 +46,11 @@ namespace SKPatcher
 					if (body != null)
 					{
 						ILProcessor proc = body.GetILProcessor();
-						List<Instruction> eventHook = HookHelper.Instance.prepareEventHook(processMethod, "ProcessPacket",
+						List<Instruction> eventHook = HookHelper.Instance.prepareEventHook(processMethod, "ProcessPacketEvent",
 							new Instruction[][]{
+								new Instruction[]{
+									proc.Create(OpCodes.Ldarg_0),
+								},
 								new Instruction[] {
 									proc.Create(OpCodes.Ldc_I4_0),
 									proc.Create(OpCodes.Box, module.Import(mscorlibModule.GetType("System.Boolean"))),
@@ -60,7 +63,7 @@ namespace SKPatcher
 								},
 							}
 						);
-						eventHook.Add(proc.Create(OpCodes.Ldc_I4_0));
+						eventHook.Add(proc.Create(OpCodes.Ldc_I4_1));
 						eventHook.Add(proc.Create(OpCodes.Ldelem_Ref));
 						eventHook.Add(proc.Create(OpCodes.Unbox_Any, module.Import(mscorlibModule.GetType("System.Boolean"))));
 						eventHook.Add(proc.Create(OpCodes.Brfalse, body.Instructions[0]));
@@ -78,7 +81,13 @@ namespace SKPatcher
 					if (body != null)
 					{
 						ILProcessor proc = body.GetILProcessor();
-						List<Instruction> eventHook = HookHelper.Instance.prepareEventHook(readMethod, "ReadPacketFromBuf", new Instruction[][]{});
+						List<Instruction> eventHook = HookHelper.Instance.prepareEventHook(readMethod, "ReadPacketFromBufEvent",
+							new Instruction[][]{
+								new Instruction[]{
+									proc.Create(OpCodes.Ldarg_0),
+								},
+							}
+						);
 						eventHook.Add(proc.Create(OpCodes.Pop));
 						HookHelper.insertAt(body, body.Instructions.Count-1, eventHook.ToArray());
 					}
@@ -93,15 +102,18 @@ namespace SKPatcher
 					if (body != null)
 					{
 						ILProcessor proc = body.GetILProcessor();
-						List<Instruction> eventHook = HookHelper.Instance.prepareEventHook(writeMethod, "WritePacketToBuf",
+						List<Instruction> eventHook = HookHelper.Instance.prepareEventHook(writeMethod, "WritePacketToBufEvent",
 							new Instruction[][]{
+								new Instruction[]{
+									proc.Create(OpCodes.Ldarg_0),
+								},
 								new Instruction[] {
 									proc.Create(OpCodes.Ldc_I4_0),
 									proc.Create(OpCodes.Box, module.Import(mscorlibModule.GetType("System.Boolean"))),
 								},
 							}
 						);
-						eventHook.Add(proc.Create(OpCodes.Ldc_I4_0));
+						eventHook.Add(proc.Create(OpCodes.Ldc_I4_1));
 						eventHook.Add(proc.Create(OpCodes.Ldelem_Ref));
 						eventHook.Add(proc.Create(OpCodes.Unbox_Any, module.Import(mscorlibModule.GetType("System.Boolean"))));
 						eventHook.Add(proc.Create(OpCodes.Brfalse, body.Instructions[0]));
