@@ -32,12 +32,12 @@ namespace SurvivalKit.Tests.Mocks
 			throw new NotImplementedException();
 		}
 
-		public bool RegisterEventListener<TListener>(TListener eventListener) where TListener : Abstracts.EventListener
+		public bool RegisterEventListener<TListener>(TListener eventListener) where TListener : SurvivalKit.Abstracts.EventListener
 		{
 			throw new NotImplementedException();
 		}
 
-		public void UnregisterEventListener<TListener>(TListener eventListener) where TListener : Abstracts.EventListener
+		public void UnregisterEventListener<TListener>(TListener eventListener) where TListener : SurvivalKit.Abstracts.EventListener
 		{
 			throw new NotImplementedException();
 		}

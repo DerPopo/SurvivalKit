@@ -50,7 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Abstracts\EventListener.cs" />
+    <Compile Include="Abstracts\EventListenerTests.cs" />
     <Compile Include="Events\EventManagerTests.cs" />
     <Compile Include="Mocks\MockEvent.cs" />
     <Compile Include="Mocks\MockEventAggregator.cs" />
