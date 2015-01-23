@@ -8,7 +8,7 @@ namespace SurvivalKit.Tests.Abstracts
 	public class EventListenerTests
 	{
 		[TestMethod]
-		public void CompareTo_Equal()
+		public void EventListenerTests_CompareTo_Equal()
 		{
 			var instance = new Mocks.MockEventListener(true, false);
 			
@@ -16,7 +16,7 @@ namespace SurvivalKit.Tests.Abstracts
 		}
 
 		[TestMethod]
-		public void CompareTo_Null()
+		public void EventListenerTests_CompareTo_Null()
 		{
 			var instance = new Mocks.MockEventListener(true, false);
 
@@ -24,7 +24,7 @@ namespace SurvivalKit.Tests.Abstracts
 		}
 
 		[TestMethod]
-		public void CompareTo_Other()
+		public void EventListenerTests_CompareTo_Other()
 		{
 			var instance = new Mocks.MockEventListener(true, false);
 			var otherInstance = new Mocks.MockEventListener(true, false);
@@ -33,7 +33,7 @@ namespace SurvivalKit.Tests.Abstracts
 		}
 
 		[TestMethod]
-		public void Equals_SingleArgument()
+		public void EventListenerTests_Equals_SingleArgument()
 		{
 			EventListener instance = new Mocks.MockEventListener(true, false);
 			EventListener otherInstance = new Mocks.MockEventListener(true, false);
@@ -42,7 +42,7 @@ namespace SurvivalKit.Tests.Abstracts
 		}
 
 		[TestMethod]
-		public void Equals_Equal()
+		public void EventListenerTests_Equals_Equal()
 		{
 			EventListener instance = new Mocks.MockEventListener(true, false);
 			EventListener otherInstance = new Mocks.MockEventListener(true, false);
@@ -51,7 +51,7 @@ namespace SurvivalKit.Tests.Abstracts
 		}
 
 		[TestMethod]
-		public void Equals_NotEqual()
+		public void EventListenerTests_Equals_NotEqual()
 		{
 			EventListener instance = new Mocks.MockEventListener(true, false);
 			EventListener otherInstance = new Mocks.MockEventListener(true, false);
@@ -60,7 +60,7 @@ namespace SurvivalKit.Tests.Abstracts
 		}
 
 		[TestMethod]
-		public void Equals_RightNull()
+		public void EventListenerTests_Equals_RightNull()
 		{
 			EventListener instance = new Mocks.MockEventListener(true, false);
 			EventListener otherInstance = null;
@@ -69,13 +69,32 @@ namespace SurvivalKit.Tests.Abstracts
 		}
 
 		[TestMethod]
-		public void Equals_LeftNull()
+		public void EventListenerTests_Equals_LeftNull()
 		{
 			EventListener instance = null;
 			EventListener otherInstance = new Mocks.MockEventListener(true, false);
 
 
 			Assert.IsFalse(otherInstance.Equals(instance, otherInstance));
+		}
+
+		[ExpectedException(typeof(ArgumentNullException))]
+		[TestMethod]
+		public void EventListenerTests_GetHashCode_Null()
+		{
+			EventListener instance = null;
+			EventListener otherInstance = new Mocks.MockEventListener(true, false);
+
+
+			otherInstance.GetHashCode(instance);
+		}
+
+		[TestMethod]
+		public void EventListenerTests_GetHashCode_Valid()
+		{
+			EventListener instance =  new Mocks.MockEventListener(true, false);
+
+			Assert.IsNotNull(instance.GetHashCode(instance));
 		}
 	}
 }
