@@ -61,5 +61,11 @@ namespace SurvivalKit.Tests.Mocks
 		{
 			throw new NotImplementedException();
 		}
+
+
+		public void Shutdown()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

@@ -25,6 +25,8 @@ namespace SurvivalKit.Events
 		/// </summary>
 		private static IEventAggregator _instance;
 
+		private readonly List<IPlugin> _plugins;
+
 		/// <summary>
 		///	Registry of hooks.
 		/// </summary>
@@ -51,26 +53,39 @@ namespace SurvivalKit.Events
 			_commandRegistry = new Dictionary<string, List<ICommandListener>>();
 
 			// Get all instances and try to gather all event listeners.
-			var registerEventListeners = instanceResolver.ResolveInstances<IPlugin>();
+			_plugins = instanceResolver.ResolveInstances<IPlugin>();
 
-			if (registerEventListeners == null || registerEventListeners.Count == 0)
+			if (_plugins == null || _plugins.Count == 0)
 			{
-				LogUtility.Warning("No IPlugin instances found.");
+				LogUtility.Warning("[SK] No IPlugin instances found.");
 				return;
 			}
 
-			foreach (var registerEventListenerInstance in registerEventListeners)
+			foreach (var plugin in _plugins)
 			{
 				try
 				{
-					registerEventListenerInstance.RegisterEventListeners(this);
-					registerEventListenerInstance.RegisterCommandListeners(this);
+					var authors = plugin.getAuthors();
+					var formatted = string.Join(", ", authors);
+					var lastIndex = formatted.LastIndexOf(", ");
+					if(lastIndex > 0)
+					{
+						formatted = formatted.Remove(lastIndex, 2);
+						formatted = formatted.Insert(lastIndex, " & ");
+					}
+					LogUtility.Out("[SK] Loading plugin " + plugin.getPluginName() + " created by " + formatted);
+
+					plugin.onLoad();
+					plugin.RegisterEventListeners(this);
+					plugin.RegisterCommandListeners(this);
 				}
 				catch (Exception exception)
 				{
 					LogUtility.Exception(exception);
 				}
 			}
+
+			LogUtility.Out("[SK] EventAggregator initialized");
 		}
 
 		/// <summary>
@@ -121,7 +136,7 @@ namespace SurvivalKit.Events
 				throw new ArgumentNullException("eventListener");
 			}
 
-			LogUtility.Out("Registering " + eventListener.GetType().FullName);
+			LogUtility.Out("[SK] Registering " + eventListener.GetType().FullName);
 
 			// TODO check if this event listener isn't already registered.
 
@@ -200,15 +215,14 @@ namespace SurvivalKit.Events
 					var tooManyArgumentsRequired = eventHookRegistration.GetRequiredMethodArguments() > 1;
 					if (tooManyArgumentsRequired)
 					{
-						var message = string.Format("SurvivalKit warning: Skipped listener {0} for event type {1} is skipped. Argument mismatch!", instance.GetType(), eventType);
+						var message = string.Format("[SK] SurvivalKit warning: Skipped listener {0} for event type {1} is skipped. Argument mismatch!", instance.GetType(), eventType);
 						LogUtility.Warning(message);
 						continue;
 					}
 
 					try
 					{
-						LogUtility.Out("[SK] Invoking listener for: " + eventType.Name);
-						LogUtility.Out("[SK] Invoking listener for: " + instance.GetType().Name);
+						LogUtility.Out("[SK] Invoking listener: " + instance.GetType().Name);
 						method.Invoke(instance, new object[1] { eventInstance });
 
 						if (!eventInstance.IsCancelled() && fireSubEvents)
@@ -250,6 +264,10 @@ namespace SurvivalKit.Events
 		public void EnableGame()
 		{
 			GameDisabled = false;
+			foreach (var plugin in _plugins)
+			{
+				plugin.onEnable();
+			}
 		}
 
 		/// <summary>
@@ -258,6 +276,10 @@ namespace SurvivalKit.Events
 		public void DisableGame()
 		{
 			GameDisabled = true;
+			foreach (var plugin in _plugins)
+			{
+				plugin.onDisable();
+			}
 		}
 
 		/// <summary>
@@ -297,6 +319,17 @@ namespace SurvivalKit.Events
 		}
 
 		/// <summary>
+		///	Method to shut down all plugins.
+		/// </summary>
+		public void Shutdown()
+		{
+			foreach (var plugin in _plugins)
+			{
+				plugin.onShutdown();
+			}
+		}
+
+		/// <summary>
 		///	Method to dispatch an event.
 		/// </summary>
 		/// <typeparam name="TEventType">The type of the event that will be dispatched.</typeparam>
@@ -323,7 +356,7 @@ namespace SurvivalKit.Events
 					}
 					catch (Exception exception)
 					{
-						LogUtility.Error("An exception occured while processing the command " + command.ToLower());
+						LogUtility.Error("[SK] An exception occured while processing the command " + command.ToLower());
 						LogUtility.Exception(exception);
 					}
 

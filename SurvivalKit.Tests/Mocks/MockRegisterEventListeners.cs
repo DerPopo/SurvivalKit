@@ -43,6 +43,10 @@ namespace SurvivalKit.Tests.Mocks
 		public void onLoad()
 		{
 		}
+		
+		public void onShutdown()
+		{
+		}
 
 		public void onEnable()
 		{

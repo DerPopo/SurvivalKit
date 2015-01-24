@@ -10,15 +10,14 @@ using System.Text;
 
 namespace SetBlockEventPlugin
 {
-	public class SetBlockListener : EventListener, IDisposable
+	public class SetBlockListener : EventListener
 	{
 		private Stream WriteStream;
 
-		public SetBlockListener()
+		public void Load()
 		{
 			var fileInfo = new FileInfo("SetBlockLog.txt");
 			WriteStream = fileInfo.Open(FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read);
-			
 		}
 
 		public override string GetDescription()
@@ -43,15 +42,14 @@ namespace SetBlockEventPlugin
 
 			foreach (var blockChangeInformation in information)
 			{
-				var formatted = string.Format("[{0}] - Block modified at [{1},{2},{3}]", DateTime.Now, blockChangeInformation.pos.x,blockChangeInformation.pos.y,blockChangeInformation.pos.z);
+				var formatted = string.Format("[{0}] - Block modified at [{1},{2},{3}]{4}", DateTime.Now, blockChangeInformation.pos.x,blockChangeInformation.pos.y,blockChangeInformation.pos.z, System.Environment.NewLine);
 				var bytes = ASCIIEncoding.UTF8.GetBytes(formatted);
 				WriteStream.Write(bytes, 0, bytes.Length);
 				WriteStream.Flush();
 			}
 		}
 
-
-		public void Dispose()
+		public void ShutDown()
 		{
 			WriteStream.Close();
 			WriteStream.Dispose();

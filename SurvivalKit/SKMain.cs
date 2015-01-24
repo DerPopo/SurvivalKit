@@ -127,7 +127,7 @@ namespace SurvivalKit
 		public static void onGameUninit()
 		{
 			if (mainInstance != null) {
-				EventAggregator.GetInstance().DisableGame();
+				EventAggregator.GetInstance().Shutdown();
 				mainInstance = null;
 			}
 		}

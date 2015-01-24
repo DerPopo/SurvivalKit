@@ -72,5 +72,10 @@ namespace SurvivalKit.Interfaces
 		/// Disables the event dispatching.
 		/// </summary>
 		void DisableGame();
+
+		/// <summary>
+		///	Method to shut down all plugins.
+		/// </summary>
+		void Shutdown();
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using SurvivalKit.Interfaces;
+using SurvivalKit.Utility;
 
 namespace SetBlockEventPlugin
 {
@@ -33,7 +34,14 @@ namespace SetBlockEventPlugin
 
 		public void onLoad()
 		{
-			
+			LogUtility.Out("[SKDP] Load");
+			Listener.Load();
+		}
+
+		public void onShutdown()
+		{
+			LogUtility.Out("[SKDP] Shutdown");
+			Listener.ShutDown();
 		}
 
 		public void onEnable()
@@ -46,7 +54,7 @@ namespace SetBlockEventPlugin
 
 		public void Dispose()
 		{
-			Listener.Dispose();
+			Listener = null;
 		}
 	}
 }

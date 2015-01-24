@@ -38,6 +38,11 @@ namespace SurvivalKit.Interfaces
 		void onLoad();
 
 		/// <summary>
+		/// Called when the plugin should shut down.
+		/// </summary>
+		void onShutdown();
+
+		/// <summary>
 		/// Called when the plug in is enabled.
 		/// </summary>
 		void onEnable();
