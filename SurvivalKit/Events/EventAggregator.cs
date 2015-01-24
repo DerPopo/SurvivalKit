@@ -81,7 +81,8 @@ namespace SurvivalKit.Events
 				}
 				catch (Exception exception)
 				{
-					LogUtility.Exception(exception);
+					var wrappedException = new PluginInitializationException(plugin.GetType().AssemblyQualifiedName, exception.Message, exception);
+					LogUtility.Exception(wrappedException);
 				}
 			}
 
@@ -240,7 +241,7 @@ namespace SurvivalKit.Events
 					catch (Exception exception)
 					{
 						// TODO Perhaps disable this plugin?
-						var wrappedException = new SurvivalKitPluginException(eventType.Name, eventType.AssemblyQualifiedName, "Exception while invoking plugin with listener: " + instance.GetType().FullName, exception);
+						var wrappedException = new EventDispatchingException(eventType.Name, eventType.AssemblyQualifiedName, "Exception while invoking plugin with listener: " + instance.GetType().FullName, exception);
 						LogUtility.Exception(wrappedException);
 					}
 				}
@@ -356,8 +357,8 @@ namespace SurvivalKit.Events
 					}
 					catch (Exception exception)
 					{
-						LogUtility.Error("[SK] An exception occured while processing the command " + command.ToLower());
-						LogUtility.Exception(exception);
+						var wrappedException = new CommandDispatchingException(command, item.GetType().AssemblyQualifiedName, "An exception occured while processing the command " + command.ToLower(), exception);
+						LogUtility.Exception(wrappedException);
 					}
 
 				}

@@ -6,33 +6,32 @@ using System.Text;
 namespace SurvivalKit.Exceptions
 {
 	/// <summary>
-	///	Exception that wraps all exceptions that occurred when delegating an event.
+	///	Exception that wraps all exceptions that occurred when dispatching a command.
 	/// </summary>
-	public class SurvivalKitPluginException : Exception, ISurvivalKitException
+	public class CommandDispatchingException : Exception, ISurvivalKitException
 	{
 		/// <summary>
-		///	The name of the event that has been fired.
-		///	This name is provided by the game engine.
+		///	The name of the command that has been dispatched.
 		/// </summary>
-		public string EventName;
-		
+		public string CommandName;
+
 		/// <summary>
 		/// The type of the event that was found as a match.
 		/// </summary>
-		public string EventType;
+		public string CommandListenerType;
 
 		/// <summary>
 		///	Constructor to initialize the exception correctly.
 		/// </summary>
-		/// <param name="eventName">The name of the event, provided by the game engine.</param>
-		/// <param name="eventType">The type of the event that was found matching the name.</param>
+		/// <param name="commandName">The name of the command that was dispatched.</param>
+		/// <param name="commandListener">The type of the command listener that caused the exception.</param>
 		/// <param name="message">The message describing the exception.</param>
 		/// <param name="innerException">The inner exceptions.</param>
-		public SurvivalKitPluginException(string eventName, string eventType, string message, Exception innerException)
+		public CommandDispatchingException(string commandName, string commandListener, string message, Exception innerException)
 			: base(message, innerException)
 		{
-			EventName = eventName;
-			EventType = eventType;
+			CommandName = commandName;
+			CommandListenerType = commandListener;
 		}
 
 		/// <summary>
@@ -42,10 +41,10 @@ namespace SurvivalKit.Exceptions
 		public override string ToString()
 		{
 			return string.Format(@"
-/****** Start SurvivalKit Exception ******/
+/****** Start SurvivalKit CommandDispatchingException ******/
 Message: {0}
-Event Name: {1}
-Event Type: {2}
+Command Name: {1}
+Command Listener Type: {2}
 
 ===========[ Inner Exception ]===========
 Message: {3}
@@ -53,7 +52,7 @@ Stacktrace:
 {4}
 
 /****** End SurvivalKit Exception ******/
-", Message, EventName, EventType, InnerException.Message, InnerException.StackTrace);
+", Message, CommandName, CommandListenerType, InnerException.Message, InnerException.StackTrace);
 		}
 	}
 }

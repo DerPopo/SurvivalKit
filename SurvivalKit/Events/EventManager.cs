@@ -57,7 +57,7 @@ namespace SurvivalKit.Events
 					}
 					catch (Exception ex)
 					{
-						var exception = new SurvivalKitPluginException(lowerCaseName, curEventType.AssemblyQualifiedName, "An exception occurred inside the constructor for an event", ex);
+						var exception = new EventInstantiationException(lowerCaseName, curEventType.AssemblyQualifiedName, "An exception occurred inside the constructor for an event", ex);
 						LogUtility.Exception(ex);
 						throw exception;
 					}

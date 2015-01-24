@@ -58,6 +58,11 @@
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\EventHook.cs" />
     <Compile Include="Events\EventListenerRegistration.cs" />
+    <Compile Include="Exceptions\AssemblyLoadException.cs" />
+    <Compile Include="Exceptions\CommandDispatchingException.cs" />
+    <Compile Include="Exceptions\EventDispatchingException.cs" />
+    <Compile Include="Exceptions\EventInstantiationException.cs" />
+    <Compile Include="Exceptions\PluginInitializationException.cs" />
     <Compile Include="Exceptions\SurvivalKitPluginException.cs" />
     <Compile Include="Extensions\ExtensionAttribute.cs" />
     <Compile Include="Extensions\IDispatchableEventExtensions.cs" />
@@ -65,6 +70,7 @@
     <Compile Include="Interfaces\ICommandListener.cs" />
     <Compile Include="Interfaces\ILoadAssemblies.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />
+    <Compile Include="Interfaces\ISurvivalKitException.cs" />
     <Compile Include="Utility\EventListenerRegistrationComparer.cs" />
     <Compile Include="Utility\InstanceResolver.cs" />
     <Compile Include="Interfaces\IDispatchableEvent.cs" />

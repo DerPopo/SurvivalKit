@@ -97,8 +97,8 @@ namespace SurvivalKit.Utility
 				}
 				catch (Exception e)
 				{
-					LogUtility.Error("[SK] An exception occured while loading a plugin dll ('" + fi.Name + "') : ");
-					LogUtility.Exception(e);
+					var survivalKitException = new SurvivalKit.Exceptions.AssemblyLoadException(fi.FullName, "An exception occured while loading a plugin dll ('" + fi.Name + "')", e);
+					LogUtility.Exception(survivalKitException);
 				}
 			}
 

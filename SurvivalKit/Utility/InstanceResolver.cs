@@ -71,9 +71,8 @@ namespace SurvivalKit.Utility
 				catch (Exception exception)
 				{
 					// Not yet able to cover this piece of code with a unit test.
-					LogUtility.Error("Unable to extract types from assembly: " + assembly.FullName);
-					LogUtility.Error(assembly.Location);
-					LogUtility.Exception(exception);
+					var survivalKitException = new SurvivalKit.Exceptions.SurvivalKitPluginException("SK.ResolveInstances", "SurvivalKit.Utility.InstanceResolver", "Unable to extract types from assembly: " + assembly.FullName, exception);
+					LogUtility.Exception(survivalKitException);
 				}
 
 				foreach (var typeInAssembly in typesInAssembly)
@@ -112,7 +111,6 @@ namespace SurvivalKit.Utility
 						{
 							var wrappedException = new SurvivalKitPluginException("ResolvePlugin","SurvivalKit.InstanceResolver.ResolveInstances", "Error while invoking constructor", exception);
 							LogUtility.Exception(wrappedException);
-							LogUtility.Error("Error loading type: " + typeInAssembly.AssemblyQualifiedName);
 						}
 					}
 				}

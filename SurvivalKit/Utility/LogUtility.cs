@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SurvivalKit.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -41,11 +42,27 @@ namespace SurvivalKit.Utility
 		{
 			if(LogToConsole)
 			{
-				Debug.WriteLine("[SK]  Exception:");
-				Debug.WriteLine(exception);
+				if (exception is ISurvivalKitException)
+				{
+					// custom exception should be formatted using the ToString override.
+					Debug.WriteLine(exception.ToString());
+				}
+				else
+				{
+					// no exception of ours, just log the default way.
+					Debug.WriteLine(exception);
+				}
 			} else {
-				Log.Error("[SK]  Exception:");
-				Log.Exception(exception);
+				if (exception is ISurvivalKitException)
+				{
+					// custom exception should be formatted using the ToString override.
+					Log.Error(exception.ToString());
+				}
+				else
+				{
+					// no exception of ours, just log the default way.
+					Log.Exception(exception);
+				}
 			}
 		}
 
