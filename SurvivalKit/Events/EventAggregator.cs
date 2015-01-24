@@ -171,7 +171,6 @@ namespace SurvivalKit.Events
 		/// <param name="fireSubEvents">Should we fire sub events</param>
 		public void DispatchEvent<TEventType>(TEventType eventInstance, bool fireSubEvents) where TEventType : IDispatchableEvent
 		{
-			LogUtility.Out("[SK] Dispatching: " + eventInstance.GetType().Name);
 			if (GameDisabled)
 			{
 				// perhaps cancel the event?
@@ -180,8 +179,7 @@ namespace SurvivalKit.Events
 			}
 
 			// use the type they are giving us, not the actual type. 
-			var eventType = typeof(TEventType);
-
+			var eventType = eventInstance.GetType();
 
 			if (eventInstance.IsCancelled())
 			{
@@ -192,7 +190,6 @@ namespace SurvivalKit.Events
 
 			if (_hookRegistry.ContainsKey(eventType))
 			{
-				LogUtility.Out("[SK] Found listeners for: " + eventType.Name);
 				var eventHookRegistrations = _hookRegistry[eventType];
 
 				foreach (var eventHookRegistration in eventHookRegistrations)
@@ -229,7 +226,7 @@ namespace SurvivalKit.Events
 					catch (Exception exception)
 					{
 						// TODO Perhaps disable this plugin?
-						var wrappedException = new SurvivalKitPluginException(eventType.Name, eventType.AssemblyQualifiedName, "Exception while invoking plugin", exception);
+						var wrappedException = new SurvivalKitPluginException(eventType.Name, eventType.AssemblyQualifiedName, "Exception while invoking plugin with listener: " + instance.GetType().FullName, exception);
 						LogUtility.Exception(wrappedException);
 					}
 				}
