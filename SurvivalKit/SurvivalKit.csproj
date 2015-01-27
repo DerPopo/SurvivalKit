@@ -58,6 +58,7 @@
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\EventHook.cs" />
     <Compile Include="Events\EventListenerRegistration.cs" />
+    <Compile Include="Events\Player\PlayerDisconnectedEvent.cs" />
     <Compile Include="Exceptions\AssemblyLoadException.cs" />
     <Compile Include="Exceptions\CommandDispatchingException.cs" />
     <Compile Include="Exceptions\EventDispatchingException.cs" />

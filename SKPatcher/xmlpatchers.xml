@@ -8,7 +8,7 @@
 	instref : Instruction reference (operand is the index of the target instruction)
 -->
 <patchers>
-	<hook type="event" name="EntityEmitSmell" cancellable="true" insertAt="0">
+	<hook type="event" name="EntityEmitSmellEvent" cancellable="true" insertAt="0">
 		<type name="AIDirectorMarkerManagementComponent"/>
 		<method name="EmitSmell" parameters="Entity;UnityEngine.Vector3;System.String" return="System.Void"/>
 		<parameters>
@@ -40,5 +40,28 @@
 				</write>
 			</parameter>
 		</parameters>
+	</hook>
+	<hook type="event" name="PlayerDisconnectedEvent" cancellable="false" insertAt="17">
+		<type name="GameManager"/>
+		<method name="PlayerDisconnected" parameters="System.Int32" return="System.Void"/>
+		<parameters>
+			<parameter type="System.Int32"> <!--0 : _clientId -->
+				<load>
+					<opcode name="Ldarg_1" optype="none"/>
+				</load>
+			</parameter>
+			<parameter type="System.Int32"> <!--0 : _clientId -->
+				<load>
+					<opcode name="Ldloc_0" optype="none"/>
+				</load>
+			</parameter>
+			<parameter type="EntityPlayer"> <!--0 : _clientId -->
+				<load>
+					<opcode name="Ldloc_1" optype="none"/>
+				</load>
+			</parameter>
+		</parameters>
+		<!-- instref -->
+		
 	</hook>
 </patchers>

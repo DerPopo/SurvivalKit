@@ -45,10 +45,13 @@ namespace SurvivalKit.Events
 			var lowerCaseName = name.ToLower();
 			IDispatchableEvent _event = null;
 			var eventTypes = _aggregator.GetRegisteredEventTypes();
+
+			LogUtility.Out("Fired: " + lowerCaseName);
 			foreach (Type curEventType in eventTypes)
 			{
 				if (curEventType.Name.ToLower().Equals(lowerCaseName))
 				{
+					LogUtility.Out("Found listener for " + lowerCaseName);
 					try
 					{
 						_event = Activator.CreateInstance(curEventType, new object[] { pars }) as IDispatchableEvent;
