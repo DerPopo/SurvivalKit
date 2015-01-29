@@ -41,27 +41,26 @@
 			</parameter>
 		</parameters>
 	</hook>
-	<hook type="event" name="PlayerDisconnectedEvent" cancellable="false" insertAt="17">
+	<hook type="event" name="PlayerDisconnectedEvent" cancellable="false" insertAt="26">
 		<type name="GameManager"/>
 		<method name="PlayerDisconnected" parameters="System.Int32" return="System.Void"/>
 		<parameters>
-			<parameter type="System.Int32"> <!--0 : _clientId -->
+			<parameter type="System.Int32"> <!--0 : client id -->
 				<load>
 					<opcode name="Ldarg_1" optype="none"/>
 				</load>
 			</parameter>
-			<parameter type="System.Int32"> <!--0 : _clientId -->
+			<parameter type="System.Int32"> <!--0 : entity id -->
 				<load>
 					<opcode name="Ldloc_0" optype="none"/>
 				</load>
 			</parameter>
-			<parameter type="EntityPlayer"> <!--0 : _clientId -->
+			<parameter type="EntityPlayer"> <!--0 : EntityPlayer -->
 				<load>
 					<opcode name="Ldloc_1" optype="none"/>
 				</load>
 			</parameter>
 		</parameters>
-		<!-- instref -->
 		
 	</hook>
 </patchers>
