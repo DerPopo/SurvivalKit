@@ -35,7 +35,7 @@ namespace SKPatcher
 			ILProcessor proc = mdef.Body.GetILProcessor();
 			List<Instruction> hook = new List<Instruction>();
 			hook.Add(proc.Create(OpCodes.Ldstr, _event));
-			hook.Add(proc.Create(OpCodes.Ldc_I4, argLoaders.Length + 1));
+			hook.Add(proc.Create(OpCodes.Ldc_I4, argLoaders.Length));
 			hook.Add(proc.Create(OpCodes.Newarr, csModule.Import(mscorlibModule.GetType("System.Object"))));
 			int dataIndex = 0;
 			//addToArray(proc, hook, dataIndex++, new Instruction[] { proc.Create(OpCodes.Ldarg_0) });

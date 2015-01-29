@@ -26,7 +26,7 @@ namespace SurvivalKit.Events.Misc
 		/// </param>
 		public UnknownChunkProviderEvent(Object[] args)
 		{
-			if (args == null || args.Length < 3)
+			if (args == null || args.Length < 4)
 				throw new ArgumentNullException();
 			cluster = (ChunkCluster)args[0];
 			cancelled = (bool)args[1];

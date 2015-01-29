@@ -27,7 +27,7 @@ namespace SurvivalKit.Events.Entities
 		/// </param>
 		public EntityEmitSmellEvent(Object[] args)
 		{
-			if (args == null || args.Length < 5)
+			if (args == null || args.Length < 4)
 				throw new ArgumentNullException();
 			cancelled = (bool)args[0];
 			pos = (UnityEngine.Vector3)args[1];

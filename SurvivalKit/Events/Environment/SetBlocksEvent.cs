@@ -26,7 +26,7 @@ namespace SurvivalKit.Events.Environment
 		/// </param>
 		public SetBlocksEvent(Object[] args)
 		{
-			if (args == null || args.Length < 4)
+			if (args == null || args.Length < 3)
 				throw new ArgumentNullException();
 			this.cancelled = (bool)args[0];
 			this.blockPosTypes = (List<BlockChangeInfo>)args[1];
